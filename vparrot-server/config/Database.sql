@@ -43,3 +43,14 @@ CREATE TABLE IF NOT EXISTS rejected_testimonies
   content VARCHAR(250) NOT NULL,
   rating INT NOT NULL
 );
+
+/*CREATION SCHEDULES TABLE */
+CREATE TABLE IF NOT EXISTS schedules
+(
+  id_opening_day INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  day_of_week ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche') NOT NULL,
+  morning_opening TIME NOT NULL,
+  morning_closing TIME NOT NULL,
+  afternoon_opening TIME NOT NULL,
+  afternoon_closing TIME NOT NULL
+);
