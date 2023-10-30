@@ -109,6 +109,20 @@ CREATE TABLE IF NOT EXISTS cars_images
   FOREIGN KEY (car_id) REFERENCES cars(id_car)
 );
 
+/*CREATION CARS FEATURES TABLE*/
+CREATE TABLE IF NOT EXISTS car_features
+(
+  id_feature INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  car_id INT NOT NULL,
+  years INT NOT NULL,
+  fuel VARCHAR(20) NOT NULL,
+  power INT NOT NULL,
+  kilometer INT NOT NULL,
+  transmission VARCHAR(20) NOT NULL,
+  body VARCHAR(20) NOT NULL,
+  FOREIGN KEY (car_id) REFERENCES cars(id_car)
+);
+
 
 
 
