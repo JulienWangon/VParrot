@@ -32,3 +32,14 @@ CREATE TABLE IF NOT EXISTS testimonies
   rating INT NOT NULL,
   is_moderated BOOLEAN NOT NULL
 );
+
+/*CREATION REJECTED TESTIMONIES TABLE*/
+CREATE TABLE IF NOT EXISTS rejected_testimonies
+(
+  id_rejected_testimony INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id_testimony INT NOT NULL,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  content VARCHAR(250) NOT NULL,
+  rating INT NOT NULL
+);
