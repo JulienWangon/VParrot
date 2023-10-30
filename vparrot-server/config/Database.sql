@@ -61,3 +61,17 @@ CREATE TABLE IF NOT EXISTS services_type
   id_type INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   type_name VARCHAR(50) NOT NULL
 );
+
+/*CREATION SERVICES TABLE*/
+CREATE TABLE IF NOT EXISTS services
+(
+  id_service INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  type_id INT NOT NULL,
+  service_name VARCHAR(50) NOT NULL,
+  description TEXT NOT NULL,
+  price VARCHAR(20) NOT NULL,
+  path_img VARCHAR(250) NOT NULL,
+  FOREIGN KEY (type_id) REFERENCES services_type(id_type)
+);
+
+
