@@ -22,3 +22,12 @@ INSERT INTO testimonies (first_name, last_name, content, rating, is_moderated) V
 ("François", "TRITON", "Un peut d'attente mais content de l'intervention", 4, 1),
 ("Jeanne", "POULINOIS", "Equipe très pro, plutôt rassurant pour moi qui n'y connais rien en voiture", 5, 1),
 ("Miguel", "BANDOZA", "Mon véhiucle est entre de bonnes mains même si la prise de rendez_vous était difficile", 4, 1);
+
+/*INSERT SCHEDULES DATA*/
+INSERT INTO schedules (day_of_week, morning_opening, morning_closing, afternoon_opening, afternoon_closing) VALUES
+("Lundi", "08:00", "12:00", "13:30", "18:00"),
+("Mardi", "08:00", "12:00", "13:30", "18:00"),
+("Mercredi", "08:00", "12:00", "13:30", "18:00"),
+("Jeudi", "08:00", "12:00", "13:30", "18:00"),
+("Vendredi", "08:00", "12:00", "13:30", "18:00"),
+("Samedi", "10:00", "12:00", "14:00", "17:00"),
