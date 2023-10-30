@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS contact
   is_treated BOOLEAN NOT NULL,
   treatment_date DATETIME,
   treatment_methode VARCHAR(20)
-)
+);
 
 /*CREATION CAR TABLE*/
 CREATE TABLE IF NOT EXISTS cars
@@ -97,6 +97,18 @@ CREATE TABLE IF NOT EXISTS cars
   model VARCHAR(20) NOT NULL,
   trade_name VARCHAR(50) NOT NULL,
   price INT NOT NULL
-)
+);
+
+/*CREATION PHOTO GALLERY TABLE*/
+CREATE TABLE IF NOT EXISTS cars_images
+(
+  id_images INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  file_path VARCHAR(250) NOT NULL,
+  is_main BOOLEAN NOT NULL,
+  car_id INT NOT NULL,
+  FOREIGN KEY (car_id) REFERENCES cars(id_car)
+);
+
+
 
 
