@@ -140,4 +140,14 @@ CREATE TABLE IF NOT EXISTS equipments
 );
 
 
+/*CREATION ASSOCIATIVE TABLE BETWEEN CARS AND EQUIPMENT*/
+CREATE TABLE IF NOT EXISTS car_equipments 
+(
+  id_car_equipment INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  car_id INT NOT NULL,
+  equipment_id INT NOT NULL,
+  FOREIGN KEY (car_id) REFERENCES cars(id_car),
+  FOREIGN KEY (equipment_id) REFERENCES equipments(id_equipment)
+);
+
 
