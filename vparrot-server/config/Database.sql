@@ -1,0 +1,3 @@
+/*DATABASE CREATION*/
+CREATE DATABASE IF NOT EXISTS vparrot_garage;
+USE vparrot_garage;
