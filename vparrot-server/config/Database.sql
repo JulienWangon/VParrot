@@ -74,4 +74,19 @@ CREATE TABLE IF NOT EXISTS services
   FOREIGN KEY (type_id) REFERENCES services_type(id_type)
 );
 
+/*CREATION CONTACT TABLE*/
+CREATE TABLE IF NOT EXISTS contact
+(
+  id_contact INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  email VARCHAR(250) NOT NULL,
+  contact_subject VARCHAR(250) NOT NULL,
+  content TEXT NOT NULL,
+  is_treated BOOLEAN NOT NULL,
+  treatment_date DATETIME,
+  treatment_methode VARCHAR(20)
+)
+
 
