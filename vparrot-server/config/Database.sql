@@ -54,3 +54,10 @@ CREATE TABLE IF NOT EXISTS schedules
   afternoon_opening TIME NOT NULL,
   afternoon_closing TIME NOT NULL
 );
+
+/*CREATION SERVICES TYPE TABLE*/
+CREATE TABLE IF NOT EXISTS services_type
+(
+  id_type INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  type_name VARCHAR(50) NOT NULL
+);
