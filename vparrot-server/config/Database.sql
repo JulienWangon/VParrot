@@ -84,9 +84,7 @@ CREATE TABLE IF NOT EXISTS contact
   email VARCHAR(250) NOT NULL,
   contact_subject VARCHAR(250) NOT NULL,
   content TEXT NOT NULL,
-  is_treated BOOLEAN NOT NULL,
-  treatment_date DATETIME,
-  treatment_methode VARCHAR(20)
+  is_treated BOOLEAN NOT NULL
 );
 
 /*CREATION CAR TABLE*/
