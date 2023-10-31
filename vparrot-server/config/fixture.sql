@@ -39,7 +39,7 @@ INSERT INTO services_type (type_name) VALUES
 ("réparation")
 
 /*INSERT SERVICE DATA*/
-INSERT INTO services (type_id, service_name, description, price, path_img)VALUES
+INSERT INTO services (type_id, service_name, description, price, path_img) VALUES
 (1, "Forfait vidange", "Ce forfait inclut une vidange complète de l'huile moteur, le remplacement du filtre à huile, ainsi que le contrôle et le complément des autres fluides essentiels de votre véhicule.", "69.90€", "public/images/services/entretien/vidange.webp"),
 (1, "Forfait freinage", "Notre forfait comprend une vérification détaillée de vos freins, le remplacement des plaquettes et des disques de frein si nécessaire, ainsi qu'un contrôle rigoureux du niveau de votre liquide de frein.", "149.90€", "public/images/services/entretien/freinage.webp"),
 (1, "Forfait pneumatique", "Ce forfait comprend le montage, le gonflage à la bonne pression, et l'équilibrage de vos pneus. (Prix unitaire par pneu a remplacer hors coût des nouveaux pneus).", "19.90€", "public/images/services/entretien/pneumatique.webp"),
@@ -58,8 +58,20 @@ INSERT INTO services (type_id, service_name, description, price, path_img)VALUES
 
 
 /*INSERT CONTACT DATA*/
-INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated, treatment_date, treatment_methode)VALUES
+INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated, treatment_date, treatment_methode) VALUES
 ("Marcel", "PADBOLE", "0425874689", "m.padbole@email.com", "devis carrosserie", "bonjour, je viens de percuter un poteau j'aurai besoin de connaitre le coute des reparations, merci de me recontacter pour un rdv, cordialement", 0, "", "" ),
 ("Julie", "PASFACILE", "0758468932", "j.pasfacile@email.com", "devis reparation", "Bonjour, depuis ce mati mon véhicule fume noire, pouvez vous me téléphoner pour prévoir les répérations", 1, "17/08/2023 15:30", "téléphone"),
 ("Jean", "FONCE", "0625461008", "j.fonce@email.com", "rendez_vous entretien", "Bonjour, j'ai besoin d'un rendez-vous pour la révision des 75000 km de ma Fiat Panda", 0, "", "");
 
+/*INSERT CARS DATA*/
+INSERT INTO cars (brand, model, trade_name, price) VALUES
+("AUDI", "A3 BERLINE", "ADVANCED 3.0 TFSI S Tronic SPORT XENON", 38000),
+("MERCEDES", "CLA II", "2.0 250 224 AMG LINE", 45000),
+("BMW", "M3 G80", "COMPETITION G80 3.0 510", 110000),
+("VOLKSWAGEN", "GOLF 8 GTI", "2.0 TSI 300 GTI CLUBSPORT", 52000),
+("TESLA", "MODEL 3", "50kWh 306 STANDARD PLUS", 25990),
+("TESLA", "MODEL S PHASE 2", "100kWh 796 PERFOMANCE LUDICROUS", 75000),
+("BMW", "I8 ROADSTER", "1.5 374 A", 124900),
+("VOLVO", "V40", "2.0 D2 ADBLUE 120 BUSINESS", 17500),
+("LEXUS", "ES PHASE 2", "2.5 300H 178 BUSINESS", 53000),
+("LEXUS", "RC", "2.5 300H 300F SPORT EXECUTIVE", 34000);
