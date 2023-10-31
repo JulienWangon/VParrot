@@ -30,13 +30,13 @@ INSERT INTO schedules (day_of_week, morning_opening, morning_closing, afternoon_
 ("Mercredi", "08:00", "12:00", "13:30", "18:00"),
 ("Jeudi", "08:00", "12:00", "13:30", "18:00"),
 ("Vendredi", "08:00", "12:00", "13:30", "18:00"),
-("Samedi", "10:00", "12:00", "14:00", "17:00"),
+("Samedi", "10:00", "12:00", "14:00", "17:00");
 
 /*INSERT SERVICES TYPES DATA*/
 INSERT INTO services_type (type_name) VALUES
 ("entretien"),
 ("carrosserie"),
-("réparation")
+("réparation");
 
 /*INSERT SERVICE DATA*/
 INSERT INTO services (type_id, service_name, description, price, path_img) VALUES
@@ -58,10 +58,10 @@ INSERT INTO services (type_id, service_name, description, price, path_img) VALUE
 
 
 /*INSERT CONTACT DATA*/
-INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated, treatment_date, treatment_methode) VALUES
-("Marcel", "PADBOLE", "0425874689", "m.padbole@email.com", "devis carrosserie", "bonjour, je viens de percuter un poteau j'aurai besoin de connaitre le coute des reparations, merci de me recontacter pour un rdv, cordialement", 0, "", "" ),
-("Julie", "PASFACILE", "0758468932", "j.pasfacile@email.com", "devis reparation", "Bonjour, depuis ce mati mon véhicule fume noire, pouvez vous me téléphoner pour prévoir les répérations", 1, "17/08/2023 15:30", "téléphone"),
-("Jean", "FONCE", "0625461008", "j.fonce@email.com", "rendez_vous entretien", "Bonjour, j'ai besoin d'un rendez-vous pour la révision des 75000 km de ma Fiat Panda", 0, "", "");
+INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated) VALUES
+("Marcel", "PADBOLE", "0425874689", "m.padbole@email.com", "devis carrosserie", "bonjour, je viens de percuter un poteau j'aurai besoin de connaitre le coute des reparations, merci de me recontacter pour un rdv, cordialement", 0),
+("Julie", "PASFACILE", "0758468932", "j.pasfacile@email.com", "devis reparation", "Bonjour, depuis ce mati mon véhicule fume noire, pouvez vous me téléphoner pour prévoir les répérations", 0),
+("Jean", "FONCE", "0625461008", "j.fonce@email.com", "rendez-vous entretien", "Bonjour, j'ai besoin d'un rendez-vous pour la révision des 75000 km de ma Fiat Panda", 0);
 
 /*INSERT CARS DATA*/
 INSERT INTO cars (brand, model, trade_name, price) VALUES
@@ -77,7 +77,7 @@ INSERT INTO cars (brand, model, trade_name, price) VALUES
 ("LEXUS", "RC", "2.5 300H 300F SPORT EXECUTIVE", 34000);
 
 /*INSERT CARS IMAGES DATA*/
-INSERT INTO car_images (file_path, is_main, car_id) VALUES
+INSERT INTO cars_images (file_path, is_main, car_id) VALUES
 ("public/images/cars/car1/img1.webp", 1, 1),
 ("public/images/cars/car1/img2.webp", 0, 1),
 ("public/images/cars/car1/img3.webp", 0, 1),
@@ -433,7 +433,7 @@ INSERT INTO car_equipments (car_id, equipment_id) VALUES
 (10, 42),
 (10, 44),
 (10, 45),
-(10, 46),
+(10, 46);
 
 
 
