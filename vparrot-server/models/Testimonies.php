@@ -70,7 +70,7 @@ class Testimonies extends Database {
 //CRUD Methods
 
 //GET all testimonies 
-    public function getallTestimonies() :array {
+    public function getAllTestimonies() :array {
         try {
 
             $db = $this->getBdd();
