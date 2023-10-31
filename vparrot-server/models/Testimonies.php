@@ -67,11 +67,32 @@ class Testimonies extends Database {
         $this->isModerated = $isModerated;
     }
 
+//CRUD Methods
 
+//GET all testimonies 
+    public function getallTestimonies() :array {
+        try {
 
+            $db = $this->getBdd();
+            $req = "SELECT * FROM testimonies";
+            $stmt = $db->prepare($req);
+            $stmt->execute();
+            $testimonies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            return $testimonies;
 
-    
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la demande d'extraction des témoignages. "
+            . "Fichier: " . $e->getFile()
+            . " à la ligne " . $e->getLine()
+            . " Erreur: " . $e->getMessage();
+            error_log($errorMsg);
+
+            throw new Exception("Erreur lors de la récupération de la liste des témoignages, veuillez réessayer plus tard");
+        }
+    }
+
 }
 
 
