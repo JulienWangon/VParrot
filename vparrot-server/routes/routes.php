@@ -10,6 +10,8 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
+require_once './vparrot-server/controllers/TestimoniesController.php';
+
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
@@ -17,12 +19,15 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //LOADING CONTROLLERS
-$controllers = [];
+$controllers = [
+    'testimonies' => new TestimoniesController(),
+];
 
 
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
+        '/vparrot/testimonies/all' => [$controllers['testimonies'], 'getAllTestimoniesList'],
 
     ],
 
@@ -43,6 +48,7 @@ $routes = [
 
 //EXTRACTING THE URI FROM THE REQUEST
 $uri = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
+
 
 //ROUTING SYSTEM
 $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -66,7 +72,6 @@ if (!$foundRoute) {
         }
 
     }
-
 }
 
 //IF ROUTE NOTE FOUND RETURN 404 ERROR
