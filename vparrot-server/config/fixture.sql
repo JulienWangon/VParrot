@@ -142,6 +142,13 @@ INSERT INTO car_features (car_id, years, fuel, power, kilometer, transmission, b
 (9, 2023, "Diesel", 178, 9600, "Manuelle", "Berline"),
 (10, 2017, "Hybride", 223, 60000, "Manuelle", "Sportive");
 
+/*INSERT EQUIPMENT TYPES DATA*/
+INSERT INTO equipment_types (type_name) VALUES
+("Equipements de sécurité"),
+("Equipements de visibilité"),
+("Equipements de confort"),
+("Equipements multimédia");
+
 
 
 
