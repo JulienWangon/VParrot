@@ -150,6 +150,64 @@ INSERT INTO equipment_types (type_name) VALUES
 ("Equipements multimédia");
 
 
+/*INSERT EQUIPMENTS DATA*/
+INSERT INTO equipments (denomination, type_id) VALUES
+("ABS", 1),
+("ESP", 1),
+("Airbags", 1)
+("Détection d'angle mort", 1),
+("Freinage d'urgence autonome", 1),
+("Détecteur pression des pneus", 1),
+("Fixation ISOFIX", 1),
+("Système de maintien de voie", 1),
+("Caméra de recul", 2),
+("Anti-brouillard avant",2),
+("Feux LED", 2),
+("Feux Xénon", 2),
+("Feux de jour DRL", 2),
+("Phares adaptatifs", 2),
+("Détecteur de pluie", 2),
+("Essuie-glace auto",2),
+("Allumage des feux auto", 2),
+("Réflecteurs de porte", 2),
+("Climatisation", 3),
+("Sièges chauffants", 3),
+("Régulateur de vitesse", 3),
+("Réglage électrique des sièges", 3),
+("Mémoire de position des sièges", 3),
+("Commandes au volant", 3),
+("Démarrage sans clé", 3),
+("Toit ouvrant", 3),
+("Toit panoramique", 3),
+("Siège ventilés", 3),
+("Accoudoir central avant", 3),
+("Accoudoir central arrière", 3),
+("Boite à gant réfrigérée", 3),
+("Connectivité Bluetooth", 4),
+("Port USB", 4),
+("Prise auxiliaire", 4),
+("Ecran tactile", 4),
+("Système de navigation intégré", 4),
+("Recharge sans file", 4),
+("Système audio haut de gamme", 4),
+("Lecteur CD", 4),
+("Commandes vocales", 4),
+("Connectivité WIFI", 4),
+("Ecrans passagers arrières", 4),
+("Mise à jour OTA", 4),
+("Affichage tête haute conducteur", 4),
+("Apple CarPlay", 4),
+("Android auto", 4);
+
+
+
+
+
+
+
+
+
+
 
 
 
