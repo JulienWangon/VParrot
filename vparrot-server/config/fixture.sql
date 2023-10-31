@@ -75,3 +75,63 @@ INSERT INTO cars (brand, model, trade_name, price) VALUES
 ("VOLVO", "V40", "2.0 D2 ADBLUE 120 BUSINESS", 17500),
 ("LEXUS", "ES PHASE 2", "2.5 300H 178 BUSINESS", 53000),
 ("LEXUS", "RC", "2.5 300H 300F SPORT EXECUTIVE", 34000);
+
+/*INSERT CARS IMAGES DATA*/
+INSERT INTO car_images (file_path, is_main, car_id) VALUES
+("public/images/cars/car1/img1.webp", 1, 1),
+("public/images/cars/car1/img2.webp", 0, 1),
+("public/images/cars/car1/img3.webp", 0, 1),
+("public/images/cars/car1/img4.webp", 0, 1),
+("public/images/cars/car1/img5.webp", 0, 1),
+("public/images/cars/car2/img1.webp", 1, 2),
+("public/images/cars/car2/img2.webp", 0, 2),
+("public/images/cars/car2/img3.webp", 0, 2),
+("public/images/cars/car2/img4.webp", 0, 2),
+("public/images/cars/car2/img5.webp", 0, 2),
+("public/images/cars/car3/img1.webp", 1, 3),
+("public/images/cars/car3/img2.webp", 0, 3),
+("public/images/cars/car3/img3.webp", 0, 3),
+("public/images/cars/car3/img4.webp", 0, 3),
+("public/images/cars/car3/img5.webp", 0, 3),
+("public/images/cars/car4/img1.webp", 1, 4),
+("public/images/cars/car4/img2.webp", 0, 4),
+("public/images/cars/car4/img3.webp", 0, 4),
+("public/images/cars/car4/img4.webp", 0, 4),
+("public/images/cars/car4/img5.webp", 0, 4),
+("public/images/cars/car5/img1.webp", 1, 5),
+("public/images/cars/car5/img2.webp", 0, 5),
+("public/images/cars/car5/img3.webp", 0, 5),
+("public/images/cars/car5/img4.webp", 0, 5),
+("public/images/cars/car5/img5.webp", 0, 5),
+("public/images/cars/car6/img1.webp", 1, 6),
+("public/images/cars/car6/img2.webp", 0, 6),
+("public/images/cars/car6/img3.webp", 0, 6),
+("public/images/cars/car6/img4.webp", 0, 6),
+("public/images/cars/car6/img5.webp", 0, 6),
+("public/images/cars/car7/img1.webp", 1, 7),
+("public/images/cars/car7/img2.webp", 0, 7),
+("public/images/cars/car7/img3.webp", 0, 7),
+("public/images/cars/car7/img4.webp", 0, 7),
+("public/images/cars/car7/img5.webp", 0, 7),
+("public/images/cars/car8/img1.webp", 1, 8),
+("public/images/cars/car8/img2.webp", 0, 8),
+("public/images/cars/car8/img3.webp", 0, 8),
+("public/images/cars/car8/img4.webp", 0, 8),
+("public/images/cars/car8/img5.webp", 0, 8),
+("public/images/cars/car9/img1.webp", 1, 9),
+("public/images/cars/car9/img2.webp", 0, 9),
+("public/images/cars/car9/img3.webp", 0, 9),
+("public/images/cars/car9/img4.webp", 0, 9),
+("public/images/cars/car9/img5.webp", 1, 9),
+("public/images/cars/car10/img1.webp", 1, 10),
+("public/images/cars/car10/img2.webp", 0, 10),
+("public/images/cars/car10/img3.webp", 0, 10),
+("public/images/cars/car10/img4.webp", 0, 10),
+("public/images/cars/car10/img5.webp", 0, 10),
+
+
+
+
+
+
+
