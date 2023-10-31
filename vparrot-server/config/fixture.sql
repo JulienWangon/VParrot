@@ -55,3 +55,11 @@ INSERT INTO services (type_id, service_name, description, price, path_img)VALUES
 (3, "Suspension et direction", "Qu'il s'agisse de la réparation d'amortisseurs usés, du remplacement de barres stabilisatrices ou de la résolution de problèmes de direction, nos techniciens qualifiés sont équipés pour le travail. Grâce à notre expertise, nous nous assurons que votre voiture offre une conduite douce, une bonne tenue de route et une direction précise.", "Sur Devis", "public/images/services/reparation/suspension.webp"),
 (3, "Transmission", "La transmission joue un rôle essentiel dans le fonctionnement de votre véhicule, assurant une conduite en douceur et efficace. Nos techniciens sont experts dans le diagnostic des problèmes de transmission, manuelle ou automatique. Qu'il s'agisse d'un simple changement de liquide ou d'une réparation plus complexe, nous avons l'expertise pour vous offrir une solution efficace.", "Sur Devis", "public/images/services/reparation/transmission.webp"),
 (3, "Refroidissement", "Le système de refroidissement joue un rôle crucial dans la régulation de la température du moteur, garantissant ainsi des performances optimales et la longévité de votre voiture. Nos techniciens experts sont formés pour diagnostiquer et réparer tous les composants du système de refroidissement, y compris le radiateur, le thermostat, les pompes à eau, et les ventilateurs.Nous assurons un service rapide et fiable, vous permettant de reprendre la route en toute sécurité.", "Sur Devis", "public/images/services/reparation/refroidissement.webp");
+
+
+/*INSERT CONTACT DATA*/
+INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated, treatment_date, treatment_methode)VALUES
+("Marcel", "PADBOLE", "0425874689", "m.padbole@email.com", "devis carrosserie", "bonjour, je viens de percuter un poteau j'aurai besoin de connaitre le coute des reparations, merci de me recontacter pour un rdv, cordialement", 0, "", "" ),
+("Julie", "PASFACILE", "0758468932", "j.pasfacile@email.com", "devis reparation", "Bonjour, depuis ce mati mon véhicule fume noire, pouvez vous me téléphoner pour prévoir les répérations", 1, "17/08/2023 15:30", "téléphone"),
+("Jean", "FONCE", "0625461008", "j.fonce@email.com", "rendez_vous entretien", "Bonjour, j'ai besoin d'un rendez-vous pour la révision des 75000 km de ma Fiat Panda", 0, "", "");
+
