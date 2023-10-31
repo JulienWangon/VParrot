@@ -127,7 +127,24 @@ INSERT INTO car_images (file_path, is_main, car_id) VALUES
 ("public/images/cars/car10/img2.webp", 0, 10),
 ("public/images/cars/car10/img3.webp", 0, 10),
 ("public/images/cars/car10/img4.webp", 0, 10),
-("public/images/cars/car10/img5.webp", 0, 10),
+("public/images/cars/car10/img5.webp", 0, 10);
+
+/*INSERT CARS FEATURES*/
+INSERT INTO car_features (car_id, years, fuel, power, kilometer, transmission, body) VALUES
+(1, 2021, "Essence", 150, 7503, "Manuelle", "Berline"),
+(2, 2019, "Essence", 224, 28785, "Automatique", "Berline"),
+(3, 2021, "Essence", 510, 15000, "Automartique", "Sportive"),
+(4, 2023, "Essence", 300, 50, "Automatique", "Sportive"),
+(5, 2019, "Electrique", 306, 149000, "Automatique", "Citadine"),
+(6, 2020, "Electrique", 672, 60500, "Automatique", "Berline"),
+(7, 2018, "Hybride", 374, 39500, "Automatique","Sportive"),
+(8, 2019, "Diesel", 120, 69450, "Manuelle", "Citadine"),
+(9, 2023, "Diesel", 178, 9600, "Manuelle", "Berline"),
+(10, 2017, "Hybride", 223, 60000, "Manuelle", "Sportive");
+
+
+
+
 
 
 
