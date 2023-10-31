@@ -31,3 +31,9 @@ INSERT INTO schedules (day_of_week, morning_opening, morning_closing, afternoon_
 ("Jeudi", "08:00", "12:00", "13:30", "18:00"),
 ("Vendredi", "08:00", "12:00", "13:30", "18:00"),
 ("Samedi", "10:00", "12:00", "14:00", "17:00"),
+
+/*INSERT SERVICES TYPES DATA*/
+INSERT INTO services_type (type_name) VALUES
+("entretien"),
+("carrosserie"),
+("réparation")
