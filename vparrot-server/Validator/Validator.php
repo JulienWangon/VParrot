@@ -97,6 +97,30 @@ class Validator {
         return empty($this->errors["email"]);
     }
 
+    //Validate password
+    public function validatePassword($password) {
+
+        //Check if password exists
+        if(!$password || $password = ""){
+            $this->errors["password"][] = ["status" => "error", "message" => "Le mot de passe est requis"];
+
+        //Check if password have an uppercase letter
+        } else if (!preg_match("/[A-Z]/", $password)) {
+            $this->errors["password"][] = ["status" => "error", "message" => "Le mot de passe doit contenir au moins une lettre majuscule."];
+
+        //Check if password have lowercase letter    
+        } else if (!preg_match("/[a-z]/", $password)) {
+            $this->errors["password"][] = ["status" => "error", "message" => "Le mot de passe doit contenir au moins une lettre minuscule."];
+
+        //check if password contains a special charactère    
+        } else if (!preg_match("/[\W]/", $password)) {
+            $this->errors["password"][] = ["status" => "error", "message" => "Le mot de passe doit contenir au moins un caractère spécial."];
+        }
+
+        return empty($this->errors["password"]);
+
+    }
+
    
     //Return validator error
     public function getErrors() {
