@@ -12,12 +12,12 @@ class Validator {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
             return false;
 
-        //Checking minimal Length
+        //Checking min Length
         }else if (strlen($input) < 3) {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit comporter au moins 3 caractères."];
             return false;
 
-        //Checking maximal Length
+        //Checking max Length
         }else if (strlen($input) > $maxLength) {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pads dépasser $maxLength caractères."];
             return false;
@@ -53,20 +53,38 @@ class Validator {
         }
 
         return empty($this->errors['rating']);
-              
+
     }
 
+    public function validateMediumContent($content, $type, $minLength = 20, $maxLength = 250){
 
+        //Checking if content exists
+        if (!$content || $content = "") {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
+            return false;
+
+        //Checking content min length
+        } else if (strlen($content) < $minLength) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit comporter au moins $minLength caractères."];
+            return false;
+
+        //Checking content max length
+        } else if (strlen($content) > $maxLength) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pads dépasser $maxLength caractères."];
+            return false;
+
+        } else if (!preg_match("/^[A-Za-z0-9 .,!?()-]+$/", $content)) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ commentaire contient des caractères non autorisés."];
+            return false;
+        }
+
+        return empty($this->errors[$type]);
+    }
+
+    
     //Return validator error
     public function getErrors() {
         return $this->errors;
     }
-
-
-
-
-
-
-
 
 }
