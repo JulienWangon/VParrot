@@ -168,14 +168,24 @@ class Users extends Database {
 
     
     //Check if email existe
-    public function doesEmailExists(string $email) :bool {
+    public function doesEmailExists(string $email, int $excludeUserId = null) :bool {
 
         try {
 
             $db = $this->getBdd();
             $req = "SELECT 1 FROM users WHERE user_email = :userEmail";
+
+            if ($excludeUserId !== null) {
+                $req .= " AND id_user != :excludeUserId";
+            }
+
             $stmt = $db->prepare($req);
             $stmt->bindValue(":userEmail", $email, PDO::PARAM_STR);
+
+            if ($excludeUserId !== null) {
+                $stmt->bindValue(":excludeUserId", $excludeUserId, PDO::PARAM_INT);
+            }
+            
             $stmt->execute();
 
             return $stmt->fetchColumn() !== false;
