@@ -86,6 +86,27 @@ class TestimoniesController {
 
     }
 
+//Approve Testimony
+    public function approveThisTestimony(int $testimonyId) {
+
+        $testimony = new Testimonies();
+
+        //Check if testimony exists
+        if(!$testimony->testimonyExists($testimonyId)) {
+            $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
+            return;
+        }
+
+        //If testimony exists continue with approval
+        if($testimony->approveTestimony($testimonyId)) {
+            $this->sendResponse(["status" => "success", "message" => "Témoignage approuvé avec succès"]);
+        } else {
+            $this->sendResponse(["status" => "error", "message" => "Erreur lors de l 'approbation du témoignage"], 500);
+        }
+    }
+
+    
+
 
 
 
