@@ -130,6 +130,33 @@ class Users extends Database {
         }
     }
 
+    //Check if email existe
+    public function doesEmailExists(string $email) :bool {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "SELECT 1 FROM users WHERE user_email = :userEmail";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":userEmail", $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            return $stmt->fetchColumn() !== false;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la vérification de l'existence de l'email. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();        
+            error_log($errorMsg);
+    
+            throw new Exception("Une erreur est survenue, veuillez réessayer plus tard");
+
+        }
+
+    }
+
 
 
 
