@@ -53,10 +53,10 @@ class TestimoniesController {
             //Data validation
             $this->validator = new Validator();
 
-            $validLastName = $this->validator->validateStringForName($lastName, 'lastName');
-            $validFirstName = $this->validator->validateStringForName($firstName, 'firstName');
+            $validLastName = $this->validator->validateStringForNames($lastName, 'lastName');
+            $validFirstName = $this->validator->validateStringForNames($firstName, 'firstName');
             $validRating = $this->validator->validateRating($rating, 'rating');
-            $validContent = $this->validator->validateContent($content, 'content');
+            $validContent = $this->validator->validateMediumContent($content, 'content');
 
             if(!$validLastName || !$validFirstName || !$validRating || $validContent) {
                 $errors = $this->validator->getErrors();
