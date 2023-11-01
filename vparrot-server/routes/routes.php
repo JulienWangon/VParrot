@@ -42,11 +42,12 @@ $controllers = [
 $routes = [
     'GET' => [
         '/vparrot/testimonies/all' => [$controllers['testimonies'], 'getAllTestimoniesList'],
-        '/vparrot/users/all' => [$controllers['users'], 'getAllUsersList'],
+        '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
 
     ],
 
     'POST' => [
+        '/vparrot/users' => [$controllers['users'], 'addThisUser'],
 
     ],
 
