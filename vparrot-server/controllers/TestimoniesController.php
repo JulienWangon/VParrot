@@ -55,17 +55,17 @@ class TestimoniesController {
             $validLastName = $this->validator->validateStringForName($lastName, 'lastName');
             $validFirstName = $this->validator->validateStringForName($firstName, 'firstName');
             $validRating = $this->validator->validateRating($rating, 'rating');
-            $vcalidContent = $this->validator->validateContent($content, 'content');
+            $validContent = $this->validator->validateContent($content, 'content');
 
             if(!$validLastName || !$validFirstName || !$validRating || $validContent) {
                 $errors = $this->validator->getErrors();
                 $this->sendResponse(["status" => "error", "message" => $errors], 400);
             }
 
-            if($validLastName && $validfirstName && $validRating && $validContent) {
+            if($validLastName && $validFirstName && $validRating && $validContent) {
                 try {
-                    $testimony = new Testimony();
-                    $testimony->setLastName($lasrtName);
+                    $testimony = new Testimonies();
+                    $testimony->setLastName($lastName);
                     $testimony->setFirstName($firstName);
                     $testimony->setContent($content);
                     $testimony->setRating($rating);
