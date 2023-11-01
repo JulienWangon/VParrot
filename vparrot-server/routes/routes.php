@@ -41,7 +41,7 @@ $controllers = [
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
-        '/vparrot/testimonies/all' => [$controllers['testimonies'], 'getAllTestimoniesList'],
+        '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
 
     ],
