@@ -24,13 +24,13 @@ class UsersController {
 
     }
 
-    //Get all users list
+    //GET all users list
     public function getAllUsersList() {
         $data = $this->users->getAllUsers();
         $this->sendResponse($data);
     }
 
-    //Create new user 
+    //CREATE new user 
     public function addThisUser() {
 
             // Retrieve data sent by the client
@@ -86,13 +86,7 @@ class UsersController {
 
             try {
 
-                $this->users->setFirstName($firstName);
-                $this->users->setLastName($lastName);
-                $this->users->setUserEmail($userEmail);
-                $this->users->setUserPassword($hashedPassword);
-                $this->users->setRoleId($roleId);
-
-                if ($this->users->addUser()) {
+                if ($this->users->addUser($firstName, $lastName, $userEmail, $userPassword, $roleId)) {
                     $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès"], 200);
 
                 } else {
@@ -106,6 +100,10 @@ class UsersController {
             }
         
     }
+
+    //UPDATE User
+
+
 
 
 }
