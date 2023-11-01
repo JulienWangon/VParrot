@@ -121,6 +121,11 @@ class Validator {
 
     }
 
+    //Validate JSON data format
+    public function validateJsonFormat($jsonData) :bool {
+        return !($jsonData === null && json_last_error() !== JSON_ERROR_NONE);
+    }
+
    
     //Return validator error
     public function getErrors() {
