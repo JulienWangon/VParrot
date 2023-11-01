@@ -71,7 +71,7 @@ class Users extends Database {
 
     //CRUD Method
 
-    //Get all users
+    //GET all users
     public function getAllUsers() :array {
 
         try {
@@ -100,19 +100,19 @@ class Users extends Database {
         }
     }
 
-    //Create new user 
-    public function addUser() :bool {
+    //CREATE new user 
+    public function addUser($firstName, $lastName, $userEmail, $userPassword, $roleId ) :bool {
         try {
 
             $db = $this->getBdd();
             $req = "INSERT INTO users (first_name, last_name, user_email, user_password, role_id) 
                     VALUE (:firstName, :lastName, :userEmail, :userPassword, :roleId)";
             $stmt = $db->prepare($req);
-            $stmt->bindValue(":firstName", $this->getFirstName(), PDO::PARAM_STR);
-            $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
-            $stmt->bindValue(":userEmail", $this->getUserEmail(), PDO::PARAM_STR);
-            $stmt->bindValue(":userPassword", $this->getUserPassword(), PDO::PARAM_STR);
-            $stmt->bindValue("roleID", $this->getRoleId(), PDO::PARAM_INT);
+            $stmt->bindValue(":firstName", $firstName, PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $lastName, PDO::PARAM_STR);
+            $stmt->bindValue(":userEmail", $userEmail, PDO::PARAM_STR);
+            $stmt->bindValue(":userPassword", $userPassword, PDO::PARAM_STR);
+            $stmt->bindValue(":roleId", $roleId, PDO::PARAM_INT);
             $stmt->execute();
 
             return true;
@@ -129,6 +129,45 @@ class Users extends Database {
 
         }
     }
+
+    //UPDATE USER
+    public function updateUser(int $idUser) {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "UPDATE users 
+                    SET first_name = :firstName, last_name = :lastName, user_email = :userEmail, role_id = :roleId 
+                    WHERE id_user = :idUser";
+
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":firstName", $this->getFirstName(), PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
+            $stmt->bindValue(":userEmail", $this->getUserEmail(), PDO::PARAM_STR);
+            $stmt->bindValue(":roleId", $this->getRoleId(), PDO::PARAM_INT);
+            $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->rowCount() > 0;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la tentative de mise à jour de l'utilisateur. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();        
+            error_log($errorMsg);
+
+            throw new Exception("Erreur lors de la mise a jour de l'utilisateur");
+
+        }
+    }
+
+
+
+
+
+
 
     //Check if email existe
     public function doesEmailExists(string $email) :bool {
