@@ -69,7 +69,38 @@ class Users extends Database {
         $this->roleId = $roleId;
     }
 
-    
+    //CRUD Method
+
+    //Get all users
+    public function getallUsers() :array {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "SELECT u.id_user, u.first_name, u.last_name, u.user_email, r.id_role, r.role_name 
+                    FROM users u 
+                    JOIN roles r 
+                    ON u.role_id = r.id_role";
+
+            $stmt = $db->prepare($req);
+            $stmt->execute;
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $users;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la demande d'extraction des utilisateurs. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();        
+            error_log($errorMsg);
+
+            throw new Exception("Une erreur est survenue, veuiller réessayer plus tard");
+        }
+    }
+
+
 
 
 
