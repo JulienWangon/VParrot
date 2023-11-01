@@ -71,7 +71,7 @@ class Testimonies extends Database {
 
 //GET all testimonies 
     public function getAllTestimonies() :array {
-        
+
         try {
 
             $db = $this->getBdd();
@@ -194,6 +194,30 @@ class Testimonies extends Database {
         }
     }
 
+//Checking if testimony id exists
+    public function testimonyExists(int $testimonyId) :bool {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "SELECT 1 FROM testimonies WHERE id_testimony = :id";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchColumn() !== false;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la vérification de l'existance du témoignage. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();
+            error_log($errorMsg);
+            throw new Exception("Erreur lors de la vérification de l'existance du témoignage, veuillez réessayer plus tard");
+
+        }
+    }
 
 }
 
