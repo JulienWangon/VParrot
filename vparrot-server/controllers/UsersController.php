@@ -6,9 +6,11 @@ require_once './vparrot-server/Validator/Validator.php';
 class UsersController {
 
     private $validator;
+    private $users;
 
-    public function __construct() {
-        $this->validator = new Validator();
+    public function __construct($validator, $users) {
+        $this->validator = $validator;
+        $this->users = $users;
     }
 
 
@@ -24,15 +26,12 @@ class UsersController {
 
     //Get all users list
     public function getAllUsersList() {
-        $users = new Users();
-        $data = $users->getAllUsers();
+        $data = $this->users->getAllUsers();
         $this->sendResponse($data);
     }
 
     //Create new user 
     public function addThisUser() {
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Retrieve data sent by the client
             $data = json_decode(file_get_contents('php://input'), true);
@@ -74,10 +73,9 @@ class UsersController {
               return;
             }
 
-            $user = new Users();
-
+    
                 //Check if e-mail exists
-            if($user->doesEmailExists($userEmail)) {
+            if($this->users->doesEmailExists($userEmail)) {
 
                 $this->sendResponse(["status" => "error", "message" => "L'adresse e-mail existe déjà."]);
                 return;
@@ -88,13 +86,13 @@ class UsersController {
 
             try {
 
-                $user->setFirstName($firstName);
-                $user->setLastName($lastName);
-                $user->setUserEmail($userEmail);
-                $user->setUserPassword($hashedPassword);
-                $user->setRoleId($roleId);
+                $this->users->setFirstName($firstName);
+                $this->users->setLastName($lastName);
+                $this->users->setUserEmail($userEmail);
+                $this->users->setUserPassword($hashedPassword);
+                $this->users->setRoleId($roleId);
 
-                if ($user->addUser()) {
+                if ($this->users->addUser()) {
                     $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès"], 200);
 
                 } else {
@@ -106,12 +104,8 @@ class UsersController {
 
                 $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
             }
-        }
+        
     }
-
-
-
-
 
 
 }
