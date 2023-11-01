@@ -121,6 +121,32 @@ class Testimonies extends Database {
         }
     }
 
+//Approve testimony
+    public function approveTestimony(int $testimonyId) : bool {
+        try {
+
+            $db= $this->getBdd();
+            $req = "UPDATE testimonies SET isModerated = true WHERE idTestimony = :id";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue("id", $testimonyId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return true;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de l'approbation du témoignage. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();
+            error_log($errorMsg);
+            throw new Exception("Erreur lors de l'approbation du témoignage, veuillez réessayer plus tard");
+
+        }
+    }
+
+
+
 }
 
 
