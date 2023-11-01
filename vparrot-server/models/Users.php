@@ -163,10 +163,32 @@ class Users extends Database {
         }
     }
 
+    //Check if user exists
+    public function doesUserExist(int $idUser) :bool {
 
+        try {
 
+            $db = $this->getBdd();
+            $req = "SELECT 1 FROM users WHERE id_user = :userId";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":userId", $idUser, PDO::PARAM_INT);
+            $stmt->execute();
 
-    
+            return $stmt->fetchColumn() !== false;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la vérification de l'existence de l'utilisateur. "
+            . "Fichier: " . $e->getFile()
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();
+            error_log($errorMsg);
+
+            throw new Exception("Une erreur est survenue, veuillez réessayer plus tard");
+
+        }
+    }
+   
     //Check if email existe
     public function doesEmailExists(string $email, int $excludeUserId = null) :bool {
 
@@ -185,7 +207,7 @@ class Users extends Database {
             if ($excludeUserId !== null) {
                 $stmt->bindValue(":excludeUserId", $excludeUserId, PDO::PARAM_INT);
             }
-            
+
             $stmt->execute();
 
             return $stmt->fetchColumn() !== false;
