@@ -43,7 +43,7 @@ class Users extends Database {
         return $this->userPassword;
     }
 
-    public function gertRoleId() :int {
+    public function getRoleId() :int {
         return $this->roleId;
     }
 
@@ -97,6 +97,36 @@ class Users extends Database {
             error_log($errorMsg);
 
             throw new Exception("Une erreur est survenue, veuiller réessayer plus tard");
+        }
+    }
+
+    //Create new user 
+    public function addUser() :bool {
+        try {
+
+            $db = $this->getBdd();
+            $req = "INSERT INTO users (first_name, last_name, user_email, user_password, role_id) 
+                    VALUE (:firstName, :lastName, :userEmail, :userPassword, :roleId)";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":firstName", $this->getFirstName(), PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
+            $stmt->bindValue(":userEmail", $this->getUserEmail(), PDO::PARAM_STR);
+            $stmt->bindValue(":userPassword", $this->getUserPassword(), PDO::PARAM_STR);
+            $stmt->bindValue("roleID", $this->getRoleId(), PDO::PARAM_INT);
+            $stmt->execute();
+
+            return true;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la tentative de création d'un utilisateur. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();        
+            error_log($errorMsg);
+
+            throw new Exception("Erreur lors de la création de l'utilisateur, veuiller réessayer plus tard");
+
         }
     }
 
