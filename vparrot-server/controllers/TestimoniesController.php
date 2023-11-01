@@ -126,4 +126,25 @@ class TestimoniesController {
         }
     }
 
+//Delete Testimony
+    public function deleteThisTestimony(int $testimonyId) {
+        $testimony = new Testimonies();
+
+        //Check if testimony exists
+        if(!$testimony->testimonyExists($testimonyId)) {
+            $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
+            return;
+        }
+
+        //If testimony exists continue with delete method
+        if($testimony->deleteTestimony($testimonyId)) {
+            $this->sendResponse(["status" => "success", "message" => "Témoignage supprimé avec succès"]);
+
+        } else {
+            $this->sendResponse(["status" => "error", "message" => "Erreur lors due la suppression du témoignage"], 500);
+        }
+    }
+
+    
+
 }
