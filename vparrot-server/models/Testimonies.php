@@ -100,7 +100,7 @@ class Testimonies extends Database {
         try {
 
             $db = $this->getBdd();
-            $req = "INSERT INTO testimonies (firstName, lastName, content, rating) VALUES (:firstName, :lastName, :content, :rating)";
+            $req = "INSERT INTO testimonies (first_name, last_name, content, rating) VALUES (:firstName, :lastName, :content, :rating)";
             $stmt = $db->prepare($req);
             $stmt->bindValue(":firstName", $this->getFirstName(), PDO::PARAM_STR);
             $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
@@ -129,9 +129,9 @@ class Testimonies extends Database {
         try {
 
             $db= $this->getBdd();
-            $req = "UPDATE testimonies SET isModerated = true WHERE idTestimony = :id";
+            $req = "UPDATE testimonies SET is_moderated = true WHERE id_testimony = :id";
             $stmt = $db->prepare($req);
-            $stmt->bindValue("id", $testimonyId, PDO::PARAM_INT);
+            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
             $stmt->execute();
 
             return true;
