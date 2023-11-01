@@ -101,7 +101,7 @@ class Users extends Database {
     }
 
     //CREATE new user 
-    public function addUser($firstName, $lastName, $userEmail, $userPassword, $roleId ) :bool {
+    public function addUser(string $firstName, string $lastName, string $userEmail, string $userPassword, int $roleId ) :bool {
         try {
 
             $db = $this->getBdd();
@@ -131,7 +131,7 @@ class Users extends Database {
     }
 
     //UPDATE USER
-    public function updateUser(int $idUser) {
+    public function updateUser(int $idUser, string $firstName, string $lastName, string $userEmail, int $roleId) {
 
         try {
 
@@ -141,10 +141,10 @@ class Users extends Database {
                     WHERE id_user = :idUser";
 
             $stmt = $db->prepare($req);
-            $stmt->bindValue(":firstName", $this->getFirstName(), PDO::PARAM_STR);
-            $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
-            $stmt->bindValue(":userEmail", $this->getUserEmail(), PDO::PARAM_STR);
-            $stmt->bindValue(":roleId", $this->getRoleId(), PDO::PARAM_INT);
+            $stmt->bindValue(":firstName", $firstName, PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $lastName, PDO::PARAM_STR);
+            $stmt->bindValue(":userEmail", $userEmail, PDO::PARAM_STR);
+            $stmt->bindValue(":roleId", $roleId, PDO::PARAM_INT);
             $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
             $stmt->execute();
 
@@ -166,9 +166,7 @@ class Users extends Database {
 
 
 
-
-
-
+    
     //Check if email existe
     public function doesEmailExists(string $email) :bool {
 
