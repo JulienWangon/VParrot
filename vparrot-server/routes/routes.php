@@ -16,6 +16,7 @@ require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
 
 //require models
+require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/Users.php';
 require_once './vparrot-server/Validator/Validator.php';
 
@@ -26,12 +27,13 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //Dependency Injection
+$testimonies = new Testimonies();
 $users = new Users();
 $validator = new Validator();
 
 //LOADING CONTROLLERS
 $controllers = [
-    'testimonies' => new TestimoniesController(),
+    'testimonies' => new TestimoniesController($validator, $testimonies),
     'users' => new UsersController($validator, $users),
 ];
 
