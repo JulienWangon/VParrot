@@ -71,6 +71,7 @@ class Testimonies extends Database {
 
 //GET all testimonies 
     public function getAllTestimonies() :array {
+        
         try {
 
             $db = $this->getBdd();
@@ -95,6 +96,7 @@ class Testimonies extends Database {
 
 //CREATE testimony 
     public function addTestimony() :bool {
+
         try {
 
             $db = $this->getBdd();
@@ -123,6 +125,7 @@ class Testimonies extends Database {
 
 //Approve testimony
     public function approveTestimony(int $testimonyId) : bool {
+
         try {
 
             $db= $this->getBdd();
@@ -145,6 +148,51 @@ class Testimonies extends Database {
         }
     }
 
+//Rejecte Testimony
+    public function rejectTestimony(int $testimonyId) : bool {
+
+        $db = $this->getBdd();
+
+        try {
+            
+            //Start transaction
+            $db->beginTransaction();
+
+            //Copy testimony to the rejected_testimonies table
+            $req = "INSERT INTO rejected_testimonies (id_testimony, first_name, last_name, content, rating)
+                    SELECT id_testimony, first_name, last_name, content, rating  
+                    FROM testimonies 
+                    WHERE id_testimony = :id";
+            
+            $stmt= $db->prepare($req);
+            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            //Delete testimony in testimonies table
+            $reqToDelete = "DELETE FROM testimonies WHERE id_testimony = :id";
+            $stmtToDelete = $db->prepare($reqToDelete);
+            $stmtToDelete->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmtToDelete->execute();
+
+            //Transaction validation
+            $db->commit();
+
+            return true;
+
+        } catch (PDOException $e) {
+
+            //Canceling transaction if an error occurs
+            $db->rollBack();
+
+            $errorMsg = "Erreur lors du rejet du témoignage. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();
+            error_log($errorMsg);
+            throw new Exception("Erreur lors du rejet du témoignage, veuillez réessayer plus tard");
+
+        }
+    }
 
 
 }
