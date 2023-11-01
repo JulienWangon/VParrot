@@ -7,6 +7,12 @@ require_once './vparrot-server/Validator/Validator.php';
 class TestimoniesController {
 
     private $validator;
+    private $testimonies;
+
+    public function __construct($validator, $testimonies) {
+        $this->validator = $validator;
+        $this->testimonies = $testimonies;
+    }
 
     private function sendResponse($data, $statusCode = 200) {
 
@@ -17,23 +23,22 @@ class TestimoniesController {
 
 //GET all testimonies list
     public function getAllTestimoniesList () {
-        $testimonies = new Testimonies();
-        $data = $testimonies->getAllTestimonies();
+        $data = $this->testimonies->getAllTestimonies();
         $this->sendResponse($data);
     }
 
 //CREATE new testimony    
     public function createTestimony () {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+       
             // Retrieve data sent by the client
             $data = json_decode(file_get_contents('php://input'), true);
 
             //Check if JSON data is formatted correctly
-            if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-                $this->sendResponse(["status" => "error", "message" => "Format JSON invalide"], 400);
+            if (!$this->validator->validateJsonFormat($data)) {
+
+                $this->sendResponse($this->validator->getErrors(), 400);
                 return;
-            }
+              }
 
             //Check if all the necessary keys are present
             $requireKeys =["firstName", "lastName", "content", "rating"];
@@ -61,17 +66,17 @@ class TestimoniesController {
             if(!$validLastName || !$validFirstName || !$validRating || $validContent) {
                 $errors = $this->validator->getErrors();
                 $this->sendResponse(["status" => "error", "message" => $errors], 400);
+                return;
             }
 
-            if($validLastName && $validFirstName && $validRating && $validContent) {
                 try {
-                    $testimony = new Testimonies();
-                    $testimony->setLastName($lastName);
-                    $testimony->setFirstName($firstName);
-                    $testimony->setContent($content);
-                    $testimony->setRating($rating);
+                   
+                    $this->testimonies->setLastName($lastName);
+                    $this->testimonies->setFirstName($firstName);
+                    $this->testimonies->setContent($content);
+                    $this->testimonies->setRating($rating);
 
-                    if ($testimony->addTestimony()) {
+                    if ($this->testimonies->addTestimony()) {
                         $this->sendResponse(["status" => "succes", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
                         
                     } else {
@@ -80,25 +85,20 @@ class TestimoniesController {
                 } catch (Exception $e) {
                     $this->sendResponse(["status" => "error", "message" => $e->getMessage(), 500]);
                 }
-            }
-
-        }
-
     }
 
 //Approve Testimony
     public function approveThisTestimony(int $testimonyId) {
 
-        $testimony = new Testimonies();
 
         //Check if testimony exists
-        if(!$testimony->testimonyExists($testimonyId)) {
+        if(!$this->testimonies->testimonyExists($testimonyId)) {
             $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
             return;
         }
 
         //If testimony exists continue with approval
-        if($testimony->approveTestimony($testimonyId)) {
+        if($this->testimonies->approveTestimony($testimonyId)) {
             $this->sendResponse(["status" => "success", "message" => "Témoignage approuvé avec succès"]);
 
         } else {
@@ -109,16 +109,14 @@ class TestimoniesController {
 //Reject Testimony
     public function rejectThisTestimony(int $testimonyId) {
 
-        $testimony = new Testimonies();
-
         //Check if testimony exists
-        if(!$testimony->testimonyExists($testimonyId)) {
+        if(!$this->testimonies->testimonyExists($testimonyId)) {
             $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
             return;
         }
 
         //If testimony exists continue with reject method
-        if($testimony->rejectTestimony($testimonyId)) {
+        if($this->testimonies->rejectTestimony($testimonyId)) {
             $this->sendResponse(["status" => "success", "message" => "Témoignage rejeté avec succès"]);
 
         } else {
@@ -128,16 +126,15 @@ class TestimoniesController {
 
 //Delete Testimony
     public function deleteThisTestimony(int $testimonyId) {
-        $testimony = new Testimonies();
-
+       
         //Check if testimony exists
-        if(!$testimony->testimonyExists($testimonyId)) {
+        if($this->testimonies->testimonyExists($testimonyId)) {
             $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
             return;
         }
 
         //If testimony exists continue with delete method
-        if($testimony->deleteTestimony($testimonyId)) {
+        if($this->testimonies->deleteTestimony($testimonyId)) {
             $this->sendResponse(["status" => "success", "message" => "Témoignage supprimé avec succès"]);
 
         } else {
