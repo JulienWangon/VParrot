@@ -10,8 +10,14 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
+
+//require controllers
 require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
+
+//require models
+require_once './vparrot-server/models/Users.php';
+require_once './vparrot-server/Validator/Validator.php';
 
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -19,10 +25,14 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
+//Dependency Injection
+$users = new Users();
+$validator = new Validator();
+
 //LOADING CONTROLLERS
 $controllers = [
     'testimonies' => new TestimoniesController(),
-    'users' => new UsersController(),
+    'users' => new UsersController($validator, $users),
 ];
 
 
