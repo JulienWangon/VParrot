@@ -18,9 +18,9 @@ class UsersController {
     //Setting Response
     private function sendResponse($data, $statusCode = 200) {
 
-      header("Content-Type: application/json");
-      http_response_code($statusCode);
-      echo json_encode($data);
+        header("Content-Type: application/json");
+        http_response_code($statusCode);
+        echo json_encode($data);
 
     }
 
@@ -33,18 +33,88 @@ class UsersController {
     //CREATE new user 
     public function addThisUser() {
 
-            // Retrieve data sent by the client
-            $data = json_decode(file_get_contents('php://input'), true);
+        // Retrieve data sent by the client
+        $data = json_decode(file_get_contents('php://input'), true);
 
-            //Validate json data format
-            if (!$this->validator->validateJsonFormat($data)) {
+        //Validate json data format
+        if (!$this->validator->validateJsonFormat($data)) {
 
-              $this->sendResponse($this->validator->getErrors(), 400);
-              return;
-            }
+            $this->sendResponse($this->validator->getErrors(), 400);
+            return;
+        }
 
             //Check if all the necessary keys are present
-            $requireKeys =["first_name", "last_name", "user_email", "user_password", "role_id"];
+        $requireKeys =["first_name", "last_name", "user_email", "user_password", "role_id"];
+        foreach ($requireKeys as $key) {
+            if (!isset($data[$key])) {
+
+                $this->sendResponse(["status" => "error", "message" => "La clé $key est manquante"], 400);
+                return;
+            }
+        }
+
+        //Assign Data to Variables
+        $firstName = $data["first_name"];
+        $lastName = $data["last_name"];
+        $userEmail = $data["user_email"];
+        $userPassword = $data['user_password'];
+        $roleId = $data["role_id"];
+
+        //Data validation
+        $validFirstName = $this->validator->validateStringForNames($firstName, "prénom");
+        $validLastName = $this->validator->validateStringForNames($lastName, "nom");
+        $validUserEmail = $this->validator->validateEmail($userEmail);
+        $validUserPassword = $this->validator->validatePassword($userPassword);
+
+        if(!$validLastName || !$validFirstName || !$validUserEmail || !$validUserPassword) {
+
+            $errors = $this->validator->getErrors();
+            $this->sendResponse(["status" => "error", "message" => $errors], 400);
+            return;
+        }
+
+    
+        //Check if e-mail exists
+        if($this->users->doesEmailExists($userEmail)) {
+
+            $this->sendResponse(["status" => "error", "message" => "L'adresse e-mail existe déjà."]);
+            return;
+         }
+
+        //Hash password
+        $hashedPassword = password_hash($userPassword, PASSWORD_DEFAULT);
+
+        try {
+
+            if ($this->users->addUser($firstName, $lastName, $userEmail, $userPassword, $roleId)) {
+                $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès"], 200);
+
+            } else {
+                $this->sendResponse(["status" => "error", "message" => "Échec de l'ajout de l'utilisateur"], 500);
+                        
+            }
+
+        } catch( Exception $e) {
+
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
+        }
+        
+    }
+
+    //UPDATE User
+    public function updateThisUser(int $idUser) {
+
+        // Retrieve data sent by the client
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        //Validate json data format
+        if (!$this->validator->validateJsonFormat($data)) {
+
+            $this->sendResponse($this->validator->getErrors(), 400);
+            return;
+        }
+
+        $requireKeys =["first_name", "last_name", "user_email", "role_id"];
             foreach ($requireKeys as $key) {
                 if (!isset($data[$key])) {
 
@@ -53,57 +123,51 @@ class UsersController {
                 }
             }
 
-            //Assign Data to Variables
-            $firstName = $data["first_name"];
-            $lastName = $data["last_name"];
-            $userEmail = $data["user_email"];
-            $userPassword = $data['user_password'];
-            $roleId = $data["role_id"];
+        //Assign Data to Variables
+        $firstName = $data["first_name"];
+        $lastName = $data["last_name"];
+        $userEmail = $data["user_email"];
+        $roleId = $data["role_id"];
 
-            //Data validation
-            $validFirstName = $this->validator->validateStringForNames($firstName, "prénom");
-            $validLastName = $this->validator->validateStringForNames($lastName, "nom");
-            $validUserEmail = $this->validator->validateEmail($userEmail);
-            $validUserPassword = $this->validator->validatePassword($userPassword);
+        //Data validation
+        $validFirstName = $this->validator->validateStringForNames($firstName, "prénom");
+        $validLastName = $this->validator->validateStringForNames($lastName, "nom");
+        $validUserEmail = $this->validator->validateEmail($userEmail);
 
-            if(!$validLastName || !$validFirstName || !$validUserEmail || !$validUserPassword) {
+        if(!$validLastName || !$validFirstName || !$validUserEmail) {
 
-              $errors = $this->validator->getErrors();
-              $this->sendResponse(["status" => "error", "message" => $errors], 400);
-              return;
-            }
+            $errors = $this->validator->getErrors();
+            $this->sendResponse(["status" => "error", "message" => $errors], 400);
+            return;
+          }
 
-    
-                //Check if e-mail exists
-            if($this->users->doesEmailExists($userEmail)) {
+        // Check if user exists before updating
+        if(!$this->users->doesUserExist($idUser)) {
+            $this->sendResponse(["status" => "error", "message" => "L'utilisateur n'existe pas."], 404); // 404 Not Found
+            return;
+        }
 
-                $this->sendResponse(["status" => "error", "message" => "L'adresse e-mail existe déjà."]);
-                return;
-            }
+        // Check if e-mail is taken by another user (excluding the current user being updated).
+        if($this->users->doesEmailExists($userEmail, $idUser)) {
 
-            //Hash password
-            $hashedPassword = password_hash($userPassword, PASSWORD_DEFAULT);
+            $this->sendResponse(["status" => "error", "message" => "L'adresse e-mail est déjà utilisée par un autre utilisateur."]);
+            return;
+        }
 
-            try {
+        try {
 
-                if ($this->users->addUser($firstName, $lastName, $userEmail, $userPassword, $roleId)) {
-                    $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès"], 200);
+            if ($this->users->updateUser($idUser, $firstName, $lastName, $userEmail, $roleId)) {
+                $this->sendResponse(["status" => "success", "message" => "Utilisateur mis à jour avec succès"], 200);
 
-                } else {
-                    $this->sendResponse(["status" => "error", "message" => "Échec de l'ajout de l'utilisateur"], 500);
+            } else {
+                $this->sendResponse(["status" => "error", "message" => "Échec de la mise à jour de l'utilisateur"], 500);
                         
-                }
-
-            } catch( Exception $e) {
-
-                $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
             }
-        
+
+        } catch(Exception $e) {
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
+        }
+
     }
-
-    //UPDATE User
-
-
-
-
+    
 }
