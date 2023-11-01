@@ -11,6 +11,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
 require_once './vparrot-server/controllers/TestimoniesController.php';
+require_once './vparrot-server/controllers/UsersController.php';
 
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -21,6 +22,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 //LOADING CONTROLLERS
 $controllers = [
     'testimonies' => new TestimoniesController(),
+    'users' => new UsersController(),
 ];
 
 
@@ -28,6 +30,7 @@ $controllers = [
 $routes = [
     'GET' => [
         '/vparrot/testimonies/all' => [$controllers['testimonies'], 'getAllTestimoniesList'],
+        '/vparrot/users/all' => [$controllers['users'], 'getAllUsersList'],
 
     ],
 
