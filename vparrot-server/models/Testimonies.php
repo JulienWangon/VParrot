@@ -93,6 +93,34 @@ class Testimonies extends Database {
         }
     }
 
+//CREATE testimony 
+    public function addTestimony() :bool {
+        try {
+
+            $db = $this->getBdd();
+            $req = "INSERT INTO testimonies (firstName, lastName, content, rating) VALUES (:firstName, :lastName, :content, :rating)";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":firstName", $this->getFirstName(), PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
+            $stmt->bindValue(":content", $this->getContent(), PDO::PARAM_STR);
+            $stmt->bindValue(":rating", $this->getRating(), PDO::PARAM_INT);
+            $stmt->execute();
+
+            return true;
+
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la tentative de création d'un témoignage. "
+            . "Fichier: " . $e->getFile()
+            . " à la ligne " . $e->getLine()
+            . " Erreur: " . $e->getMessage();
+            error_log($errorMsg);
+
+            throw new Exception("Erreur lors de la création de votre témoignage, veuillez réessayer plus tard.");
+        }
+    }
+
 }
 
 
