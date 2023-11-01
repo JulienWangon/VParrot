@@ -70,7 +70,7 @@ class Validator {
 
         //Checking content max length
         } else if (strlen($content) > $maxLength) {
-            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pads dépasser $maxLength caractères."];
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pas dépasser $maxLength caractères."];
             return false;
 
         } else if (!preg_match("/^[A-Za-z0-9 .,!?()-]+$/", $content)) {
@@ -84,7 +84,12 @@ class Validator {
     //Validate Email
     public function validateEmail($email) {
 
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        //Check if e-mail exists
+        if(!$email || $email = "") {
+            $this->errors["email"][] = ["status" => "error", "message" => "L'adresse e-mail est requise."];
+
+        //check e-mail format
+        } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->errors["email"][] = ["status" => "error", "message" => "L'adresse e-mail n'est pas valide."];
             return false;
         }
@@ -92,7 +97,7 @@ class Validator {
         return empty($this->errors["email"]);
     }
 
-    
+   
     //Return validator error
     public function getErrors() {
         return $this->errors;
