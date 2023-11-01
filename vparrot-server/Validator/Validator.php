@@ -81,6 +81,17 @@ class Validator {
         return empty($this->errors[$type]);
     }
 
+    //Validate Email
+    public function validateEmail($email) {
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->errors["email"][] = ["status" => "error", "message" => "L'adresse e-mail n'est pas valide."];
+            return false;
+        }
+
+        return empty($this->errors["email"]);
+    }
+
     
     //Return validator error
     public function getErrors() {
