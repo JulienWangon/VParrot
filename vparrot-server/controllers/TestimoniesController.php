@@ -1,6 +1,7 @@
 <?php
 
 require_once './vparrot-server/models/Testimonies.php';
+require_once './vparrot-server/Validator/Validator.php';
 
 
 class TestimoniesController {
