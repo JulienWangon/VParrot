@@ -72,7 +72,7 @@ class Users extends Database {
     //CRUD Method
 
     //Get all users
-    public function getallUsers() :array {
+    public function getAllUsers() :array {
 
         try {
 
@@ -83,7 +83,7 @@ class Users extends Database {
                     ON u.role_id = r.id_role";
 
             $stmt = $db->prepare($req);
-            $stmt->execute;
+            $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $users;
