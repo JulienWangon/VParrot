@@ -194,6 +194,34 @@ class Testimonies extends Database {
         }
     }
 
+//Delete testimony 
+    public function deleteTestimony(int $testimonyId) : bool {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "DELETE FROM testimonies WHERE id_testimony = :id";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return true;
+
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la tentative de suppression d'un témoignage "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();      
+            error_log($errorMsg);
+
+            throw new Exception("Erreur lors de la tentative de suppression du témoignage, veuillez réessayer plus tard");
+
+        }
+    }
+
+
 //Checking if testimony id exists
     public function testimonyExists(int $testimonyId) :bool {
 
