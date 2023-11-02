@@ -31,4 +31,15 @@ abstract class Database {
         return self::$pdo;
         
     }
+
+    //Exception management
+    protected function handleException(PDOException $e, $action = "effectuer l'opération") {
+        $errorMsg = "Erreur lors de la tentative de " . $action . ": "
+        . "Fichier: " . $e->getFile() 
+        . " à la ligne " . $e->getLine()
+        . ". Erreur: " . $e->getMessage();        
+        error_log($errorMsg);
+
+        throw new Exception("Une erreur est survenue, veuillez réessayer plus tard.");
+    }
 }
