@@ -47,6 +47,7 @@ $routes = [
     ],
 
     'POST' => [
+        '/vparrot/testimonies' => [$controller]['testimonies'], 'createTestimony',
         '/vparrot/users' => [$controllers['users'], 'addThisUser'],
 
     ],
@@ -83,8 +84,8 @@ if (!$foundRoute) {
 
     foreach($routes[$requestMethod] as $pattern =>$function) {
         if (preg_match($pattern, $uri, $matches)) {
-          
-            array_shift($matches); // Remove the full pattern match from the matches
+
+            array_shift($matches); 
             $function(...$matches);
             $foundRoute = true;
             break;
