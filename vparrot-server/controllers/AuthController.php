@@ -24,12 +24,13 @@ class AuthController {
   }
 
   //Login method
-  public function login($userEmail, $userPassword) {
+  public function login() {
 
       try {
 
           // Retrieve data sent by the client
           $data = json_decode(file_get_contents('php://input'), true);
+          error_log(print_r($data, true));
 
           //Validate json data format
           if (!$this->validator->validateJsonFormat($data)) {

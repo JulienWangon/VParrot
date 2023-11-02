@@ -8,7 +8,7 @@ class Validator {
     public function validateStringForNames($input, $type, $maxLength = 50) {
 
         //Checking if $input exists
-        if(!$input || $input = "") {
+        if(!$input || $input === "") {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
             return false;
 
@@ -37,7 +37,7 @@ class Validator {
     public function validateRating($rating) {
 
         //Checking if rating exists
-        if(!$rating || $rating = "") {
+        if(!$rating || $rating === "") {
             $this->errors['rating'][] = ["status" => "error", "message" => "La note est requise."];
             return false;
 
@@ -59,7 +59,7 @@ class Validator {
     public function validateMediumContent($content, $type, $minLength = 20, $maxLength = 250){
 
         //Checking if content exists
-        if (!$content || $content = "") {
+        if (!$content || $content === "") {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
             return false;
 
@@ -84,16 +84,19 @@ class Validator {
     //Validate Email
     public function validateEmail($email) {
 
-        //Check if e-mail exists
-        if(!$email || $email = "") {
+        // Check if e-mail exists
+        if(!$email || $email == "") {
             $this->errors["email"][] = ["status" => "error", "message" => "L'adresse e-mail est requise."];
-
-        //check e-mail format
-        } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+    
+        // Check e-mail format with regex
+        $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        if(!preg_match($pattern, $email)) {
             $this->errors["email"][] = ["status" => "error", "message" => "L'adresse e-mail n'est pas valide."];
             return false;
         }
-
+    
         return empty($this->errors["email"]);
     }
 
@@ -101,7 +104,7 @@ class Validator {
     public function validatePassword($password) {
 
         //Check if password exists
-        if(!$password || $password = ""){
+        if(!$password || $password === ""){
             $this->errors["password"][] = ["status" => "error", "message" => "Le mot de passe est requis"];
 
         //Check if password have an uppercase letter

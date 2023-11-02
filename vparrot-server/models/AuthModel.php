@@ -1,10 +1,10 @@
 <?php
 
-require_once './Database.php';
+require_once 'Database.php';
 require_once './vparrot-server/vendor/autoload.php';
 
   use Firebase\JWT\JWT;
-use JetBrains\PhpStorm\ExpectedValues;
+
 
   class AuthModel extends Database {
 
@@ -16,7 +16,7 @@ use JetBrains\PhpStorm\ExpectedValues;
           try {
               
               $db = $this->getBdd();
-              $req = "SELECT users.id_user, users.user_email, roles.role_name
+              $req = "SELECT users.id_user, users.user_password, roles.role_name
                       FROM users
                       LEFT JOIN roles
                       ON users.role_id = roles.id_role
@@ -31,8 +31,9 @@ use JetBrains\PhpStorm\ExpectedValues;
               }
 
               return [
-                  "id_user" => $user["id_user"],
-                  "role_name" => $user["role_name"]
+                    "user_password" => $user["user_password"],
+                    "id_user" => $user["id_user"],
+                    "role_name" => $user["role_name"]
               ];
 
           } catch(PDOException $e) {
@@ -45,7 +46,7 @@ use JetBrains\PhpStorm\ExpectedValues;
       //Create JWT token for user
       public function createJWTForUser($user) {
           //Take secret key 
-          $secretKey = $_ENV['SECRET_KEY'];
+          $secretKey = $_SERVER['SECRET_KEY'];
 
           if(!$secretKey) {
             throw new Exception("clé secrète introuvable");
@@ -66,11 +67,6 @@ use JetBrains\PhpStorm\ExpectedValues;
           $jwtData = ["jwt" => $jwt, "exp" => $expiryTime];
           return $jwtData;
       }
-
-
-
-
-
 
   }
 

@@ -14,10 +14,12 @@ header("Access-Control-Allow-Credentials: true");
 //require controllers
 require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
+require_once './vparrot-server/controllers/AuthController.php';
 
 //require models
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/Users.php';
+require_once './vparrot-server/models/AuthModel.php';
 require_once './vparrot-server/Validator/Validator.php';
 
 
@@ -29,12 +31,14 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 //Dependency Injection
 $testimonies = new Testimonies();
 $users = new Users();
+$authModel = new AuthModel();
 $validator = new Validator();
 
 //LOADING CONTROLLERS
 $controllers = [
     'testimonies' => new TestimoniesController($validator, $testimonies),
     'users' => new UsersController($validator, $users),
+    'auth' => new AuthController($validator, $authModel),
 ];
 
 
@@ -47,8 +51,9 @@ $routes = [
     ],
 
     'POST' => [
-        '/vparrot/testimonies' => [$controller['testimonies'], 'createTestimony'],
+        '/vparrot/testimonies' => [$controllers['testimonies'], 'createTestimony'],
         '/vparrot/users' => [$controllers['users'], 'addThisUser'],
+        '/vparrot/login' => [$controllers['auth'], "login"],
 
     ],
 
