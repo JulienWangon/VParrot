@@ -54,6 +54,8 @@ $routes = [
 
     'PUT' => [
       '#^/vparrot/users/(\d+)$#' => [$controllers['users'], 'updateThisUser'],
+      '#^/vparrot/testimonies/(\d+)/approve$#' => [$controllers['testimonies'], 'approveThisTestimony'],
+      '#^/vparrot/testimonies/(\d+)/reject$#' => [$controllers['testimonies'], 'rejectThisTestimony'],
 
     ],
 
