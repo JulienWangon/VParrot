@@ -90,13 +90,7 @@ class Users extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la demande d'extraction des utilisateurs. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();        
-            error_log($errorMsg);
-
-            throw new Exception("Une erreur est survenue, veuiller réessayer plus tard");
+            $this->handleException($e, "extraction des utilisateurs");
         }
     }
 
@@ -119,14 +113,7 @@ class Users extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la tentative de création d'un utilisateur. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();        
-            error_log($errorMsg);
-
-            throw new Exception("Erreur lors de la création de l'utilisateur, veuiller réessayer plus tard");
-
+            $this->handleException($e, "création d'un utilisateur");
         }
     }
 
@@ -152,14 +139,7 @@ class Users extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la tentative de mise à jour de l'utilisateur. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();        
-            error_log($errorMsg);
-
-            throw new Exception("Erreur lors de la mise a jour de l'utilisateur");
-
+            $this->handleException($e, "mise à jour d'un utilisateur");
         }
     }
 
@@ -178,13 +158,7 @@ class Users extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la tentative de suppression de l'utilisateur. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();        
-            error_log($errorMsg);
-
-            throw new Exception("Une erreur est survenue, veuiller réessayer plus tard");
+            $this->handleException($e, "suppression d'un utilisateur");
         }
     }
 
@@ -204,14 +178,7 @@ class Users extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la vérification de l'existence de l'utilisateur. "
-            . "Fichier: " . $e->getFile()
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();
-            error_log($errorMsg);
-
-            throw new Exception("Une erreur est survenue, veuillez réessayer plus tard");
-
+            $this->handleException($e, "vérification de l'existance d'un utilisateur");
         }
     }
    
@@ -240,22 +207,11 @@ class Users extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la vérification de l'existence de l'email. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();        
-            error_log($errorMsg);
-    
-            throw new Exception("Une erreur est survenue, veuillez réessayer plus tard");
+            $this->handleException($e, "vérification d'existance d'un e-mail");
 
         }
 
     }
-
-
-
-
-
 
 
 }
