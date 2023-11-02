@@ -162,6 +162,27 @@ class Users extends Database {
         }
     }
 
+    //UPDATE password
+    public function changeUserPassword(int $idUser, $newPassword) {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "UPDATE users 
+                    SET user_password = :userPassword 
+                    WHERE id = :idUser";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":userPassword", $newPassword, PDO::PARAM_STR);
+            $stmt->execute();
+
+            return $stmt->rowCount() > 0;
+
+        } catch(PDOException $e) {
+
+            $this->handleException($e, "Changement du mot de passe");
+        }
+    }
+
 
     //Check if user exists
     public function doesUserExist(int $idUser) :bool {
@@ -169,9 +190,9 @@ class Users extends Database {
         try {
 
             $db = $this->getBdd();
-            $req = "SELECT 1 FROM users WHERE id_user = :userId";
+            $req = "SELECT 1 FROM users WHERE id_user = :idUser";
             $stmt = $db->prepare($req);
-            $stmt->bindValue(":userId", $idUser, PDO::PARAM_INT);
+            $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchColumn() !== false;
