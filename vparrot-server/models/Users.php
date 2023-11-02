@@ -113,9 +113,9 @@ class Users extends Database {
             $stmt->bindValue(":userEmail", $userEmail, PDO::PARAM_STR);
             $stmt->bindValue(":userPassword", $userPassword, PDO::PARAM_STR);
             $stmt->bindValue(":roleId", $roleId, PDO::PARAM_INT);
-            $stmt->execute();
+            $result = $stmt->execute();
 
-            return true;
+            return $result;
 
         } catch(PDOException $e) {
 
