@@ -16,7 +16,7 @@ use JetBrains\PhpStorm\ExpectedValues;
           try {
               
               $db = $this->getBdd();
-              $req = "SELECT users.id_user, roles.role_name
+              $req = "SELECT users.id_user, users.user_email, roles.role_name
                       FROM users
                       LEFT JOIN roles
                       ON users.role_id = roles.id_role
@@ -61,7 +61,10 @@ use JetBrains\PhpStorm\ExpectedValues;
               "role_name" => $user["role_name"],
           ];
 
-          return JWT::encode($payload, $secretKey, "HS256");
+          $jwt = JWT::encode($payload, $secretKey, "HS256");
+
+          $jwtData = ["jwt" => $jwt, "exp" => $expiryTime];
+          return $jwtData;
       }
 
 
