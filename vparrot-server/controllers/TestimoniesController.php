@@ -71,12 +71,8 @@ class TestimoniesController {
 
                 try {
                    
-                    $this->testimonies->setLastName($lastName);
-                    $this->testimonies->setFirstName($firstName);
-                    $this->testimonies->setContent($content);
-                    $this->testimonies->setRating($rating);
-
-                    if ($this->testimonies->addTestimony()) {
+        
+                    if ($this->testimonies->addTestimony($firstName, $lastName, $content, $rating)) {
                         $this->sendResponse(["status" => "succes", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
                         
                     } else {
