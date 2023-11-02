@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 
 
-import H1title from '../Title/H1Title/H1title';
+import H1Title from '../H1Title/H1Title';
 import Navbar from '../Navbar/Navbar';
 
 
@@ -44,7 +44,7 @@ const Header = ({ title, slogan}) => {
     <header className={headerClass}>
         <div className="opacityLayer"></div>
         <Navbar links={links}/>
-        <H1title h1Text={title} spanText={slogan}/>
+        <H1Title h1Text={title} spanText={slogan}/>
       
     </header>
   );
