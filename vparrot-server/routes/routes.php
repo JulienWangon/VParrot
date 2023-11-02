@@ -47,7 +47,7 @@ $routes = [
     ],
 
     'POST' => [
-        '/vparrot/testimonies' => [$controller]['testimonies'], 'createTestimony',
+        '/vparrot/testimonies' => [$controller['testimonies'], 'createTestimony'],
         '/vparrot/users' => [$controllers['users'], 'addThisUser'],
 
     ],
