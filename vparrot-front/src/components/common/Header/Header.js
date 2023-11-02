@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../../contexts/AuthContext';
+
 
 import H1title from '../Title/H1Title/H1title';
 import Navbar from '../Navbar/Navbar';
+
 
 
 
@@ -16,16 +19,16 @@ const Header = ({ title, slogan}) => {
 
   const publicLinks = [
     { text: 'Accueil', url: '/home' },
-    { text: 'Entretien', url: '/entretien' },
-    { text: 'Réparation', url: '/reparation' },
-    { text: 'Espace vente', url: '/vente' },
+    { text: 'Entretiens', url: '/entretiens' },
+    { text: 'Réparations', url: '/reparations' },
+    { text: 'Espace ventes', url: '/ventes' },
     { text: 'Contact', url: '/contact' },
     { text: 'Admin', action: toggleModal },
   ];
 
   const adminLinks = [
 
-    { text: 'Utilisateurs', url: '/manageuser' },
+    { text: 'Utilisateurs', url: '/manageusers' },
     { text: 'Avis clients', url: '/managetestimonies' },
     { text: 'Horaires', url: '/manageschedules' },
     { text: 'Services', url: '/manageservices' },
