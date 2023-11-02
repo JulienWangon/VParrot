@@ -163,6 +163,32 @@ class Users extends Database {
         }
     }
 
+    //DELETE user
+    public function deleteUser($idUser) :bool {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "DELETE FROM users WHERE idUser = :idUser";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->rowCount() > 0;
+
+        } catch(PDOException $e) {
+
+            $errorMsg = "Erreur lors de la tentative de suppression de l'utilisateur. "
+            . "Fichier: " . $e->getFile() 
+            . " à la ligne " . $e->getLine()
+            . ". Erreur: " . $e->getMessage();        
+            error_log($errorMsg);
+
+            throw new Exception("Une erreur est survenue, veuiller réessayer plus tard");
+        }
+    }
+
+
     //Check if user exists
     public function doesUserExist(int $idUser) :bool {
 
