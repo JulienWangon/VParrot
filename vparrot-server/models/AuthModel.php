@@ -4,6 +4,7 @@ require_once './Database.php';
 require_once './vparrot-server/vendor/autoload.php';
 
   use Firebase\JWT\JWT;
+use JetBrains\PhpStorm\ExpectedValues;
 
   class AuthModel extends Database {
 
@@ -30,8 +31,8 @@ require_once './vparrot-server/vendor/autoload.php';
               }
 
               return [
-                  'id_user' => $user['id_user'],
-                  'role_name' => $user['role_name']
+                  "id_user" => $user["id_user"],
+                  "role_name" => $user["role_name"]
               ];
 
           } catch(PDOException $e) {
@@ -41,7 +42,29 @@ require_once './vparrot-server/vendor/autoload.php';
 
       }
 
-      
+      //Create JWT token for user
+      public function createJWTForUser($user) {
+          //Take secret key 
+          $secretKey = $_ENV['SECRET_KEY'];
+
+          if(!$secretKey) {
+            throw new Exception("clé secrète introuvable");
+          }
+
+          $issueAt = time();
+          $expiryTime = $issueAt + self::TOKEN_EXPIRY_SECONDS;
+
+          $payload = [
+              "iat" => $issueAt,
+              "exp" => $expiryTime,
+              "id_user" => $user["id_user"],
+              "role_name" => $user["role_name"],
+          ];
+
+          return JWT::encode($payload, $secretKey, "HS256");
+      }
+
+
 
 
 
