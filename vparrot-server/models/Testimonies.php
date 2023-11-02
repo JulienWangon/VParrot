@@ -84,13 +84,7 @@ class Testimonies extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la demande d'extraction des témoignages. "
-            . "Fichier: " . $e->getFile()
-            . " à la ligne " . $e->getLine()
-            . " Erreur: " . $e->getMessage();
-            error_log($errorMsg);
-
-            throw new Exception("Erreur lors de la récupération de la liste des témoignages, veuillez réessayer plus tard");
+            $this->handleException($e, "extraction liste utilisateur");
         }
     }
 
@@ -110,16 +104,9 @@ class Testimonies extends Database {
 
             return $result;
 
-
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la tentative de création d'un témoignage. "
-            . "Fichier: " . $e->getFile()
-            . " à la ligne " . $e->getLine()
-            . " Erreur: " . $e->getMessage();
-            error_log($errorMsg);
-
-            throw new Exception("Erreur lors de la création de votre témoignage, veuillez réessayer plus tard.");
+            $this->handleException($e, "création utilisateur");
         }
     }
 
@@ -138,13 +125,7 @@ class Testimonies extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de l'approbation du témoignage. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();
-            error_log($errorMsg);
-            throw new Exception("Erreur lors de l'approbation du témoignage, veuillez réessayer plus tard");
-
+            $this->handleException($e, "approbation du témoignage");
         }
     }
 
@@ -184,13 +165,7 @@ class Testimonies extends Database {
             //Canceling transaction if an error occurs
             $db->rollBack();
 
-            $errorMsg = "Erreur lors du rejet du témoignage. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();
-            error_log($errorMsg);
-            throw new Exception("Erreur lors du rejet du témoignage, veuillez réessayer plus tard");
-
+            $this->handleException($e, "rejet du témoignage");
         }
     }
 
@@ -207,17 +182,9 @@ class Testimonies extends Database {
 
             return $stmt->rowCount() > 0;
 
-
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la tentative de suppression d'un témoignage "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();      
-            error_log($errorMsg);
-
-            throw new Exception("Erreur lors de la tentative de suppression du témoignage, veuillez réessayer plus tard");
-
+            $this->handleException($e, "suppression du témoignage");
         }
     }
 
@@ -237,13 +204,7 @@ class Testimonies extends Database {
 
         } catch(PDOException $e) {
 
-            $errorMsg = "Erreur lors de la vérification de l'existance du témoignage. "
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();
-            error_log($errorMsg);
-            throw new Exception("Erreur lors de la vérification de l'existance du témoignage, veuillez réessayer plus tard");
-
+            $this->handleException($e, "vérification de l'existance du témoignage");
         }
     }
 
