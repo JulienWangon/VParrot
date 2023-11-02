@@ -21,7 +21,7 @@ function App() {
                 <Route path="/reparations" element={<RepairServices/>}/>
                 <Route path="/ventes" element={<SalesArea/>}/>
 
-                <Route path="*" element={Error}/>
+                <Route path="*" element={<Error/>}/>
                 
             </Routes>       
         </BrowserRouter>
