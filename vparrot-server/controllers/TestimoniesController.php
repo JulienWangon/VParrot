@@ -22,13 +22,13 @@ class TestimoniesController {
     }
 
 //GET all testimonies list
-    public function getAllTestimoniesList () {
+    public function getAllTestimoniesList() {
         $data = $this->testimonies->getAllTestimonies();
         $this->sendResponse($data);
     }
 
 //CREATE new testimony    
-    public function createTestimony () {
+    public function createTestimony() {
        
             // Retrieve data sent by the client
             $data = json_decode(file_get_contents('php://input'), true);
@@ -85,7 +85,6 @@ class TestimoniesController {
 
 //Approve Testimony
     public function approveThisTestimony(int $testimonyId) {
-
 
         //Check if testimony exists
         if(!$this->testimonies->testimonyExists($testimonyId)) {
