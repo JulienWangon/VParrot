@@ -52,6 +52,7 @@ $routes = [
     ],
 
     'PUT' => [
+      '#^/vparrot/users/(\d+)$#' => [$controllers['users'], 'updateThisUser'],
 
     ],
 
@@ -63,7 +64,7 @@ $routes = [
 
 
 //EXTRACTING THE URI FROM THE REQUEST
-$uri = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']);
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 
 //ROUTING SYSTEM
@@ -82,9 +83,11 @@ if (!$foundRoute) {
 
     foreach($routes[$requestMethod] as $pattern =>$function) {
         if (preg_match($pattern, $uri, $matches)) {
-          $function($matches);
-          $foundRoute = true;
-          break;
+          
+            array_shift($matches); // Remove the full pattern match from the matches
+            $function(...$matches);
+            $foundRoute = true;
+            break;
         }
 
     }
