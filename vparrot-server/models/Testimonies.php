@@ -106,9 +106,9 @@ class Testimonies extends Database {
             $stmt->bindValue(":lastName", $this->getLastName(), PDO::PARAM_STR);
             $stmt->bindValue(":content", $this->getContent(), PDO::PARAM_STR);
             $stmt->bindValue(":rating", $this->getRating(), PDO::PARAM_INT);
-            $stmt->execute();
+            $result = $stmt->execute();
 
-            return true;
+            return $result;
 
 
         } catch(PDOException $e) {
@@ -134,7 +134,7 @@ class Testimonies extends Database {
             $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
             $stmt->execute();
 
-            return true;
+            return $stmt->rowCount() > 0;
 
         } catch(PDOException $e) {
 
@@ -177,7 +177,7 @@ class Testimonies extends Database {
             //Transaction validation
             $db->commit();
 
-            return true;
+            return $stmt->rowCount() > 0;
 
         } catch (PDOException $e) {
 
@@ -205,7 +205,7 @@ class Testimonies extends Database {
             $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
             $stmt->execute();
 
-            return true;
+            return $stmt->rowCount() > 0;
 
 
         } catch(PDOException $e) {
