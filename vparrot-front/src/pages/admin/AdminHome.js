@@ -1,10 +1,11 @@
 import React from 'react';
+import Header from '../../components/common/Header/Header';
 
 const AdminHome = () => {
   return (
-    <div>
-      ICI PAGE D ACCEUIL ADMIN
-    </div>
+    <>
+        <Header title="Garage V.Parrot" slogan="Bienvenu sur votre espace administrateur"/>      
+    </>
   );
 };
 
