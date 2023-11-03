@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 
 
 import H1Title from '../H1Title/H1Title';
 import Navbar from '../Navbar/Navbar';
-
+import ConnexionModal from '../../public/ConnexionModal/ConnexionModal';
 
 
 
@@ -45,6 +45,7 @@ const Header = ({ title, slogan}) => {
         <div className="opacityLayer"></div>
         <Navbar links={links}/>
         <H1Title h1Text={title} spanText={slogan}/>
+        {showModal && <ConnexionModal closeModal={toggleModal} />}
       
     </header>
   );

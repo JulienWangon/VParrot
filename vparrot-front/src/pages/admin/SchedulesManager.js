@@ -3,7 +3,7 @@ import React from 'react';
 const SchedulesManager = () => {
   return (
     <div>
-      
+      ICI GESTION DES HORAIRES
     </div>
   );
 };

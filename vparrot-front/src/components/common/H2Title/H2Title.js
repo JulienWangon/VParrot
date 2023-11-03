@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TitleH2 = ({className, h2Text}) => {
+const H2Title = ({className, h2Text}) => {
   return (
     <h2 className={className}>
         {h2Text}
@@ -10,4 +10,4 @@ const TitleH2 = ({className, h2Text}) => {
 
 
 
-export default TitleH2;
+export default H2Title;

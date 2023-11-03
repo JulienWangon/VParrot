@@ -26,14 +26,15 @@ export const AuthProvider = ({ children }) => {
   
             setLoading(true);
   //Configurer les données du formulaire pour la requête POST
-            const formData = new URLSearchParams();
-            formData.append('email', email);
-            formData.append('password', password);
+            const data = {
+              user_email: email,
+              user_password: password
+            };
   //Envoyer la requête POST pour la connexion
-            const response = await axios.post('http://localhost/vparrot/login', formData, {
+            const response = await axios.post('http://localhost/vparrot/login', JSON.stringify(data), {
   
               headers: {
-                'Content-Type' : 'application/x-www-form-urlencoded'
+                'Content-Type' : 'application/json'
               },
               withCredentials: true
             });
@@ -41,7 +42,9 @@ export const AuthProvider = ({ children }) => {
             
   //Vérifier la répoonse si la connexion est réussi mettre à jour l' utilisateur actuel
             if(response.status === 200) {
+              console.log("Réponse complète du serveur:", response);
                 setCurrentUser(response.data.user);
+             
                 navigate('/adminhome');
             } else if (response.status === 401) {
               // Utilisateur non trouvé ou authentification échouée
@@ -116,5 +119,5 @@ export const AuthProvider = ({ children }) => {
               {children}
           </AuthContext.Provider>
       );
-};
+    };
 

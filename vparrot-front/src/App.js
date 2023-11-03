@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { MessageProvider } from './contexts/MessagesContext';
 import ProtectedRoute from './_utils/ProtectedRoute';
 
 // Publics Pages Components Import
@@ -25,70 +26,72 @@ function App() {
     <div className="App">
 
         <BrowserRouter>
+            <MessageProvider>
 
-            <AuthProvider>
-                <Routes>
+                <AuthProvider>
+                    <Routes>
 
-                    <Route index element={<Home/>}/>
+                        <Route index element={<Home/>}/>
 
-                    <Route path="/home" element={<Home/>}/>
-                    <Route path="/entretiens" element={<MainteanceServices/>}/>
-                    <Route path="/reparations" element={<RepairServices/>}/>
-                    <Route path="/ventes" element={<SalesArea/>}/>
+                        <Route path="/home" element={<Home/>}/>
+                        <Route path="/entretiens" element={<MainteanceServices/>}/>
+                        <Route path="/reparations" element={<RepairServices/>}/>
+                        <Route path="/ventes" element={<SalesArea/>}/>
 
-                    <Route 
-                      path="/adminhome" 
-                      element={
-                          <ProtectedRoute>
-                              <AdminHome/>
-                          </ProtectedRoute>
-                      }
-                    />
-                    <Route 
-                      path="/manageusers" 
-                      element={
-                          <ProtectedRoute>
-                              <UsersManager/>
-                          </ProtectedRoute>
-                      }
-                    />
-                    <Route 
-                      path="/managetestimonies" 
-                      element={
-                          <ProtectedRoute>
-                              <TestimoniesManager/>
-                          </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="/manageschedules"
-                      element={
-                          <ProtectedRoute>
-                              <SchedulesManager/>
-                          </ProtectedRoute>
-                      }     
-                    />
-                    <Route 
-                      path="/manageservices" 
-                      element={
-                          <ProtectedRoute>
-                              <ServicesManager/>
-                          </ProtectedRoute>
-                      }
-                    />
-                    <Route 
-                      path="/managecars" 
-                      element={
-                          <ProtectedRoute>
-                              <CarsManager/>
-                          </ProtectedRoute>
-                      }
-                    />
+                        <Route 
+                          path="/adminhome" 
+                          element={
+                              <ProtectedRoute>
+                                  <AdminHome/>
+                              </ProtectedRoute>
+                          }
+                        />
+                        <Route 
+                          path="/manageusers" 
+                          element={
+                              <ProtectedRoute>
+                                  <UsersManager/>
+                              </ProtectedRoute>
+                          }
+                        />
+                        <Route 
+                          path="/managetestimonies" 
+                          element={
+                              <ProtectedRoute>
+                                  <TestimoniesManager/>
+                              </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/manageschedules"
+                          element={
+                              <ProtectedRoute>
+                                  <SchedulesManager/>
+                              </ProtectedRoute>
+                          }     
+                        />
+                        <Route 
+                          path="/manageservices" 
+                          element={
+                              <ProtectedRoute>
+                                  <ServicesManager/>
+                              </ProtectedRoute>
+                          }
+                        />
+                        <Route 
+                          path="/managecars" 
+                          element={
+                              <ProtectedRoute>
+                                  <CarsManager/>
+                              </ProtectedRoute>
+                          }
+                        />
 
-                    <Route path="*" element={<Error/>}/>
-                    
-                </Routes>
-            </AuthProvider>       
+                        <Route path="*" element={<Error/>}/>
+                        
+                    </Routes>
+                </AuthProvider>
+            </MessageProvider>       
         </BrowserRouter>
 
     </div>

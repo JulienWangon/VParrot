@@ -2,6 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ links }) => {
+
+    const handleAction = (action, e) => {
+        e.preventDefault();  // Prevent navigation
+        if (action) {
+            action();  // Execute the provided action if it exists
+        }
+    }
+    
   return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
           <div className="container-fluid">
@@ -13,7 +21,7 @@ const Navbar = ({ links }) => {
                   <ul className="navbar-nav navMenu">
                       {links.map((link, index) => (
                           <li className="navItem" key={index}>
-                              {link.url ? ( <Link to={link.url} className="navLink">{link.text}</Link>) : ( <button>{link.text}</button>)}
+                              {link.url ? ( <Link to={link.url} className="navLink">{link.text}</Link>) : ( <button onClick={(e) => {handleAction(link.action, e);}} className="navLink">{link.text}</button>)}
                           </li>
                       ))}
                   </ul>
