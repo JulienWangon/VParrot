@@ -74,6 +74,10 @@ class AuthController {
                 return;
             }
 
+            //Assign user id and user role variable
+            $userId = $user["id_user"];
+            $roleName = $user["role_name"];
+
             //Get JWT Token for user
             $jwtData = $this->authModel->createJWTForUser($user);
 
@@ -90,7 +94,14 @@ class AuthController {
                 "samesite" => 'None',
             ]);
 
-            $this->sendResponse(["status" => "success", "message" => "Connexion réussie."]);
+            $this->sendResponse([
+                "status" => "success", 
+                "message" => "Connexion réussie.",
+                "user" => [
+                    "id" => $userId,
+                    "role" => $roleName
+                ]  
+            ]);
 
         } catch(Exception $e) {
             $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
