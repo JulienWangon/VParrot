@@ -24,83 +24,97 @@ class AuthController {
   }
 
   //Login method
-  public function login() {
+    public function login() {
 
-      try {
+        try {
 
-          // Retrieve data sent by the client
-          $data = json_decode(file_get_contents('php://input'), true);
-          error_log(print_r($data, true));
+            // Retrieve data sent by the client
+            $data = json_decode(file_get_contents('php://input'), true);
+            error_log(print_r($data, true));
 
-          //Validate json data format
-          if (!$this->validator->validateJsonFormat($data)) {
+            //Validate json data format
+            if (!$this->validator->validateJsonFormat($data)) {
 
-              $this->sendResponse($this->validator->getErrors(), 400);
-              return;
-          }
+                $this->sendResponse($this->validator->getErrors(), 400);
+                return;
+            }
 
-          //Check if all the necessary keys are present
-          $requireKeys =["user_email", "user_password"];
-              foreach ($requireKeys as $key) {
-                  if (!isset($data[$key])) {
+            //Check if all the necessary keys are present
+            $requireKeys =["user_email", "user_password"];
+                foreach ($requireKeys as $key) {
+                    if (!isset($data[$key])) {
 
-                      $this->sendResponse(["status" => "error", "message" => "La clé $key est manquante"], 400);
-                      return;
-                  }
-              }
+                        $this->sendResponse(["status" => "error", "message" => "La clé $key est manquante"], 400);
+                        return;
+                    }
+                }
 
-          //Assign Data to Variables
-          $userEmail = $data["user_email"];
-          $userPassword = $data["user_password"];
+            //Assign Data to Variables
+            $userEmail = $data["user_email"];
+            $userPassword = $data["user_password"];
 
-          //Data validation
-          $validUserEmail = $this->validator->validateEmail($userEmail);
-          $validUserPassword = $this->validator->validatePassword($userPassword);
+            //Data validation
+            $validUserEmail = $this->validator->validateEmail($userEmail);
+            $validUserPassword = $this->validator->validatePassword($userPassword);
 
-          if(!$validUserEmail || !$validUserPassword) {
+            if(!$validUserEmail || !$validUserPassword) {
 
-            $errors = $this->validator->getErrors();
-            $this->sendResponse(["status" => "error", "message" => $errors], 400);
-            return;
-          }
+                $errors = $this->validator->getErrors();
+                $this->sendResponse(["status" => "error", "message" => $errors], 400);
+                return;
+            }
 
-          //Retrieve User
-          $user = $this->authModel->getUserByEmail($userEmail);
+            //Retrieve User
+            $user = $this->authModel->getUserByEmail($userEmail);
 
-          //Verify user and password
-          if(!$user || !password_verify($userPassword, $user["user_password"])) {
+            //Verify user and password
+            if(!$user || !password_verify($userPassword, $user["user_password"])) {
 
-              $this->sendResponse(['status' => 'error', 'message' => "L'utilisateur n'existe pas."], 401);
-              return;
-          }
+                $this->sendResponse(['status' => 'error', 'message' => "L'utilisateur n'existe pas."], 401);
+                return;
+            }
 
-          //Get JWT Token for user
-          $jwtData = $this->authModel->createJWTForUser($user);
+            //Get JWT Token for user
+            $jwtData = $this->authModel->createJWTForUser($user);
 
-          $jwt = $jwtData["jwt"];
-          $expiryTime = $jwtData["exp"];
+            $jwt = $jwtData["jwt"];
+            $expiryTime = $jwtData["exp"];
 
-          //Create cookie
-          setcookie("token", $jwt, [
-              "expires" => $expiryTime,
-              "path" => '/',
-              "domain" => "",
-              "secure" => true,
-              "httponly" => true,
-              "samesite" => 'None',
-          ]);
+            //Create cookie
+            setcookie("token", $jwt, [
+                "expires" => $expiryTime,
+                "path" => '/',
+                "domain" => "",
+                "secure" => true,
+                "httponly" => true,
+                "samesite" => 'None',
+            ]);
 
-          $this->sendResponse(["status" => "success", "message" => "Connexion réussie."]);
+            $this->sendResponse(["status" => "success", "message" => "Connexion réussie."]);
 
-      } catch(Exception $e) {
-          $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
+        } catch(Exception $e) {
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
 
-      }
+        }
+    }
 
+    //Logout Method
+    public function logout() {
+        try {
+            if (isset($_COOKIE["token"])) {
 
+                unset($_COOKIE["token"]);
+                setcookie("token", null, -1, "", true, true);
+                $this->sendResponse(["status" => "success", "message" => "Déconnexion réussie."]);
+            } else {
 
-  }
-
+                $this->sendResponse(["status" => "error", "message" => "Aucun utilisateur n'est connecté."], 401);
+            }
+        } catch (Exception $e) {
+            
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
 
 
 }
