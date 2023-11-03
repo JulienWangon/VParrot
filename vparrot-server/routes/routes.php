@@ -54,6 +54,7 @@ $routes = [
         '/vparrot/testimonies' => [$controllers['testimonies'], 'createTestimony'],
         '/vparrot/users' => [$controllers['users'], 'addThisUser'],
         '/vparrot/login' => [$controllers['auth'], "login"],
+        '/vparrot/logout' => [$controllers['auth'], "logout"],
 
     ],
 
