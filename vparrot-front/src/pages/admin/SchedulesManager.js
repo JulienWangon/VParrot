@@ -1,10 +1,11 @@
 import React from 'react';
+import Header from '../../components/common/Header/Header';
 
 const SchedulesManager = () => {
   return (
-    <div>
-      ICI GESTION DES HORAIRES
-    </div>
+    <>
+      <Header title="Horaires" slogan="Gestion des horaires d'ouverture"/>
+    </>
   );
 };
 

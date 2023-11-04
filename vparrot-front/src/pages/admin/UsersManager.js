@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../../components/common/Header/Header';
 
 const UsersManager = () => {
   return (
     <div>
-      ICI GESTION DES UTILISATEURS
+        <Header title="Utilisateurs" slogan="Gestion des utilisateurs"/>
     </div>
   );
 };

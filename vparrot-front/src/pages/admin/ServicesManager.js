@@ -1,10 +1,11 @@
 import React from 'react';
+import Header from '../../components/common/Header/Header';
 
 const ServicesManager = () => {
   return (
-    <div>
-      ICI GESTION DES SERVICES
-    </div>
+    <>
+      <Header title="Services" slogan="Gestion de vos services"/>
+    </>
   );
 };
 
