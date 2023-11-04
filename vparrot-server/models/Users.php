@@ -189,9 +189,13 @@ class Users extends Database {
         try {
 
             $db = $this->getBdd();
-            $req = "SELECT * FROM users WHERE user_id = :userId";
+            $req = "SELECT u.id_user, u.user_email, r.id_role, r.role_name 
+                    FROM users u 
+                    JOIN roles r 
+                    ON u.role_id = r.id_role
+                    WHERE u.id_user = :userId";
             $stmt = $db->prepare($req);
-            $stmt->binValue(":userId", $userId, PDO::PARAM_INT);
+            $stmt->bindValue(":userId", $userId, PDO::PARAM_INT);
             $stmt->execute();
     
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
