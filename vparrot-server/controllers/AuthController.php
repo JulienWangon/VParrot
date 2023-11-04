@@ -165,7 +165,7 @@ class AuthController {
                 }
             } else {
                 // Répondre avec une erreur si aucun token n'est trouvé
-                $this->sendResponse(['status' => 'error', 'message' => 'Aucun token trouvé.'], 401);
+                $this->sendResponse(['status' => 'success', 'user' => null]);
             }
         } catch (ExpiredException $e) {
             // Gérer l'exception si le token est expiré
