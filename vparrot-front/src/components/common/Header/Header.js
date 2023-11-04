@@ -6,8 +6,6 @@ import Navbar from '../Navbar/Navbar';
 
 const Header = ({ title, slogan}) => {
 
-
-  console.log('Header props:', { title, slogan });
   return (
     <header className="header">
         <div className="opacityLayer"></div>
