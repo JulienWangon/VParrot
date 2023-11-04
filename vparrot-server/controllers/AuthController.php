@@ -119,7 +119,14 @@ class AuthController {
             if (isset($_COOKIE["token"])) {
 
                 unset($_COOKIE["token"]);
-                setcookie("token", null, -1, "", true, true);
+                setcookie("token", '', [
+                    "expires" => time() - 3600, // Heure dans le passé pour effacer le cookie
+                    "path" => '/',
+                    "domain" => "", // Ajustez si nécessaire
+                    "secure" => true,
+                    "httponly" => true,
+                    "samesite" => 'None', // Important si vous utilisez samesite
+                ]);
                 $this->sendResponse(["status" => "success", "message" => "Déconnexion réussie."]);
             } else {
 
