@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const Title = ({h1Text, spanText}) => {
+const H1Title = ({h1Text, spanText}) => {
   return (
     <div className="titleContainer">
         <h1>{h1Text}</h1>
@@ -12,9 +12,9 @@ const Title = ({h1Text, spanText}) => {
 };
 
 
-Title.propTypes = {
+H1Title.propTypes = {
   h1Text: PropTypes.string.isRequired,
   spanText: PropTypes.string.isRequired
 }
 
-export default Title;
+export default H1Title;
