@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Header from '../../components/common/Header/Header';
+
 const RepairServices = () => {
   return (
     <div>
-      ICI PAGE DES SERVICES DE REPARATION
+      <Header title="Service de Réparation" slogan="Réparation mécanique et carrosserie véhicules toutes marques"/>
     </div>
   );
 };
