@@ -19,6 +19,7 @@ import SchedulesManager from './pages/admin/SchedulesManager';
 import ServicesManager from './pages/admin/ServicesManager';
 import TestimoniesManager from './pages/admin/TestimoniesManager';
 import UsersManager from './pages/admin/UsersManager';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
 
 
 function App() {
@@ -33,13 +34,14 @@ function App() {
 
                         <Route index element={<Home/>}/>
 
-                        <Route path="/home" element={<Home/>}/>
+                        <Route path="/accueil" element={<Home/>}/>
                         <Route path="/entretiens" element={<MainteanceServices/>}/>
                         <Route path="/reparations" element={<RepairServices/>}/>
                         <Route path="/ventes" element={<SalesArea/>}/>
+                        <Route path="/access-panel" element={<AdminLoginPage/>}/>
 
                         <Route 
-                          path="/adminhome" 
+                          path="/accueiladmin" 
                           element={
                               <ProtectedRoute>
                                   <AdminHome/>
@@ -47,7 +49,7 @@ function App() {
                           }
                         />
                         <Route 
-                          path="/manageusers" 
+                          path="/utilisateurs" 
                           element={
                               <ProtectedRoute>
                                   <UsersManager/>
@@ -55,7 +57,7 @@ function App() {
                           }
                         />
                         <Route 
-                          path="/managetestimonies" 
+                          path="/avisclients" 
                           element={
                               <ProtectedRoute>
                                   <TestimoniesManager/>
@@ -63,7 +65,7 @@ function App() {
                           }
                         />
                         <Route
-                          path="/manageschedules"
+                          path="/horaires"
                           element={
                               <ProtectedRoute>
                                   <SchedulesManager/>
@@ -71,7 +73,7 @@ function App() {
                           }     
                         />
                         <Route 
-                          path="/manageservices" 
+                          path="/services" 
                           element={
                               <ProtectedRoute>
                                   <ServicesManager/>
@@ -79,7 +81,7 @@ function App() {
                           }
                         />
                         <Route 
-                          path="/managecars" 
+                          path="/parcauto" 
                           element={
                               <ProtectedRoute>
                                   <CarsManager/>
