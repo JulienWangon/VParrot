@@ -4,6 +4,8 @@ require_once './vparrot-server/models/AuthModel.php';
 require_once './vparrot-server/Validator/Validator.php';
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Firebase\JWT\ExpiredException;
 
 class AuthController {
 
@@ -124,6 +126,44 @@ class AuthController {
         } catch (Exception $e) {
             
             $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
+        }
+    }
+
+    //Check Session Method
+    public function checkSession() {
+        try {
+
+            if (isset($_COOKIE["token"])) {
+                // Vérifier le token du cookie
+                $token = $_COOKIE["token"];
+                // Remplacer 'your_key' par la clé que vous avez utilisée lors de la création des JWT
+                $secretKey = $_ENV['SECRET_KEY'];
+                $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
+                
+                // Vérifiez que le token n'est pas expiré et que les données de l'utilisateur sont toujours valides
+                $userId = $decoded->data->id_user;
+                $user = $this->authModel->getUserById($userId);
+                if ($user) {
+                    // Renvoyer uniquement l'ID et le rôle de l'utilisateur dans la réponse
+                    $responseUser = [
+                        "id" => $user["id_user"],
+                        "role" => $user["role_name"]
+                    ];
+                    $this->sendResponse(['status' => 'success', 'user' => $responseUser]);
+                } else {
+                    // Répondre avec une erreur si l'utilisateur n'existe plus dans la base de données
+                    $this->sendResponse(['status' => 'error', 'message' => 'Session non valide ou utilisateur inexistant.'], 401);
+                }
+            } else {
+                // Répondre avec une erreur si aucun token n'est trouvé
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucun token trouvé.'], 401);
+            }
+        } catch (ExpiredException $e) {
+            // Gérer l'exception si le token est expiré
+            $this->sendResponse(['status' => 'error', 'message' => 'Session expirée.'], 401);
+        } catch (Exception $e) {
+            // Gérer toute autre exception
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 
