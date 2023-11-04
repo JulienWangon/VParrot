@@ -11,10 +11,10 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
 
+  const [loading, setLoading] = useState(true);
+
   //State pour stocker l'utilisateur actuel
       const [currentUser, setCurrentUser] = useState(null);
-  //State pour suivre si l application est en train de faire une requête réseau
-      const [loading, setLoading] = useState(false);
   //State pour stocker les erreurs de connexion
       const [error, setError] = useState(null);
   
@@ -24,38 +24,32 @@ export const AuthProvider = ({ children }) => {
     const checkUserSession = async () => {
 
         try {
-
-            setLoading(true);
-
-            const response = await axios.get('http://localhost/vparrot/check-session', { withCredentials: true});
+            const response = await axios.get('http://localhost/vparrot/check-session', {  withCredentials: true});
 
             if (response.status === 200) {
                 setCurrentUser({
                   id: response.data.user.id,
                   role: response.data.user.role
                 });
+                console.log('Current user updated after session check:', response.data.user);
             }
         } catch (error) {
 
-
+            
             setCurrentUser(null);
-        } finally {
-
-            setLoading(false);
-        }
+        } 
+        setLoading(false);
     }
 
     // Utiliser l'effet pour vérifier la session une fois que le composant AuthProvider est monté
   useEffect(() => {
-
+    console.log('Checking user session...');
     checkUserSession();
   }, []);
   
   //Méthode e connexion de l'utilisateur    
       const login = async (email, password) => {
           try {
-  
-            setLoading(true);
   //Configurer les données du formulaire pour la requête POST
             const data = {
               user_email: email,
@@ -77,8 +71,9 @@ export const AuthProvider = ({ children }) => {
               setCurrentUser({
                 id: response.data.user.id,
                 role: response.data.user.role
-              });            
-                navigate('/adminhome');
+              }); 
+              console.log('Current user updated after session check:', response.data.user);           
+                navigate('/accueiladmin');
             } else if (response.status === 401) {
               // Utilisateur non trouvé ou authentification échouée
               setError(response.data.message || "Erreur de connexion");
@@ -90,17 +85,14 @@ export const AuthProvider = ({ children }) => {
     } else {
       setError("Une erreur s'est produite lors de la connexion.");
     }
-          } finally {
-  // Quelle que soit l'issue, rétablissez l'état de chargement à false.
-            setLoading(false);
-          }
+          } 
       };
   
   
   //Méthode pour déconnecter l'utilisateur
       const logout = async () => {
           try {
-              setLoading(true);
+
   //envoyer une requête POST pour déconnecter l'utilisateur
               const response = await axios.post('http://localhost/vparrot/logout', {}, {
                   withCredentials: true,
@@ -109,7 +101,8 @@ export const AuthProvider = ({ children }) => {
   //Vérifier la réponse si la déconnexion est réussie, reinitialiser l'utilisateur actuel
               if(response.data.status === 'success') {
                   setCurrentUser(null);
-                  navigate('/home');
+                  console.log('Current user updated after session check:', response.data.user);
+                  navigate('/access-panel');
               } else {             
   //Si la réponse indique un échec, stockez le message d'erreur.
                   setError(response.data.message || "Erreur de déconnexion");
@@ -124,9 +117,6 @@ export const AuthProvider = ({ children }) => {
                   setError("une erreur s'est produite lors de la connexion.");
               }
   
-          } finally {
-  // Quelle que soit l'issue, rétablissez l'état de chargement à false.
-              setLoading(false);
           }
       };
   
@@ -139,9 +129,9 @@ export const AuthProvider = ({ children }) => {
         currentUser,
         error,
         setError,
-        loading,
         login,
         logout,
+        loading,
         clearErrors,
       };
   
@@ -149,7 +139,7 @@ export const AuthProvider = ({ children }) => {
       return (
   
           <AuthContext.Provider value={contextValue}>
-              {!loading && children}
+              {children}
           </AuthContext.Provider>
       );
     };
