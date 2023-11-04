@@ -11,10 +11,12 @@ class AuthController {
 
     private $validator;
     private $authModel;
+    private $usersModel;
 
-    public function __construct($validator, $authModel) {
+    public function __construct($validator, $authModel, $usersModel) {
         $this->validator = $validator;
         $this->authModel = $authModel;
+        $this->usersModel = $usersModel;
     }
 
     //Setting Response
@@ -67,7 +69,7 @@ class AuthController {
             }
 
             //Retrieve User
-            $user = $this->authModel->getUserByEmail($userEmail);
+            $user = $this->usersModel->getUserByEmail($userEmail);
 
             //Verify user and password
             if(!$user || !password_verify($userPassword, $user["user_password"])) {
@@ -137,12 +139,12 @@ class AuthController {
                 // Vérifier le token du cookie
                 $token = $_COOKIE["token"];
                 // Remplacer 'your_key' par la clé que vous avez utilisée lors de la création des JWT
-                $secretKey = $_ENV['SECRET_KEY'];
+                $secretKey = $_SERVER['SECRET_KEY'];
                 $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
                 
                 // Vérifiez que le token n'est pas expiré et que les données de l'utilisateur sont toujours valides
-                $userId = $decoded->data->id_user;
-                $user = $this->authModel->getUserById($userId);
+                $userId = $decoded->id_user;
+                $user = $this->usersModel->getUserById($userId);
                 if ($user) {
                     // Renvoyer uniquement l'ID et le rôle de l'utilisateur dans la réponse
                     $responseUser = [
