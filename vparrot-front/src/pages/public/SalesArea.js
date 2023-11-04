@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from '../../components/common/Header/Header';
+
+
 
 const SalesArea = () => {
   return (
     <div>
-      ICI PRESENTATION PARC AUTO
+      <Header title="Espace Vente" slogan="Véhicules d'occasions toutes marques"/>
     </div>
   );
 };
