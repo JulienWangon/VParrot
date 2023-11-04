@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +19,37 @@ export const AuthProvider = ({ children }) => {
       const [error, setError] = useState(null);
   
       const navigate = useNavigate();
+
+  // check if user is connect
+    const checkUserSession = async () => {
+
+        try {
+
+            setLoading(true);
+
+            const response = await axios.get('http://localhost/vparrot/check-session', { withCredentials: true});
+
+            if (response.status === 200) {
+                setCurrentUser({
+                  id: response.data.user.id,
+                  role: response.data.user.role
+                });
+            }
+        } catch (error) {
+
+
+            setCurrentUser(null);
+        } finally {
+
+            setLoading(false);
+        }
+    }
+
+    // Utiliser l'effet pour vérifier la session une fois que le composant AuthProvider est monté
+  useEffect(() => {
+
+    checkUserSession();
+  }, []);
   
   //Méthode e connexion de l'utilisateur    
       const login = async (email, password) => {
@@ -42,9 +73,11 @@ export const AuthProvider = ({ children }) => {
             
   //Vérifier la répoonse si la connexion est réussi mettre à jour l' utilisateur actuel
             if(response.status === 200) {
-              console.log("Réponse complète du serveur:", response);
-                setCurrentUser(response.data.user);
-             
+                              
+              setCurrentUser({
+                id: response.data.user.id,
+                role: response.data.user.role
+              });            
                 navigate('/adminhome');
             } else if (response.status === 401) {
               // Utilisateur non trouvé ou authentification échouée
@@ -116,7 +149,7 @@ export const AuthProvider = ({ children }) => {
       return (
   
           <AuthContext.Provider value={contextValue}>
-              {children}
+              {!loading && children}
           </AuthContext.Provider>
       );
     };
