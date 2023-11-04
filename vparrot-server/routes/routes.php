@@ -30,15 +30,15 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 //Dependency Injection
 $testimonies = new Testimonies();
-$users = new Users();
+$usersModel = new Users();
 $authModel = new AuthModel();
 $validator = new Validator();
 
 //LOADING CONTROLLERS
 $controllers = [
     'testimonies' => new TestimoniesController($validator, $testimonies),
-    'users' => new UsersController($validator, $users),
-    'auth' => new AuthController($validator, $authModel),
+    'users' => new UsersController($validator, $usersModel),
+    'auth' => new AuthController($validator, $authModel, $usersModel),
 ];
 
 
@@ -47,6 +47,7 @@ $routes = [
     'GET' => [
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
+        '/vparrot/check-session' => [$controllers['auth'], 'checkSession'],
 
     ],
 
