@@ -11,9 +11,7 @@ import { validateEmail, validatePassword } from '../../../_utils/validation';
 import ModalStyle from './connexionModal.module.css';
 
 
-
-
-const ConnexionModal = ({ closeModal }) => {
+const ConnexionModal = ({ handleCloseModal }) => {
 
     const { login, error, loading, clearErrors } = useAuth();
 
@@ -71,7 +69,7 @@ const ConnexionModal = ({ closeModal }) => {
     return (
         <div className={ModalStyle.formContainer}>
             <div className={ModalStyle.opacityLayer}></div>
-            <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={closeModal}>X</Button>
+            <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
 
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="titleContainer">
