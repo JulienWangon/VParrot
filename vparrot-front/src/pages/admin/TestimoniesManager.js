@@ -5,7 +5,7 @@ const TestimoniesManager = () => {
   return (
     <>
 
-        <Header title="Avis clients" slogan="Gestion des avis clients"/>
+        <Header title="Avis Clients" slogan="Gestion des avis clients"/>
       
     </>
   );
