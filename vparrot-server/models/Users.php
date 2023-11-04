@@ -183,6 +183,19 @@ class Users extends Database {
         }
     }
 
+    //Get user by ID
+    public function getUserByID($userId) {
+        $db = $this->getBdd();
+        $req = "SELECT * FROM users WHERE user_id = :userId";
+        $stmt = $db->prepare($req);
+        $stmt->binValue(":userId", $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user;
+    }
+
 
     //Check if user exists
     public function doesUserExist(int $idUser) :bool {
