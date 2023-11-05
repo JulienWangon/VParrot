@@ -92,7 +92,7 @@ class Testimonies extends Database {
     public function getModerationTestimonies($isModerated) :array {
         try {
             $db = $this->getBdd();
-            $req = "SELECT * FROM testimonies WHERE isModerated = :isModerated";
+            $req = "SELECT * FROM testimonies WHERE is_moderated = :isModerated";
             $stmt = $db->prepare($req);
             $stmt->bindValue(":isModerated", $isModerated, PDO::PARAM_BOOL);
             $stmt->execute();
