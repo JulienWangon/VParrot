@@ -46,6 +46,7 @@ $controllers = [
 $routes = [
     'GET' => [
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
+        '/vparrot/testimonies/moderated' => [$controllers['testimonies'], 'getModeratedTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
         '/vparrot/check-session' => [$controllers['auth'], 'checkSession'],
 
@@ -61,8 +62,8 @@ $routes = [
 
     'PUT' => [
       '#^/vparrot/users/(\d+)$#' => [$controllers['users'], 'updateThisUser'],
-      '#^/vparrot/testimonies/(\d+)/approve$#' => [$controllers['testimonies'], 'approveThisTestimony'],
-      '#^/vparrot/testimonies/(\d+)/reject$#' => [$controllers['testimonies'], 'rejectThisTestimony'],
+      '#^/vparrot/testimonies/(\d+)/\approve$#' => [$controllers['testimonies'], 'approveThisTestimony'],
+      '#^/vparrot/testimonies/(\d+)/\reject$#' => [$controllers['testimonies'], 'rejectThisTestimony'],
 
     ],
 
@@ -93,8 +94,9 @@ if(isset($routes[$requestMethod][$uri])) {
 if (!$foundRoute) {
 
     foreach($routes[$requestMethod] as $pattern =>$function) {
+      echo "Attempting to match: $uri with pattern: $pattern <br>";    
         if (preg_match($pattern, $uri, $matches)) {
-
+   
             array_shift($matches); 
             $function(...$matches);
             $foundRoute = true;
