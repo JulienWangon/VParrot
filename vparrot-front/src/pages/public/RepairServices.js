@@ -5,7 +5,7 @@ import Header from '../../components/common/Header/Header';
 const RepairServices = () => {
   return (
     <div>
-      <Header title="Service de Réparation" slogan="Réparation mécanique et carrosserie véhicules toutes marques"/>
+      <Header title="Réparation" slogan="Réparation mécanique et carrosserie véhicules toutes marques"/>
     </div>
   );
 };

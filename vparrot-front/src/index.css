@@ -1,0 +1,53 @@
+html {
+  font-size: 16px; /* La taille de base pour les navigateurs de bureau */
+}
+
+/* Ultra grands écrans (ex: 4K) */
+@media screen and (min-width: 2559px) {
+  html {
+    font-size: 300px; /* Significativement plus grand pour les écrans ultra-haute résolution */
+  }
+}
+
+/* Plus grands écrans */
+@media screen and (min-width: 1400px) {
+  html {
+    font-size: 24px; /* Augmente pour les très grands écrans */
+  }
+}
+
+/* Grands écrans de bureau */
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+  html {
+    font-size: 22px; /* Un peu plus grand pour les grands écrans de bureau */
+  }
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+  html {
+    font-size: 20px; /* Ajusté pour les écrans moyens */
+  }
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  html {
+    font-size: 18px; /* Plus petit pour les tablettes et grands mobiles */
+  }
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+  html {
+    font-size: 17px; /* Ajusté pour les mobiles en orientation paysage */
+  }
+}
+
+/* Mobiles en orientation portrait */
+@media screen and (max-width: 575px) {
+  html {
+    font-size: 16px; /* Taille de base pour les mobiles en orientation portrait */
+  }
+}
+

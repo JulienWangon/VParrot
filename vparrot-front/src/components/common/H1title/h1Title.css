@@ -1,0 +1,28 @@
+.titleContainer {
+    z-index: 2000; 
+    position: relative;
+    color: white;
+    margin: auto;
+    text-align: center;  
+}
+
+ h1 {
+    font-size: 2.5rem; 
+    font-weight: 600;
+}
+
+.slogan {
+    font-size: 1.1rem;
+}
+
+h1, .slogan {
+    font-family: 'Alumni Sans', sans-serif;
+}
+
+
+
+
+
+
+
+

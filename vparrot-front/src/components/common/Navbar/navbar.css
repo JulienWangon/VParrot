@@ -1,0 +1,45 @@
+.navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+  background-color: transparent !important;
+}
+
+
+.navMenu {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  width: 100%; 
+}
+
+.navItem {
+  margin-bottom: 0.8em;
+}
+
+.navItem a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 1.5em;
+  font-weight: 600;
+  font-family: 'Alumni Sans', sans-serif;
+}
+
+.ma-toggler-white
+ {
+  border: 2px solid white;
+}
+
+.ma-toggler-white:active,
+.ma-toggler-white:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+i {
+  color: white;
+ }
+
+
