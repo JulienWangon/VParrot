@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useMessage } from '../../../contexts/MessagesContext';
+import ReCAPTCHA from "react-google-recaptcha";
 
 import H2Title from '../../common/H2Title/H2Title';
 import TextInput from '../../common/TextInput/TextInput';
@@ -10,10 +11,14 @@ import { validateEmail, validatePassword } from '../../../_utils/validation';
 
 import ModalStyle from './connexionModal.module.css';
 
+const maxLoginAttemps = 4;
+const reCaptchaKey ="6LfaqvUoAAAAALPzrRTvifhm7qlDBmh7RfEfTUOI";
 
 const ConnexionModal = ({ handleCloseModal }) => {
 
     const { login, error, loading, clearErrors } = useAuth();
+    const [loginAttempts, setLoginAttempts] = useState(0);
+    const [captchaValue, setCaptchaValue] = useState(false);
 
     const [data, setData] = useState({
         email: "",
@@ -21,7 +26,6 @@ const ConnexionModal = ({ handleCloseModal }) => {
     });
 
     const { showMessage } = useMessage();
-
     const [errors, setErrors] = useState({});
 
     const validate = () => {
@@ -50,23 +54,42 @@ const ConnexionModal = ({ handleCloseModal }) => {
         clearErrors();  // Reset auth error upon input change
     };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      if(validate()) { // Si la validation du formulaire est réussie
-          try {
-              await login(data.email, data.password); // Tentative de connexion
-              showMessage("Connecté avec succès!", "success"); // Affichage d'un message de succès
-          } catch (error) { // En cas d'erreur dans la tentative de connexion
-              showMessage(`Échec de la connexion: ${error.message}`); // Affichage de l'erreur
-          }
-      } else { // Si la validation du formulaire échoue
-          console.log("Validation failed"); // Log d'un message d'erreur dans la console
-      }     
+    const handleCaptcha = (value) => {
+        setCaptchaValue(value); // Mettre à jour la valeur du CAPTCHA
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (loginAttempts >= maxLoginAttemps && !captchaValue) {
+            showMessage("Veuillez compléter le CAPTCHA.", "error");
+            return;
+        }
+
+        if (validate()) {
+            try {
+                const result = await login(data.email, data.password);
+
+                if (result) {
+                showMessage("Connecté avec succès!", "success");
+                setCaptchaValue(null);
+                setLoginAttempts(0);
+                handleCloseModal();
+            } else {
+                throw new Error("Identifiants invalides"); // Utilisez l'état `error` ou un message par défaut
+            }
+            } catch (error) {
+                setLoginAttempts((prev) => prev + 1);
+                showMessage("Identifiants invalides", "error");
+            }
+        } else {
+            showMessage("La validation du formulaire a échoué.", "error");
+        }
+    };
 
     return (
+
+
         <div className={ModalStyle.formContainer}>
             <div className={ModalStyle.opacityLayer}></div>
             <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
@@ -78,7 +101,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
                 <TextInput
                     label="Email"
                     name="email"
-                    value={data.user_email}
+                    value={data.email}
                     onChange={handleChange}
                     placeholder="Entrez votre email"
                 />
@@ -87,20 +110,33 @@ const ConnexionModal = ({ handleCloseModal }) => {
                 <TextInput
                     label="Mot de passe"
                     name="password"
-                    value={data.user_password}
+                    value={data.password}
                     onChange={handleChange}
                     placeholder="Entrez votre mot de passe"                            
                 />
                 {errors.password && <div className="errorMessage">{errors.password}</div>}
 
+                {loginAttempts >= maxLoginAttemps && (
+                    <ReCAPTCHA
+                        sitekey={reCaptchaKey}
+                        onChange={handleCaptcha}
+                    />
+                )}
+
                 <Button
                     content="Connexion"
                     type="submit"
-                    className="submitBtn"            
+                    className="submitBtn"
+                    disabled={loginAttempts >= maxLoginAttemps} // Désactiver le bouton après le nombre maximum de tentatives            
                 />
-
                 {error && <div className="errorMessage">{error}</div>}
                 {loading && <div className="loadingMessage">Chargement...</div>}
+
+                {loginAttempts > 0 && loginAttempts < maxLoginAttemps && (
+                    <div className="infoMessage">
+                        {`Vous avez ${maxLoginAttemps - loginAttempts} tentative(s) restante(s).`}
+                    </div>
+                )}
             </form>      
         
         </div>

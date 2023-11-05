@@ -72,11 +72,12 @@ export const AuthProvider = ({ children }) => {
                 id: response.data.user.id,
                 role: response.data.user.role
               }); 
-              console.log('Current user updated after session check:', response.data.user);           
+                         
                 navigate('/accueiladmin');
             } else if (response.status === 401) {
               // Utilisateur non trouvé ou authentification échouée
-              setError(response.data.message || "Erreur de connexion");
+              throw new Error(response.data.message || "Erreur de connexion");
+              
             }
           } catch (error) {
   // En cas d'erreur réseau ou de problème avec la requête, stockez un message d'erreur.
