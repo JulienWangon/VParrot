@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './h1Title.css';
+
 
 const H1Title = ({h1Text, spanText}) => {
   return (
     <div className="titleContainer">
         <h1>{h1Text}</h1>
-        <span>{spanText}</span>
+        <span className="slogan">{spanText}</span>
     </div>
   );
 };
