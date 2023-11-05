@@ -21,13 +21,35 @@ class TestimoniesController {
         echo json_encode($data);
     }
 
-//GET all testimonies list
+    //GET all testimonies list
     public function getAllTestimoniesList() {
         $data = $this->testimonies->getAllTestimonies();
         $this->sendResponse($data);
     }
 
-//CREATE new testimony    
+    //GET testimonies by status
+    public function getTestimoniesByStatus($isModerated) {
+        try {
+            $data = $this->testimonies->getModerationTestimonies($isModerated);
+            $this->sendResponse(["status" => "success", "data" => $data], 200);
+        } catch (Exception $e) {
+            $this->sendResponse(['error' => $e->getMessage()], 400);        
+        }
+    }
+
+    //Get all moderated testimonies
+    public function getUnmoderatedTestimoniesList() {
+        $this->getTestimoniesByStatus(0);
+    }
+
+    //Get al unmoderated testimonies
+    public function getModeratedTestimoniesList() {
+        $this->getTestimoniesByStatus(1);
+    }
+
+
+
+    //CREATE new testimony    
     public function createTestimony() {
        
             // Retrieve data sent by the client
