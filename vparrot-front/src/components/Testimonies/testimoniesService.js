@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Get all moderated Testimonies
-export const fetchTestimonies = async () => {
+export const fetchModeratedTestimonies = async () => {
   try {
     const response = await axios.get('http://localhost/vparrot/testimonies/moderated');
     if (response.data && response.data.status === 'success') {
