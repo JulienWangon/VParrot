@@ -5,7 +5,7 @@ const useFetchModeratedTestimonies = () => {
 
     const [testimonies, setTestimonies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = null;
+    const [error, setError] = useState(null);
 
 
     useEffect(() => {
