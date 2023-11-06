@@ -4,7 +4,7 @@ import { MessageProvider } from './contexts/MessagesContext';
 import ProtectedRoute from './_utils/ProtectedRoute';
 
 // Publics Pages Components Import
-import Home from "./pages/public/Home";
+import Home from "./pages/public/Home/Home";
 import MainteanceServices from "./pages/public/MainteanceServices";
 import RepairServices from "./pages/public/RepairServices";
 import SalesArea from "./pages/public/SalesArea";
