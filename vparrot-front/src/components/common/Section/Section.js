@@ -11,7 +11,7 @@ const Section = ({ className, intro, title, photo1, alt1, paragraphe11, paragrap
 
         <H2Title h2Text={title}/>
         <p className="introduction">{intro}</p>
-        <div class="articleContainer">
+        <div className="articleContainer">
           <Article className="firstArticle" photo={photo1} altText={alt1} paragraphe1={paragraphe11} paragraphe2={paragraphe12}/>
           <Article className="secondArticle" photo={photo2} altText={alt2} paragraphe1={paragraphe21} paragraphe2={paragraphe22}/>
         </div>               
