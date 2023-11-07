@@ -30,7 +30,7 @@ class SchedulesController {
     }
 
     //Update Schedules
-    public function UpdateSchedule($idSchedules) {
+    public function updateSchedule($idSchedules) {
 
         // Retrieve data sent by the client
         $data = json_decode(file_get_contents('php://input'), true);
