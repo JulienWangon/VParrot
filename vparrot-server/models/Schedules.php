@@ -69,20 +69,20 @@ class Schedules extends Database {
 //CRUD Methods
 
 //GET all Schedules
-    public function getAllOpeningDays() : array {
+    public function getAllSchedules() : array {
         try {
 
             $db = $this->getBdd();
-            $req = "SELECT * FROM opening_days";
+            $req = "SELECT * FROM schedules";
             $stmt = $db->prepare($req);
             $stmt->execute();
-            $openingDays = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            $schedules = $stmt->fetchALL(PDO::FETCH_ASSOC);
        
-            return $openingDays;
+            return $schedules;
 
         } catch(PDOException $e) {
 
-            $this->handleException($e, "extraction liste utilisateur");
+            $this->handleException($e, "extraction liste des horaires d'ouverture");
         }
     }
 
@@ -99,7 +99,7 @@ class Schedules extends Database {
             $columnTable = implode(", ", $columnTable);
 
             $db = $this->getBdd();
-            $req = "UPDATE opening_days SET " . $columnTable . " WHERE idOpeningDay = :idOpeningDay";
+            $req = "UPDATE schedules SET " . $columnTable . " WHERE id_opening_day = :idOpeningDay";
             $stmt = $db->prepare($req);
 
             $stmt->bindValue(":idOpeningDay", $idOpeningDay, PDO::PARAM_INT);
@@ -114,16 +114,16 @@ class Schedules extends Database {
 
         } catch(PDOException $e) {
 
-            $this->handleException($e, "extraction liste utilisateur");
+            $this->handleException($e, "mise à jour des horaires d'ouverture");
         }
     }
 
     //If id exists method
     public function idExists($idOpeningDay) {
       try {
-        
+
           $db= $this->getBdd();
-          $req = "SELECT * FROM opening_days WHERE idOpeningDay = :idOpeningDay";
+          $req = "SELECT * FROM schedules WHERE id_opening_day = :idOpeningDay";
           $stmt = $db->prepare($req);
           $stmt->bindValue(":idOpeningDay", $idOpeningDay, PDO::PARAM_INT);
           $stmt->execute();
@@ -134,7 +134,7 @@ class Schedules extends Database {
 
       } catch (PDOException $e) {
 
-          $this->handleException($e, "extraction liste utilisateur");
+          $this->handleException($e, "vérification si l'id du jour d'ouverture existe");
       }
   }
 
