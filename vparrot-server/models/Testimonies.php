@@ -91,6 +91,7 @@ class Testimonies extends Database {
     //Get Testimonies by moderation status
     public function getModerationTestimonies($isModerated) :array {
         try {
+
             $db = $this->getBdd();
             $req = "SELECT * FROM testimonies WHERE is_moderated = :isModerated";
             $stmt = $db->prepare($req);
@@ -103,13 +104,8 @@ class Testimonies extends Database {
             return $testimonies;
             
         } catch(PDOException $e) {
-            $errorMsg = "Erreur lors de la tentative de récupération des témoignages modérés ou à modérer. " // Added a period and space here
-            . "Fichier: " . $e->getFile() 
-            . " à la ligne " . $e->getLine()
-            . ". Erreur: " . $e->getMessage();      
-            error_log($errorMsg);
-    
-            throw new Exception("La ressource demandée est introuvable.");
+
+            $this->handleException($e, "extraction liste utilisateur");
         }
     }
     
