@@ -25,8 +25,17 @@ class SchedulesController {
 
     //Get all schedules list
     public function getSchedulesList() {
-        $data= $this->schedules->getAllSchedules();
-        $this->sendResponse($data);
+        try {
+
+            $data= $this->schedules->getAllSchedules();
+            $this->sendResponse(["status" => "success", "data" => $data], 200);
+
+        } catch (Exception $e) {
+
+            $this->sendResponse(['error' => $e->getMessage()], 400);
+        }
+       
+        
     }
 
     //Update Schedules
