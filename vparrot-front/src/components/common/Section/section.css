@@ -1,0 +1,50 @@
+
+
+.careSection, .repairSection, .introSection, .conclusionSection {
+  text-align: justify;
+  font-family: 'Anek Tamil', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center ;
+  width: 100vw;
+  padding: 1em;
+}
+
+
+
+@media screen and  (min-width: 1400px) {
+
+     .repairSection, .introSection, .conclusionSection {  
+          width: 80vw;
+          display:flex;
+          align-items: center;
+          justify-content: center;        
+    }
+   
+    .careSection > * {
+        width: 80vw;
+    }
+
+    .careSection > h2 {
+        text-align: center;
+    }
+
+    .introduction {
+        margin-top: 2em;
+    }
+
+    .firstArticle {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .secondArticle {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+    }
+    
+}
+

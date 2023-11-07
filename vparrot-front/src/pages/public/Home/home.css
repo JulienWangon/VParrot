@@ -1,6 +1,259 @@
+/*TESTIMONIES SECTION*/
+
 .testimoniesSection {
-  height: 50vh;
+  height: 75vh;
   padding-top: 2em;
   background-color: #EEEEEE;
 
 }
+
+
+/*FIRST ICON SECTION*/
+
+.iconSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  background-image: url('../../../assets/images/homePage/iconBackground.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+}
+
+.IconOpacityLayer {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7); 
+  z-index: 1000; 
+}
+
+.iconContainer {
+  position: relative;
+  padding: 2em;
+  z-index: 2000;
+}
+
+.iconTitle, .iconContent, .iconConclusion{
+  position: relative;
+  color: white;
+  z-index: 2000;
+
+}
+
+.iconTitle {
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+
+}
+
+.iconContent {
+  text-align: justify;
+  font-size: 0.9rem;
+  font-family: 'Anek Tamil', sans-serif;
+  padding: 0.8em;
+
+}
+
+.icon {
+  margin-top: 0.5em;
+  position: relative;
+  width: 80px;
+  z-index: 2000;
+}
+
+.iconConclusion {  
+  text-align: justify;
+  font-family: 'Anek Tamil', sans-serif;
+  font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 1.5em;
+  margin: auto;   
+}
+
+.iconeBtnContainer {
+  text-align: center;
+  margin: 2em;
+  width: 100%;
+}
+
+.iconBtn {
+  position: relative;
+  width: 50%;
+  margin-top: 2em;
+  z-index: 2000;
+}
+
+
+/*SECOND ICONS SECTION*/
+
+.iconSection2 {
+  width: 90vw;
+}
+
+.iconsContainers2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 30vh;
+  padding: 0.7em;
+  background-color: #D9D9D9;
+}
+
+
+.iconSection2 svg {
+  width: 10vw;
+}
+
+.iconSection2 h3 {
+  font-size: 0.8em;
+  color:black;
+
+}
+
+.icone2  {
+  text-align: center;
+  margin: auto;
+} 
+
+
+.arrow1, .arrow2 {
+ 
+  transform: scaleY(-1) rotate(90deg);
+  
+}
+
+.arrow3 {
+  grid-column: 5 / 6;
+  grid-row: 2 / 3;
+  transform: scaleY(-1);
+}
+
+
+.group4, .group5, .group6, .arrow4, .arrow5 {
+
+  grid-row: 3 / 4;
+}
+
+.arrow4, .arrow5 {
+  transform: scaleY(-1) rotate(-90deg);
+}
+
+.arrow1, .arrow2, .arrow3, .arrow4, .arrow5, .arrow6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow3 {
+  transform: scaleY(-1);
+}
+
+
+
+
+/*FIRST ICON SECTION QUERIES*/
+
+@media (min-width: 1400px) {
+
+    .iconsContainer {    
+      display: flex;
+      justify-content: space-around;
+      width: 100vw;
+      text-align: center;
+      margin-top: 2em;;
+    }
+
+    .icon {
+        width: 80px;
+    }
+
+    .iconContent {
+      width: 20vw;;
+    }
+
+    .iconConclusion {
+      width: 50%;
+      margin-top: 1.5em;
+    }
+
+    .iconBtn {
+      width: 20%;
+    }
+}
+
+/*SECOND ICONS SECTION QUERIS*/
+
+@media (max-width: 2560px) and (min-width: 1663px){
+  .iconSection2 {
+    width: 30vw;
+    margin-top: 5em; 
+  }
+
+  .iconSection2 svg {
+    width: 4vw;
+  }
+
+}
+
+@media (min-width: 1400px) and (max-width: 1662px){
+
+  .iconSection2 {
+    width: 40vw;
+    margin-top: 5em;
+  }
+
+  .iconsContainers2 {
+      padding: 1em;
+  }
+
+  .iconSection2 svg {
+    width: 5vw;
+  }
+
+  .iconSection2 h3 {
+    font-size: 1.5rem;
+    color:black;
+  
+  }
+
+}
+
+@media screen and (max-width: 1400px) and (min-width: 1201px){
+
+  .iconSection2 {
+    width: 80vw;
+    margin-top: 2em; 
+    padding: 3em;
+  }
+
+  .iconSection2 svg {
+    width: 6vw;
+  }
+
+  .iconSection2 h3 {
+    font-size: 1.1rem;
+    color:black;
+  
+  }
+
+
+
+
+
+
+}
+
+
+
+
+
+
+

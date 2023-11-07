@@ -23,13 +23,12 @@
 /*Button :hovver Style*/
 .redBtn:hover{
   background-color: white;
-  color: rgba(187, 39, 26, 0.8);
-  border: 2px solid rgba(187, 39, 26, 0.9);
-  font-weight: 400;
+  color: rgba(187, 39, 26, 0.9);
+  font-weight: 600;
   
 }
 .whiteBtn:hover {
     background-color: rgba(187, 39, 26, 0.9);
-    font-weight: 400;
+    font-weight: 600;
    
 }

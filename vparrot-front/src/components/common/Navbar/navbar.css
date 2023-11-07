@@ -21,10 +21,14 @@
 .navItem a {
   text-decoration: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 1.5em;
-  font-weight: 600;
+  font-weight: 800;
   font-family: 'Alumni Sans', sans-serif;
+}
+
+.navItem a:hover {
+    color: rgba(187, 39, 26, 0.9);
 }
 
 .ma-toggler-white
