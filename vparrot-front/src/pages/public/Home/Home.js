@@ -19,6 +19,7 @@ import article2Photo1 from '../../../assets/images/homePage/article2Photo1.webp'
 import article2Photo2 from '../../../assets/images/homePage/article2Photo2.webp';
 import conclusionPhoto1 from '../../../assets/images/homePage/conclusionPhoto1.webp';
 import conclusionPhoto2 from '../../../assets/images/homePage/conclusionPhoto2.webp';
+import Footer from '../../../components/Footer/Footer';
 
 
 
@@ -26,7 +27,7 @@ import conclusionPhoto2 from '../../../assets/images/homePage/conclusionPhoto2.w
 
 const Home = () => {
   return (
-    <div>
+    <>
 
         <Header title="Garage V.Parrot" slogan="Entretien Réparation Vente de Véhicules d'occasions"/>
         <main>
@@ -216,13 +217,11 @@ const Home = () => {
                             "      
                 bgColor="#D9D9D9"
             />
-
-
-
         </main>
+        <Footer/>
 
 
-    </div>
+    </>
   );
 };
 
