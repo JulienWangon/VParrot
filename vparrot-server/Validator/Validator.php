@@ -124,6 +124,47 @@ class Validator {
 
     }
 
+    //Validate hours format
+    public function validateHoursFormat ($hourString){
+
+        if(!isset($hourString['morning_opening']) || !isset($hourString['morning_closing']) || !isset($hourString['afternoon_opening']) || !isset($hourString['afternoon_closing'])) {
+            $this->errors[] = "Tous les champs d'horaires sont nécessaires";
+            return false;
+        }
+
+        //format HH:mm:ss
+        $timePattern = "/^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/";
+        if (!preg_match($timePattern, $hourString['morningOpening']) || !preg_match($timePattern, $hourString['morningClosing']) || !preg_match($timePattern, $hourString['afternoonOpening']) || !preg_match($timePattern, $hourString['afternoonClosing'])) {
+            $this->errors[] = "Le format des horaires est invalide. Utilisez le format HH:mm:ss.";
+            return false;
+        }
+
+        return true;
+    }
+
+    //Timeline validation
+    public function validateTimeline($hourString) {
+
+        $morningOpening = DateTime::createFromFormat("H:i:s", $hourString["morning_opening"]);
+        $morningClosing = DateTime::createFromFormat("H:i:s", $hourString["morning-_closing"]);
+        $afternoonOpening = DateTime::createFromFormat("H:i:s", $hourString["afternoon_opening"]);
+        $afternoonclosing = Datetime::createFromFormat("H:i:s", $hourString["afternoon_closing"]);
+
+        if($morningOpening >= $morningClosing) {
+            $this->errors[] = "L'heure d'ouverture du matin doit être avant l'heure de fermeture du matin";
+        }
+
+        if($afternoonOpening >= $afternoonclosing) {
+            $this->errors[] = "L'heure d'ouverture de l'aprè-midi doit être avant l'heure de fermeture de l'après-midi";
+        }
+
+        if($morningClosing >= $afternoonOpening) {
+            $this->errors[] = "L'heure de fermeture du matin doit être avant l'heure d'ouverture de l'après midi";
+        }
+
+        return count($this->errors) === 0;
+    }
+
     //Validate JSON data format
     public function validateJsonFormat($jsonData) :bool {
 
@@ -135,7 +176,6 @@ class Validator {
         return empty($this->errors["json"]);
     }
 
-   
     //Return validator error
     public function getErrors() {
         return $this->errors;
