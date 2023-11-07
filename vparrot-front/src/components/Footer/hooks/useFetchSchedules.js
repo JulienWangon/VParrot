@@ -13,7 +13,7 @@ const useFetchSchedules = () => {
         
             try {
 
-                const schedules = fetchSchedules();
+                const schedules = await fetchSchedules();
                 setSchedules(schedules);
 
             } catch (error) {
