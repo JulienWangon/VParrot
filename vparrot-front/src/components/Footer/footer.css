@@ -1,0 +1,75 @@
+
+
+
+footer, .schedulesTitle, .adressTitle, .schedulesContainer ul, .adress, .phone {
+  position: relative;
+}
+
+.opacityFooter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw; 
+    padding: 1em;
+    background-image: url('../../assets/images/footer.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+
+.schedulesContainer {
+  text-align: center;
+  width: 100vw;
+}
+
+.schedulesTitle, .adressTitle{
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+  z-index: 2000;
+}
+
+.schedulesContainer ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.5em ; 
+    padding: 0;
+    margin: 0;
+    list-style-type: none; 
+    z-index: 2000;
+}
+
+.schedulesContainer li {
+  color: white;
+    box-sizing: border-box; 
+    font-size: 0.8rem;
+    font-family: 'Anek Tamil', sans-serif;
+}
+
+.adressContainer {
+  text-align: center;
+  margin-top: 2em;
+  background-color: rgba(187, 39, 26, 0.8);
+  width: 80%;
+  padding: 0.8em;
+  border-radius: 20px;;
+}
+
+.adress, .phone {
+    color: white;
+    font-family: 'Anek Tamil', sans-serif;
+    font-weight: 400;
+    z-index: 2000;
+}
