@@ -12,11 +12,13 @@ header("Access-Control-Allow-Credentials: true");
 
 
 //require controllers
+require_once './vparrot-server/controllers/SchedulesController.php';
 require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
 require_once './vparrot-server/controllers/AuthController.php';
 
 //require models
+require_once './vparrot-server/models/Schedules.php';
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/Users.php';
 require_once './vparrot-server/models/AuthModel.php';
@@ -29,6 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //Dependency Injection
+$schedules = new Schedules();
 $testimonies = new Testimonies();
 $usersModel = new Users();
 $authModel = new AuthModel();
@@ -36,6 +39,7 @@ $validator = new Validator();
 
 //LOADING CONTROLLERS
 $controllers = [
+    'schedules' => new SchedulesController($validator, $schedules),
     'testimonies' => new TestimoniesController($validator, $testimonies),
     'users' => new UsersController($validator, $usersModel),
     'auth' => new AuthController($validator, $authModel, $usersModel),
@@ -45,6 +49,7 @@ $controllers = [
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
+        '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/testimonies/moderated' => [$controllers['testimonies'], 'getModeratedTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
@@ -64,6 +69,7 @@ $routes = [
       '#^/vparrot/users/(\d+)$#' => [$controllers['users'], 'updateThisUser'],
       '#^/vparrot/testimonies/(\d+)/\approve$#' => [$controllers['testimonies'], 'approveThisTestimony'],
       '#^/vparrot/testimonies/(\d+)/\reject$#' => [$controllers['testimonies'], 'rejectThisTestimony'],
+      '#^/vparrot/schedules/(\d+)$#' => [$controllers['schedules'], 'updateSchedule'],
 
     ],
 
@@ -102,7 +108,6 @@ if (!$foundRoute) {
             $foundRoute = true;
             break;
         }
-
     }
 }
 
