@@ -1,14 +1,14 @@
 /*TESTIMONIES SECTION*/
 
 .testimoniesSection {
-  height: 75vh;
+ 
   padding-top: 2em;
   background-color: #EEEEEE;
 
 }
 
 
-/*FIRST ICON SECTION*/
+/*ICON SECTION*/
 
 .iconSection {
   position: relative;
@@ -91,75 +91,7 @@
   z-index: 2000;
 }
 
-
-/*SECOND ICONS SECTION*/
-
-.iconSection2 {
-  width: 90vw;
-}
-
-.iconsContainers2 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  height: 30vh;
-  padding: 0.7em;
-  background-color: #D9D9D9;
-}
-
-
-.iconSection2 svg {
-  width: 10vw;
-}
-
-.iconSection2 h3 {
-  font-size: 0.8em;
-  color:black;
-
-}
-
-.icone2  {
-  text-align: center;
-  margin: auto;
-} 
-
-
-.arrow1, .arrow2 {
- 
-  transform: scaleY(-1) rotate(90deg);
-  
-}
-
-.arrow3 {
-  grid-column: 5 / 6;
-  grid-row: 2 / 3;
-  transform: scaleY(-1);
-}
-
-
-.group4, .group5, .group6, .arrow4, .arrow5 {
-
-  grid-row: 3 / 4;
-}
-
-.arrow4, .arrow5 {
-  transform: scaleY(-1) rotate(-90deg);
-}
-
-.arrow1, .arrow2, .arrow3, .arrow4, .arrow5, .arrow6 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.arrow3 {
-  transform: scaleY(-1);
-}
-
-
-
-
-/*FIRST ICON SECTION QUERIES*/
+/*ICON SECTION QUERIES*/
 
 @media (min-width: 1400px) {
 
@@ -189,67 +121,146 @@
     }
 }
 
-/*SECOND ICONS SECTION QUERIS*/
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
 
-@media (max-width: 2560px) and (min-width: 1663px){
-  .iconSection2 {
+
+  .iconsContainer {    
+    display: flex;
+    justify-content: space-around;
+    width: 100vw;
+    text-align: center;
+    margin-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .iconConclusion {
+    width: 70%;
+    margin-top: 2em;
+  }
+
+  .iconContent {
     width: 30vw;
-    margin-top: 5em; 
   }
 
-  .iconSection2 svg {
-    width: 4vw;
+  .iconBtn {
+    width: 20%;
   }
-
 }
 
-@media (min-width: 1400px) and (max-width: 1662px){
+@media screen and (max-width: 1200px) and (min-width: 992px) {
 
-  .iconSection2 {
+  .iconsContainer {    
+    display: flex;
+    justify-content: space-around;
+    width: 100vw;
+    text-align: center;
+    margin-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .iconConclusion {
+    width: 70%;
+    margin-top: 2em;
+  }
+
+  .iconContent {
+    width: 30vw;
+  }
+
+  .iconBtn {
+    width: 20%;
+  } 
+}
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+
+  .iconsContainer {    
+    display: flex;
+    justify-content: space-around;
+    width: 100vw;
+    text-align: center;
+    margin-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .iconConclusion {
+    width: 90%;
+    margin-top: 2em;
+  }
+
+  .iconContent {
+    width: 30vw;
+  }
+
+  .iconBtn {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .iconsContainer {    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    text-align: center;
+    margin-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .iconConclusion {
+    width: 80%;
+    margin-top: 2em;
+  }
+
+  .iconContent {
     width: 40vw;
-    margin-top: 5em;
   }
 
-  .iconsContainers2 {
-      padding: 1em;
+  .iconBtn {
+    width: 20%;
   }
-
-  .iconSection2 svg {
-    width: 5vw;
-  }
-
-  .iconSection2 h3 {
-    font-size: 1.5rem;
-    color:black;
+}
   
+@media screen and (max-width: 575px) {
+
+  .iconsContainer {    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    text-align: center;
+    margin-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
   }
+
+  .iconConclusion {
+    width: 90%;
+    margin-top: 2em;
+  }
+
+  .iconContent {
+    width: 50vw;
+  }
+
+  .iconBtn {
+    width: 30%;
+  }
+ 
+
 
 }
 
-@media screen and (max-width: 1400px) and (min-width: 1201px){
-
-  .iconSection2 {
-    width: 80vw;
-    margin-top: 2em; 
-    padding: 3em;
-  }
-
-  .iconSection2 svg {
-    width: 6vw;
-  }
-
-  .iconSection2 h3 {
-    font-size: 1.1rem;
-    color:black;
-  
-  }
 
 
 
 
-
-
-}
 
 
 

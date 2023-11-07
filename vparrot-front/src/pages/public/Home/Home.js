@@ -37,13 +37,36 @@ const Home = () => {
             <Section
                 className="introSection"
                 title="L'expertise V.Parrot"
-                intro="Bienvenue chez Garage V.Parrot, votre partenaire de confiance pour tous vos besoins automobiles. Forts de 15 ans d'expérience dans le domaine, nous sommes spécialisés dans les réparations, la carrosserie, l'entretien courant des véhicules et la vente de véhicules d'occasion. Notre équipe de professionnels qualifiés est dévouée à vous offrir des services de haute qualité et à satisfaire vos attentes les plus exigeantes."
+                intro="
+                        Bienvenue chez Garage V.Parrot, votre partenaire de confiance pour tous vos besoins automobiles. 
+                        Forts de 15 ans d'expérience dans le domaine, nous sommes spécialisés dans les réparations, la carrosserie, l'entretien courant des véhicules et la vente de véhicules d'occasion. 
+                        Notre équipe de professionnels qualifiés est dévouée à vous offrir des services de haute qualité et à satisfaire vos attentes les plus exigeantes. 
+                        Nous comprenons l'importance d'un service clientèle irréprochable et nous nous engageons à fournir une expérience personnalisée et attentive. 
+                        De plus, nous veillons à rester à la pointe de la technologie dans tous nos services, afin d'assurer une précision et une efficacité maximales pour le soin de votre véhicule.
+                        "
                 photo1={introPhoto1}
                 alt1="Une femme travaillant sur un moteur"
-                article1="Que vous ayez besoin d'une simple réparation, d'une rénovation complète de votre carrosserie ou d'un entretien régulier pour maintenir votre véhicule en parfait état de fonctionnement, nous sommes là pour vous. Notre expertise approfondie et notre attention méticuleuse aux détails nous permettent de garantir des résultats exceptionnels à chaque fois."
+                paragraphe11="
+                            Que vous ayez besoin d'une simple réparation, d'une rénovation complète de votre carrosserie ou d'un entretien régulier pour maintenir votre véhicule en parfait état de fonctionnement, nous sommes là pour vous. 
+                            Notre expertise approfondie et notre attention méticuleuse aux détails nous permettent de garantir des résultats exceptionnels à chaque fois.            
+                            "
+                paragraphe12="
+                            Nous nous engageons à utiliser des pièces de rechange de haute qualité et des produits de finition supérieurs pour assurer la durabilité et la performance de votre véhicule. 
+                            En outre, notre équipe s'efforce de réaliser tous les services dans les délais convenus, vous permettant ainsi de reprendre la route en toute sérénité. Avec Garage V.Parrot, vous bénéficiez d'un service clientèle inégalé, où chaque véhicule est traité avec le plus grand soin, comme s'il s'agissait du nôtre.
+                            "
+        
                 photo2={introPhoto2}
                 alt2="Photo du sigle d'une marque de voiture sur le capot"
-                article2="De plus, si vous êtes à la recherche d'un véhicule d'occasion fiable, notre sélection soigneusement choisie répondra à vos besoins et à votre budget. Nous nous engageons à vous fournir des véhicules de qualité, minutieusement inspectés et prêts à prendre la route en toute confiance."            
+                paragraphe21="
+                            De plus, si vous êtes à la recherche d'un véhicule d'occasion fiable, notre sélection soigneusement choisie répondra à vos besoins et à votre budget. 
+                            Nous nous engageons à vous fournir des véhicules de qualité, minutieusement inspectés et prêts à prendre la route en toute confiance. 
+                            Chaque voiture d'occasion que nous proposons a passé une série de contrôles techniques rigoureux et est assortie d'une garantie pour vous assurer une sérénité maximale.  
+                            "
+                paragraphe22="
+                            Nous prenons également le temps de comprendre vos exigences spécifiques et de vous conseiller sur le choix du véhicule qui correspond le mieux à vos attentes en termes de performance, de style et de fonctionnalité. 
+                            Avec nous, vous bénéficiez d'un accompagnement personnalisé à chaque étape de votre achat, assurant que vous repartiez au volant de la voiture idéale pour vous et votre famille. 
+                            Faites-nous confiance pour vous guider vers la meilleure décision, et prenez la route avec assurance et plaisir.
+                            "            
             />
 
             <Section
@@ -52,10 +75,27 @@ const Home = () => {
                 intro="Chez Garage V.Parrot, nous comprenons l'importance de l'entretien régulier pour assurer la longévité et les performances optimales de votre véhicule. Notre équipe expérimentée et hautement qualifiée est spécialisée dans l'entretien courant des véhicules, offrant une gamme complète de services pour répondre à tous vos besoins."
                 photo1={article1Photo1}
                 alt1="Un homme tenant un bidon d'huile remplissant le réservoir d'huile d'une voiture"
-                article1="Que ce soit pour une vidange d'huile, le remplacement des filtres, le contrôle et le réglage des niveaux, l'inspection des freins, le diagnostic des systèmes électroniques ou toute autre intervention nécessaire, nous sommes là pour vous. Nous utilisons des équipements de pointe et des techniques modernes pour garantir des résultats précis et fiables."
+                paragraphe11="
+                            Que ce soit pour une vidange d'huile, le remplacement des filtres, le contrôle et le réglage des niveaux, l'inspection des freins, le diagnostic des systèmes électroniques ou toute autre intervention nécessaire, nous sommes là pour vous. 
+                            Nous utilisons des équipements de pointe et des techniques modernes pour garantir des résultats précis et fiables. 
+                            Notre équipe de techniciens certifiés s'engage à assurer un entretien méticuleux et un contrôle complet, afin de prévenir toute usure prématurée ou panne inattendue.       
+                            "
+                paragraphe12="
+                            Nous sommes également dédiés à la transparence et à l'honnêteté, en vous fournissant des explications claires sur les travaux réalisés et en veillant à ce que vous compreniez toutes les interventions avant qu'elles ne soient effectuées. 
+                            Faites confiance à notre expertise pour prolonger la durée de vie de votre véhicule et vous assurer une sérénité totale à chaque voyage.
+                            "
+                
                 photo2={article1Photo2}
                 alt2="Homme portant un masque chirurgical au téléphone fixant l'écran de son ordinateur"
-                article2="Nous comprenons que votre temps est précieux, c'est pourquoi nous nous efforçons de vous offrir un service rapide et efficace. Notre objectif est de maintenir votre véhicule en parfait état de fonctionnement, vous offrant une tranquillité d'esprit sur la route."
+                paragraphe21="
+                            Nous comprenons que votre temps est précieux, c'est pourquoi nous nous efforçons de vous offrir un service rapide et efficace, sans compromettre la qualité. 
+                            Notre objectif est de maintenir votre véhicule en parfait état de fonctionnement, en utilisant des pièces de rechange de haute qualité et les dernières technologies de diagnostic. 
+                            Cela vous offre une tranquillité d'esprit sur la route, sachant que chaque aspect de votre voiture a été méticuleusement inspecté et pris en charge.   
+                            "
+                paragraphe22="
+                            En outre, notre équipe est toujours prête à vous fournir des conseils professionnels et personnalisés pour garantir la longévité et les performances de votre véhicule. 
+                            Lorsque vous nous confiez votre voiture, vous pouvez vous attendre à un partenariat fiable et à une expérience de conduite améliorée.
+                            "
                 bgColor="#D9D9D9"  
             />
 
@@ -118,27 +158,69 @@ const Home = () => {
                 intro="Chez Garage V.Parrot, nous sommes spécialisés dans la réparation et la carrosserie des véhicules, offrant des services de qualité pour redonner vie à votre voiture après un accident ou une usure normale. Avec notre équipe compétente et expérimentée, nous sommes prêts à relever tous les défis, des réparations mineures aux rénovations majeures."
                 photo1={article2Photo1}
                 alt1="Homme portant des gants noire cirant la carrosserie d'une voiture violette"
-                article1="Que votre véhicule nécessite des travaux de redressement de la carrosserie, des réparations des éléments de la carrosserie, la réparation des pare-chocs, des ailes ou des portières, nous sommes équipés pour fournir des résultats exceptionnels. Nous utilisons des techniques de pointe, des outils spécialisés et des matériaux de haute qualité pour assurer une finition impeccable."
+                paragraphe11="
+                            Que votre véhicule nécessite des travaux de redressement de la carrosserie, des réparations des éléments de la carrosserie, la réparation des pare-chocs, des ailes ou des portières, nous sommes équipés pour fournir des résultats exceptionnels. 
+                            Nous utilisons des matériaux de haute qualité pour assurer une finition impeccable et durable. 
+                            Notre équipe s'efforce non seulement de restaurer l'esthétique de votre voiture, mais aussi de préserver son intégrité structurelle et sa sécurité.
+                            "
+                paragraphe12="
+                            Chaque intervention est effectuée avec les spécifications du constructeur, pour que votre voiture vous soit retournée dans un état qui répond à vos attentes. 
+                            Nous proposons un service de peinture complet, capable de reproduire la teinte originale de votre véhicule grâce à notre système de colorimétrie avancé. 
+                            Votre satisfaction est au cœur de notre métier, et nous nous engageons à vous restituer un véhicule à l'esthétique renouvelée et prêt à briller sur la route.
+                            "
                 photo2={article2Photo2}
                 alt2="Homme en combinaison grise travaillant sur le moteur d'une voiture"
-                article2="Nos mécaniciens et techniciens sont formés pour diagnostiquer rapidement les problèmes mécaniques et électroniques, afin d'effectuer les réparations nécessaires avec précision. Que ce soit pour la transmission, le système de freinage, la suspension ou tout autre composant, nous sommes compétents pour résoudre les problèmes et vous remettre en route en toute sécurité."        
+                paragraphe21="
+                            Nos mécaniciens et techniciens sont formés pour diagnostiquer rapidement les problèmes mécaniques et électroniques, afin d'effectuer les réparations nécessaires avec précision. 
+                            Que ce soit pour la transmission, le système de freinage, la suspension ou tout autre composant, nous sommes compétents pour résoudre les problèmes et vous remettre en route en toute sécurité. 
+                            Nous prenons le temps de vous expliquer clairement les travaux à réaliser et nous assurons que chaque intervention est menée avec la plus grande attention au détail. 
+                            "
+                paragraphe22="
+                            Nous utilisons uniquement des pièces de rechange homologuées et de haute qualité, conformes aux normes de l'industrie, pour garantir la durabilité et la performance de votre véhicule. 
+                            Notre engagement envers l'excellence nous pousse à rester à la pointe de la technologie et à suivre continuellement les formations les plus récentes, assurant ainsi que votre voiture bénéficie des dernières avancées en matière de mécanique et de technologie automobile. 
+                            "        
             />
 
            <Section
                 className="conclusionSection"
                 title="La satisfaction V.Parrot"
+                intro="
+                        Dans l'univers de l'automobile, la confiance et la satisfaction sont primordiales. 
+                        Chez Garage V.Parrot, ces valeurs sont le moteur de notre quotidien. 
+                        Nous clôturons votre parcours chez nous non seulement avec une voiture remise à neuf, mais également avec la certitude d'avoir été entendu, compris et respecté. 
+                        La section qui suit est le reflet de notre engagement indéfectible envers vous, nos clients, qui nous confiez ce qui vous est cher. 
+                        La promesse V.Parrot, une promesse d'excellence et de service clientèle qui dépasse vos attentes.
+                        "
                 photo1={conclusionPhoto1}
                 alt1="Garagiste en salopette grise et tee-shirt noir accroupie et accoudé sur un pneu"
-                article1="Chez Garage V.Parrot, nous sommes fiers de notre engagement envers la satisfaction du client. Nous vous tiendrons informé de l'avancement des travaux et nous vous fournirons des devis détaillés avant d'entreprendre toute réparation ou rénovation. Notre approche transparente et notre attention méticuleuse aux détails nous permettent de vous offrir un service de réparation et de carrosserie de premier ordre."
+                paragraphe11="
+                        Chez Garage V.Parrot, nous sommes fiers de notre engagement envers la satisfaction du client. 
+                        Nous vous tiendrons informé de l'avancement des travaux et nous vous fournirons des devis détaillés avant d'entreprendre toute réparation ou rénovation. 
+                        Notre approche transparente et notre attention méticuleuse aux détails nous permettent de vous offrir un service de réparation et de carrosserie de premier ordre.         
+                        "
+                paragraphe12="
+                            Notre équipe de professionnels est dédiée à répondre à toutes vos questions et à résoudre vos préoccupations, en veillant à ce que vous ayez une compréhension claire de toutes les procédures effectuées sur votre véhicule. 
+                            Nous prenons le temps d'écouter vos besoins spécifiques et de proposer des solutions personnalisées qui reflètent le meilleur rapport qualité-prix. 
+                            Chez Garage V.Parrot, vous ne trouvez pas seulement un prestataire de services, mais un partenaire de confiance. 
+                            "
                 photo2={conclusionPhoto2}
                 alt2="poignée de main entre deux hommes"
-                article2="Confiez-nous votre véhicule et faites l'expérience d'un service professionnel et fiable. Prenez rendez-vous dès aujourd'hui et laissez notre équipe qualifiée prendre soin de votre voiture, lui redonnant son apparence et ses performances optimales."       
+                paragraphe21="
+                            Confiez-nous votre véhicule et faites l'expérience d'un service professionnel et fiable. 
+                            Chez V.Parrot, nous comprenons l'importance d'une voiture bien entretenue, non seulement pour la fiabilité et la performance mais également pour votre tranquillité d'esprit. 
+                            Prenez rendez-vous dès aujourd'hui et laissez notre équipe qualifiée prendre soin de votre voiture. Avec nos techniciens experts, équipements de pointe et passion pour l'excellence, nous nous engageons à redonner à votre voiture son éclat et ses performances optimales. 
+                            "
+                paragraphe22="
+                            Nous traitons chaque véhicule avec le plus grand soin, comme si c'était le nôtre, en vous garantissant une attention méticuleuse aux détails et un service client hors pair. 
+                            Ne laissez pas les petits tracas devenir de gros problèmes confiez votre voiture à des professionnels qui se soucient vraiment de votre satisfaction.
+                            "      
                 bgColor="#D9D9D9"
             />
 
 
 
         </main>
+
 
     </div>
   );

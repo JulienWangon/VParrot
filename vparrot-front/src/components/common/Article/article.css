@@ -1,7 +1,6 @@
 .articlePhoto {
   max-width: 90vw;;
   border-radius: 20px;
-  margin-top: 1em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
@@ -17,24 +16,124 @@ article {
   margin-bottom: 0;
   font-family: 'Anek Tamil', sans-serif;
   font-weight: 500;
-  padding: 1em;
 }
 
+
+/*MEDIA QUERIES*/
 @media screen and  (min-width: 1400px) {
 
     article {
-        margin-top: 3em;
+        margin-top: 2em;
     }
     .articlePhoto {
-      max-width: 25%;
+        width: 25vw;
     }
 
     .articleText {
       text-align: start;
       height: 100%;
+      padding-bottom: 1.5em;
+      
     }
+}
+
+
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+
+ 
+
+  .articlePhoto {
+    max-width: 30vw;
+  }
+
+  .articleText {
+    text-align: start;
+    padding-bottom: 1em;
+}
+
+  .textContainer {
+      width: 30vw;
+      margin-top: 1.5em;
+  }
 
 
 }
+
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+  
+
+  .articlePhoto {
+    max-width: 40vw;
+  }
+
+  .articleText {
+    width: 40vw;
+   padding: 1em;
+  
+  }
+
+  .textContainer {
+    padding: 1em;
+  }
+ 
+}
+
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  
+  .articlePhoto {
+    max-width: 40vw;
+  }
+
+  .articleText {
+    width: 40vw;
+   padding: 0.5em;
+  
+  }
+
+  .textContainer {
+    padding: 1em;
+  }
+
+}
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .articlePhoto {
+    max-width: 90vw;
+  }
+
+  .articleText {
+    width: 90vw;
+   padding: 1em;
+  
+  }
+
+  .textContainer {
+    padding: 2em;
+  }
+  
+}
+
+@media screen and (max-width: 575px) {
+
+  .articlePhoto {
+    max-width: 90vw;
+  }
+
+  .articleText {
+    width: 90vw;
+   padding: 0.5em;
+  
+  }
+
+  .textContainer {
+    padding: 1em;
+  }
+  
+}
+
 
 

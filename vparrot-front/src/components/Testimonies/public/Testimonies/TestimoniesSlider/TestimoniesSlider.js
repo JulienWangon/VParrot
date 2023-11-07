@@ -107,7 +107,7 @@ const TestimoniesSlider = () => {
     </Slider>
 
     <div className="testimoniesConclusion">        
-        <p className="testimoniesTextSection">Tu nous as confié ton véhicule, tu as trouvé le véhicule de tes rêve parmis notre large sélection de véhicules d'occasions ? Racontes nous ton expérience en laissant un avis ! </p>
+        <p className="testimoniesTextSection">Tu nous as confié ton véhicule, tu as trouvé le véhicule de tes rêves parmi notre large sélection de véhicules d'occasion ? Raconte-nous ton expérience en laissant un avis ! Nous apprécions sincèrement chaque retour de nos clients, car il nous aide à améliorer continuellement notre service. Ton opinion est précieuse pour nous et pour la communauté des conducteurs qui, comme toi, recherchent qualité et fiabilité. Partage ton histoire et contribue à construire la réputation de confiance qui est la marque de Garage V.Parrot.</p>
         <Button className="addTestimonyBtn" colorStyle="redBtn">Déposer un avis</Button>
     </div>
     

@@ -15,18 +15,22 @@
 
 @media screen and  (min-width: 1400px) {
 
-     .repairSection, .introSection, .conclusionSection {  
+     .repairSection, .introSection {  
           width: 80vw;
           display:flex;
           align-items: center;
-          justify-content: center;        
+          justify-content: center;       
+    }
+
+    .careSection, .conclusionSection, .repairSection, .introSection {
+        padding-bottom: 3em;
     }
    
-    .careSection > * {
+    .careSection > *, .conclusionSection > * {
         width: 80vw;
     }
 
-    .careSection > h2 {
+    .careSection > h2, .conclusionSection > h2 {
         text-align: center;
     }
 
@@ -44,7 +48,138 @@
         display: flex;
         flex-direction: row-reverse;
         align-items: flex-start;
+        padding-top: 1.5em;
     }
+
+
+    .firstArticle > .textContainer {
+        padding-left: 1.5em;
+    }
+
+    .secondArticle > .textContainer {
+        padding-right: 1.5em;
+    }
+
+    
+   
     
 }
 
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+
+    .introduction {
+        margin-top: 2em;
+        padding-left: 4em;
+        padding-right: 4em;
+    }
+
+    
+    .articleContainer {
+        width: 100vw;
+        padding : 3em;
+      }
+
+
+    .firstArticle {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .textContainer{
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .secondArticle {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        padding-top: 2.5em;
+    }
+
+    .firstArticle > .textContainer {
+        padding-left: 1.5em;
+    }
+
+    .secondArticle > .textContainer {
+        padding-right: 1.5em;
+    }
+
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+    .introduction {
+        margin-top: 2em;
+        padding-left: 4em;
+        padding-right: 4em;
+    }
+
+    .articleContainer {
+        display: flex;
+        padding : 2em;
+      }
+
+    .firstArticle , .secondArticle{
+        padding: 0.5em;  
+    }
+ 
+}
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+
+    .introduction {
+        margin-top: 2em;
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+  
+    .articleContainer {
+        display: flex;
+        padding : 2em;
+      }
+
+      .firstArticle , .secondArticle{
+        padding: 0.5em;  
+    }
+ 
+}
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+    
+    .introduction {
+        margin-top: 2em;
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+  
+    .articleContainer {
+        padding :1em;
+      }
+
+      .firstArticle , .secondArticle{
+        padding: 01em;  
+    }
+  }
+
+@media screen and (max-width: 575px) {
+
+    .introduction {
+        margin-top: 1em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+  
+    .articleContainer {
+        padding :0.5em;
+      }
+
+      .firstArticle , .secondArticle{
+        padding: 01em;  
+    }
+
+
+
+
+}

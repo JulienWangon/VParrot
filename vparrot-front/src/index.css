@@ -19,42 +19,42 @@ main {
 /* Plus grands écrans */
 @media screen and (min-width: 1400px) {
   html {
-    font-size: 16px; /* Augmente pour les très grands écrans */
+    font-size: 17px; /* Augmente pour les très grands écrans */
   }
 }
 
 /* Grands écrans de bureau */
 @media screen and (max-width: 1399px) and (min-width: 1201px) {
   html {
-    font-size: 22px; /* Un peu plus grand pour les grands écrans de bureau */
+    font-size: 16px; /* Un peu plus grand pour les grands écrans de bureau */
   }
 }
 
 /* Tablettes et petits écrans de bureau */
 @media screen and (max-width: 1200px) and (min-width: 992px) {
   html {
-    font-size: 20px; /* Ajusté pour les écrans moyens */
+    font-size: 16px; /* Ajusté pour les écrans moyens */
   }
 }
 
 /* Tablettes en orientation portrait et grands mobiles */
 @media screen and (max-width: 991px) and (min-width: 768px) {
   html {
-    font-size: 18px; /* Plus petit pour les tablettes et grands mobiles */
+    font-size: 16px; /* Plus petit pour les tablettes et grands mobiles */
   }
 }
 
 /* Appareils mobiles en orientation paysage */
 @media screen and (max-width: 767px) and (min-width: 576px) {
   html {
-    font-size: 17px; /* Ajusté pour les mobiles en orientation paysage */
+    font-size: 15px; /* Ajusté pour les mobiles en orientation paysage */
   }
 }
 
 /* Mobiles en orientation portrait */
 @media screen and (max-width: 575px) {
   html {
-    font-size: 16px; /* Taille de base pour les mobiles en orientation portrait */
+    font-size: 14px; /* Taille de base pour les mobiles en orientation portrait */
   }
 }
 
