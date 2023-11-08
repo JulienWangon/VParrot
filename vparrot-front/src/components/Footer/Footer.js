@@ -4,6 +4,7 @@ import useFetchSchedules from './hooks/useFetchSchedules';
 import H3Title from '../common/H3Title/H3Title';
 
 import './footer.css';
+import ContactBtn from '../common/Buttons/ContactBtn/ContactBtn';
 
 const Footer = () => {
 
@@ -12,6 +13,11 @@ const Footer = () => {
   return (
     <footer>
         <div className="opacityFooter"></div>
+        <div className="adressContainer">
+            <H3Title className="adressTitle" h3Text="Garage v.Parrot"/>
+            <p className="adress">12 rue des dépravés 31000 Toulouse</p>
+            <p className="phone">04.28.64.32.86</p>          
+        </div>
         <div className="schedulesContainer">
             <H3Title className="schedulesTitle" h3Text="Horaires d'ouverture"/>
             {loading ? (
@@ -28,15 +34,9 @@ const Footer = () => {
                 </ul>
             )}
         </div>
-        <div className="adressContainer">
-            <H3Title className="adressTitle" h3Text="Garage v.Parrot"/>
-            <p className="adress">12 rue des dépravés 31000 Toulouse</p>
-            <p className="phone">04.28.64.32.86</p>          
-        </div>
+        
         <div className="contactContainer">
-
-
-
+            <ContactBtn/>
         </div>      
     </footer>
   );
