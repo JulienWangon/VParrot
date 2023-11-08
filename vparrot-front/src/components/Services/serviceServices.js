@@ -7,7 +7,7 @@ export const fetchAllServicesGroupedByType = async () => {
 
         const response = await axios.get('http://localhost/vparrot/services');
         if (response.data && response.data.status === 'success') {
-
+          
             return response.data.data;
         } else {
 
