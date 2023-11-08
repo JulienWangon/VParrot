@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import H1Title from '../../components/common/H1Title/H1Title';
-import Button from '../../components/common/Button/Button';
+import Button from '../../components/common/Buttons/Button/Button';
 import ConnexionModal from '../../components/admin/ConnexionModal/ConnexionModal';
 
 

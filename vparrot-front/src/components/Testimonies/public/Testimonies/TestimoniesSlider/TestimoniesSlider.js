@@ -8,7 +8,7 @@ import TestimonyCard from '../TestimonyCard/TestimonyCard';
 import './testimoniesSlider.css';
 
 import useFetchModeratedTestimonies from '../../../hooks/useFetchModeratedTestimonies';
-import Button from '../../../../common/Button/Button';
+import Button from '../../../../common/Buttons/Button/Button';
 
 
 const TestimoniesSlider = () => {

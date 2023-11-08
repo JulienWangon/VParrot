@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '../../../components/common/Header/Header';
 import TestimoniesSlider from '../../../components/Testimonies/public/Testimonies/TestimoniesSlider/TestimoniesSlider';
 import Section from '../../../components/common/Section/Section';
-import Button from '../../../components/common/Button/Button';
+import Button from '../../../components/common/Buttons/Button/Button';
 import H3Title from '../../../components/common/H3Title/H3Title';
 
 //Import CSS file
