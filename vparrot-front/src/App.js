@@ -6,7 +6,7 @@ import ProtectedRoute from './_utils/ProtectedRoute';
 // Publics Pages Components Import
 import Home from "./pages/public/Home/Home";
 import MaintenanceServices from "./pages/public/MaintenanceServices/MaintenanceServices";
-import RepairServices from "./pages/public/RepairServices";
+import RepairServices from './pages/public/RepairServices/RepairServices';
 import SalesArea from "./pages/public/SalesArea";
 
 //Import Error Component
