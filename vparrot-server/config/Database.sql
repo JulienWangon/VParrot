@@ -1,6 +1,6 @@
 /*DATABASE CREATION*/
 CREATE DATABASE IF NOT EXISTS vparrot_garage;
-USE waju5548_vparrot_garage;
+USE vparrot_garage;
 
 
 /*CREATION USER ROLE TABLE */

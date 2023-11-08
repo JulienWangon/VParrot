@@ -1,5 +1,5 @@
 SET NAME 'utf8';
-USE waju5548_vparrot_garage;
+USE vparrot_garage;
 
 /*INSERT ROLES DATA*/
 INSERT INTO roles (role_name) VALUES
@@ -153,7 +153,7 @@ INSERT INTO equipment_types (type_name) VALUES
 INSERT INTO equipments (denomination, type_id) VALUES
 ("ABS", 1),
 ("ESP", 1),
-("Airbags", 1)
+("Airbags", 1),
 ("Détection d'angle mort", 1),
 ("Freinage d'urgence autonome", 1),
 ("Détecteur pression des pneus", 1),
