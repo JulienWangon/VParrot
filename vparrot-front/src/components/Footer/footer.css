@@ -1,7 +1,7 @@
 
 
 
-footer, .schedulesTitle, .adressTitle, .schedulesContainer ul, .adress, .phone {
+footer, .schedulesTitle, .adressTitle, .schedulesContainer ul, .adress, .phone, .contactContainer > button {
   position: relative;
 }
 
@@ -18,9 +18,10 @@ footer, .schedulesTitle, .adressTitle, .schedulesContainer ul, .adress, .phone {
 footer {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    width: 100vw; 
-    padding: 1em;
+    width: 100vw;
+    height: 50vh; 
     background-image: url('../../assets/images/footer.webp');
     background-size: cover;
     background-position: center;
@@ -30,7 +31,7 @@ footer {
 
 .schedulesContainer {
   text-align: center;
-  width: 100vw;
+  
 }
 
 .schedulesTitle, .adressTitle{
@@ -60,9 +61,7 @@ footer {
 
 .adressContainer {
   text-align: center;
-  margin-top: 2em;
   background-color: rgba(187, 39, 26, 0.8);
-  width: 80%;
   padding: 0.8em;
   border-radius: 20px;;
 }
@@ -73,3 +72,166 @@ footer {
     font-weight: 400;
     z-index: 2000;
 }
+
+.contactContainer {
+  text-align: center;
+}
+
+.contactContainer > button {
+  width: 40vw;
+  z-index :2000;
+
+}
+
+
+@media screen and (min-width: 1400px) {
+  
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .contactContainer > button {
+    width: 15vw;
+    font-size: 1.1rem;
+  }
+
+  .contactContainer {
+    width: 25%;
+  }
+
+  .adressContainer {
+    width: 25%;
+  }
+
+  .schedulesContainer li {
+    font-size: 1rem;
+  }
+
+  .schedulesTitle, .adressTitle{
+    font-size: 1.8rem;
+  }
+
+  .adress, .phone {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+ 
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .contactContainer > button {
+      width: 15vw;
+      font-size: 1.1rem;
+    }
+
+    .contactContainer {
+      width: 25%;
+    }
+
+    .adressContainer {
+      width: 25%;
+    }
+
+    .schedulesContainer li {
+      font-size: 1rem;
+    }
+
+    .schedulesTitle, .adressTitle{
+      font-size: 1.8rem;
+    }
+
+    .adress, .phone {
+      font-size: 1.1rem;
+    }
+}
+
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .contactContainer > button {
+      width: 15vw;
+      font-size: 1.1rem;
+    }
+
+    .contactContainer {
+      width: 25%;
+    }
+
+   .adressContainer {
+      width: 25%;
+      padding: 0.4em;
+    }
+}
+
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+
+    .contactContainer > button {
+        width: 20vw;
+        font-size: 1.1rem;;
+    }
+
+    .schedulesContainer ul {
+      grid-gap: 1em;
+      
+    }
+
+    .schedulesContainer {
+      text-align: center;
+    }
+
+    .contactContainer {
+      text-align: center;  
+    }
+
+    .schedulesContainer li {
+      font-size: 0.9rem;
+    }
+
+    .schedulesTitle, .adressTitle{
+      font-size: 1.8rem;
+    }
+
+    .adress, .phone {
+      font-size: 1.1rem;
+    }
+}
+
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+  
+    .contactContainer > button {
+      width: 30vw; 
+    }
+
+    .schedulesContainer li {
+      font-size: 1rem;
+    }
+
+    .schedulesContainer ul {
+      grid-gap: 1em;
+      
+    }
+
+    .schedulesTitle, .adressTitle{
+      font-size: 1.8rem;
+    }
+
+    .adress, .phone {
+      font-size: 1.1rem;
+    }
+}
+
