@@ -1,0 +1,74 @@
+.serviceCard {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  width: 90vw;
+  height: 60vh;
+  padding: 0;
+  margin: 16px;
+  border-radius: 20px;
+  border: 1px solid #D9D9D9;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 15%;
+  background-color: rgba(187, 39, 26, 0.7);
+  transition: height 0.5s ease;
+}
+
+.cardContent {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 2000;
+  color: white;
+  transition: height 0.5s ease;
+  height: 100%; 
+  position: relative;
+}
+
+.cardTitle {
+  position: absolute;
+  font-size: 2rem;
+  width: 100%;
+  bottom: 2%; 
+  transition: all 0.5s ease;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.contactContainer {
+    margin-top: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease; 
+}
+
+.cardDescription, .cardPrice {
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.serviceCard:hover .overlay,
+.serviceCard:hover .cardContent {
+  height: 100%; 
+}
+
+.serviceCard:hover .cardTitle {
+  bottom: 85%;
+}
+
+.serviceCard:hover .cardDescription,
+.serviceCard:hover .cardPrice,
+.serviceCard:hover .contactContainer {
+  opacity: 1; 
+}
