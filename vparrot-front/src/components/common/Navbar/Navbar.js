@@ -3,7 +3,7 @@ import React from 'react';
 //Components import
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-import Button from '../Button/Button';
+import Button from '../Buttons/Button/Button';
 
 //CSS import
 import './navbar.css';
