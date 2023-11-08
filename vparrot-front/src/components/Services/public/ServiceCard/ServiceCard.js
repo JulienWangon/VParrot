@@ -1,8 +1,10 @@
 import React from 'react';
 
+import ContactBtn from '../../../common/Buttons/ContactBtn/ContactBtn';
+
 import './serviceCard.css';
 
-const ServiceCard = (name, description, price, pathImg) => {
+const ServiceCard = ({ name, description, price, pathImg }) => {
 
   const cardStyle = {
 
@@ -18,6 +20,10 @@ const ServiceCard = (name, description, price, pathImg) => {
             <h3 className="cardTitle">{name}</h3>
             <p className="cardDescription">{description}</p>
             <p className="cardPrice">{price}</p>
+            <div className="contactContainer">
+                <ContactBtn/>
+            </div>
+
         </div>      
     </div>
   );
