@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../repository/ServicesRepository.php';
 
   require_once './vparrot-server/Validator/Validator.php';
+  require_once './vparrot-server/config/config.php';
 
   class ServicesController {
 
@@ -29,11 +30,16 @@ require_once __DIR__ . '/../repository/ServicesRepository.php';
               $services = $this->servicesRepository->getAllServicesGroupedByType();
 
               $groupedServices = [];
-              foreach($services as $service) {
-                    $groupedServices[$service["type_name"]][] = $service;
-              }
-
-              $this->sendResponse(["status" => "success", "data" => $groupedServices]);
+              foreach ($services as &$service) {
+                // Ajouter le chemin de base aux images
+                if (isset($service['path_img']) && $service['path_img']) {
+                    $service['path_img'] = BASE_PATH . $service['path_img'];
+                }
+    
+                $groupedServices[$service["type_name"]][] = $service;
+            }
+    
+            $this->sendResponse(["status" => "success", "data" => $groupedServices]);
               
           } catch (Exception $e) {
 
