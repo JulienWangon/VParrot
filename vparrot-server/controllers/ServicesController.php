@@ -33,7 +33,7 @@ require_once __DIR__ . '/../repository/ServicesRepository.php';
                     $groupedServices[$service["type_name"]][] = $service;
               }
 
-              $this->sendResponse($groupedServices);
+              $this->sendResponse(["status" => "success", "data" => $groupedServices]);
               
           } catch (Exception $e) {
 
