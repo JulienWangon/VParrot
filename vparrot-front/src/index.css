@@ -11,7 +11,7 @@ main {
 /* Ultra grands écrans (ex: 4K) */
 @media screen and (min-width: 2559px) {
   html {
-    font-size: 20px; /* Significativement plus grand pour les écrans ultra-haute résolution */
+    font-size: 18px; /* Significativement plus grand pour les écrans ultra-haute résolution */
   }
 
 }
