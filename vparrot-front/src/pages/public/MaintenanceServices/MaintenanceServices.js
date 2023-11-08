@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Header from '../../components/common/Header/Header';
+import Header from '../../../components/common/Header/Header';
 
-const MainteanceServices = () => {
+const MaintenanceServices = () => {
   return (
     <div>
       <Header title="Entretien" slogan="Entretien véhicules toutes marques"/>
@@ -10,4 +10,4 @@ const MainteanceServices = () => {
   );
 };
 
-export default MainteanceServices;
+export default MaintenanceServices;
