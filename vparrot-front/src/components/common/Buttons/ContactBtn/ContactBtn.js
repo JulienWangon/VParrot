@@ -8,7 +8,7 @@ const ContactBtn = ( {onClick}) => {
   return (
     <>
 
-        <Button className="contactBtn" colorStyle="redBtn" onClick={onClick}>Contact</Button>
+        <Button className="contactBtn" colorStyle="whiteBtn" onClick={onClick}>Contact</Button>
       
     </>
   );
