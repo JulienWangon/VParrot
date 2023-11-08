@@ -1,11 +1,17 @@
 import React from 'react';
 
+import useServicesGroupedByType from '../../../components/Services/hooks/useServicesGroupedByType';
+
 import Header from '../../../components/common/Header/Header';
 import Footer from '../../../components/Footer/Footer';
+import ServiceCard from '../../../components/Services/public/ServiceCard/ServiceCard';
 
 import './maintenanceServices.css';
 
 const MaintenanceServices = () => {
+
+    const { servicesGroupedByType, loading, error } = useServicesGroupedByType();
+
   return (
     <>
       <Header title="Entretien" slogan="Entretien véhicules toutes marques"/>
@@ -21,6 +27,22 @@ const MaintenanceServices = () => {
                 </p>
             </article>
           </div>
+
+          {loading && <p>Chargement des services...</p>}
+          {error && <p>Erreur de chargement: {error}</p>}
+          {!loading && !error && (
+              <div className="servicesGrid">
+                  {servicesGroupedByType.entretien.map((service) => (
+                      <ServiceCard
+                          key={service.id_service}
+                          name={service.service_name}
+                          description={service.description}
+                          price={service.price}
+                          pathImg={service.path_img}
+                      />
+                  ))}
+              </div>
+          )}
 
           <div className="articleMaintenanceContainer">
             <article className="maintenanceConclusion">
