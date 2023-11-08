@@ -21,6 +21,20 @@ const MaintenanceServices = () => {
                 </p>
             </article>
           </div>
+
+          <div className="articleMaintenanceContainer">
+            <article className="maintenanceConclusion">
+                <p>Chez V.Parrot, nous comprenons que votre véhicule est un investissement important et nous sommes déterminés à lui fournir les soins et l'attention qu'il mérite. 
+                  Grâce à notre équipe d'experts et à nos services d'entretien de premier ordre, nous nous engageons à maintenir votre véhicule en parfait état de marche, améliorant ainsi sa longévité et sa fiabilité. 
+                  Nous prenons le temps de comprendre vos besoins spécifiques pour vous fournir un service personnalisé qui surpasse vos attentes.
+                </p>
+                <p>Faites confiance à V.Parrot pour tous vos besoins en matière d'entretien automobile. 
+                  Nous vous invitons à prendre rendez-vous dès aujourd'hui pour découvrir la différence V.Parrot. 
+                  Que vous ayez besoin d'un entretien de routine ou d'un service plus spécifique, nous sommes impatients de vous servir et de vous aider à maintenir votre véhicule en parfait état. 
+                  Rendez-vous chez V.Parrot, où la qualité rencontre l'excellence en matière de services d'entretien automobile.
+                </p>
+            </article>
+          </div>
           
 
       </main>
