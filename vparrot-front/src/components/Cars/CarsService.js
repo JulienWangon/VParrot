@@ -4,7 +4,7 @@ import axios from 'axios';
 export const fetchCarsBriefDetails = async () => {
     try {
 
-        const response = await axios.get('http://localhost/vparrot/cars/brief');
+        const response = await axios.get('http://localhost/vparrot/cars/briefs');
         if (response.data && response.data.status === 'success') {
 
           return response.data.data;
