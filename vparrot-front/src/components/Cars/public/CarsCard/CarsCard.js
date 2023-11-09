@@ -10,7 +10,7 @@ const CarsCard = ({ car }) => {
     <div className="carCards">
 
         <div className="carImgContainer">
-            <img className="carImg" src={car.file_path} alt={`${car.brand} ${car.mmodel}`}/>
+            <img className="carImg" src={car.file_path} alt={`${car.brand} ${car.model}`}/>
         </div>
 
         <div className="carNameContainer">
@@ -34,7 +34,7 @@ const CarsCard = ({ car }) => {
         <div className="carDetailsBtn">
             <Button className="openCarModal" colorStyle="redBtn">Détails</Button>
         </div>
-              
+
     </div>
   );
 };
