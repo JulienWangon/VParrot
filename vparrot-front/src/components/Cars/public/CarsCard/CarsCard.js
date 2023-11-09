@@ -35,6 +35,10 @@ const CarsCard = ({ car }) => {
             <Button className="openCarModal" colorStyle="redBtn">Détails</Button>
         </div>
 
+        <div className="refContainer">
+            <span className="refCar">#{car.id_car}</span>
+        </div>
+
     </div>
   );
 };
