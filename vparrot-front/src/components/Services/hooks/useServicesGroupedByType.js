@@ -4,7 +4,7 @@ import { fetchAllServicesGroupedByType } from '../serviceServices';
 
 const useServicesGroupedByType  = () => {
 
-    const [servicesGroupedByType, setServiceGroupedByType] = useState({ entretien: [], carrosserie: [], mecanique: []});
+    const [servicesGroupedByType, setServiceGroupedByType] = useState({ entretien: [], carrosserie: [], reparation: []});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
