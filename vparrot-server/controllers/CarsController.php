@@ -29,7 +29,14 @@ class CarsController {
         try{
 
             $carsDetails = $this->carsRepository->carBriefDetails();
-            $this->sendResponse(["status" => "success", "data" => $carsDetails], 200);
+            
+            //Format price and image path
+            foreach($carsDetails as $key => $car) {
+              $carsDetails[$key]['price'] = number_format($car['price'], 0, '', ' ') . ' €';
+              $carsDetails[$key]['image'] = BASE_PATH . $car['image'];
+          }
+
+          $this->sendResponse(["status" => "success", "data" => $carsDetails], 200);
 
         } catch(Exception $e) {
 
