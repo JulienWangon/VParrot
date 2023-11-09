@@ -5,6 +5,7 @@
 
 .repairIntroduction, .repairConclusion, .mecaniqueIntro, .carrosserieIntro, .carrosserieConclusion {
   text-align: justify;
+  font-family: 'Anek Tamil', sans-serif;
   padding: 2em;
 }
 

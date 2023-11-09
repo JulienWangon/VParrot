@@ -5,6 +5,7 @@
 }
 
 .maintenanceIntroduction, .maintenanceConclusion {
+  font-family: 'Anek Tamil', sans-serif;;
   text-align: justify;
   padding: 2em;
 }
