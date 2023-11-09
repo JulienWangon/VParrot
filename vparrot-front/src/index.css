@@ -2,7 +2,7 @@ html {
   font-size: 16px; /* La taille de base pour les navigateurs de bureau */
 }
 
-* { border: 1px solid red; }
+/** { border: 1px solid red; }*/
 main {
   display: flex;
   flex-direction: column;

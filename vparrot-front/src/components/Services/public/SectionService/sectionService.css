@@ -1,0 +1,102 @@
+.serviceGrid {
+    display: grid;
+    grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    gap: 1em;
+    padding: 1em;
+}
+
+.sectionTitle{
+  text-align: center;
+  
+}
+
+.serviceIntroduction {
+  text-align: justify ;
+  font-family: 'Anek Tamil', sans-serif;
+  padding: 2em;
+}
+
+
+@media screen and (min-width: 1400px) {
+
+  .serviceGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    padding: 2em;
+  
+  }
+
+}
+
+/* Grands écrans de bureau */
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+  
+  .serviceGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em;
+    padding: 1em;
+  
+  }
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+  .serviceGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    padding: 1em;
+  
+  }
+  
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+
+    .serviceGrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2em;
+      padding: 1em;
+    
+    }
+
+  
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+    .serviceGrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2em;
+      padding: 1em;
+    }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
