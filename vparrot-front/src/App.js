@@ -7,7 +7,7 @@ import ProtectedRoute from './_utils/ProtectedRoute';
 import Home from "./pages/public/Home/Home";
 import MaintenanceServices from "./pages/public/MaintenanceServices/MaintenanceServices";
 import RepairServices from './pages/public/RepairServices/RepairServices';
-import SalesArea from "./pages/public/SalesArea";
+import SalesArea from './pages/public/SalesArea/SalesArea';
 
 //Import Error Component
 import Error from './_utils/Error';
