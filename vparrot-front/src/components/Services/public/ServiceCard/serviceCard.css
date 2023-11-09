@@ -2,13 +2,14 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  width: 90vw;
-  height: 60vh;
+  width: 80vw;
+  height: 55vh;
   padding: 0;
   margin: 16px;
   border-radius: 20px;
   border: 1px solid #D9D9D9;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
 }
 
 .overlay {
@@ -50,6 +51,7 @@
 
 .contactContainer {
     opacity: 0;
+    width: 100%;
     margin-top: 2em;
     transform: translateY(0);
     transition: opacity 0.5s ease, transform 0.5s ease; 
@@ -63,17 +65,15 @@
 }
 
 .cardDescription {
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: justify;
   padding: 2em;
   margin-top: 1em;
   height: 50%;
-  
- 
 }
 
 .cardPrice {
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   font-weight: 600;
   height: 15%
 }
@@ -94,3 +94,120 @@
   transform: translateY(0);
   transition-delay: 0.1s; 
 }
+
+
+
+@media screen and (min-width: 1400px) {
+
+  .serviceCard{
+    width: 25vw;
+    height: 70vh;
+    padding: 0;
+    margin: auto;
+  }
+ 
+}
+
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+  .serviceCard{
+    width: 30vw;
+    height: 60vh;
+    padding: 0;
+    margin: auto;
+  }
+
+  .cardPrice {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1em;  
+  }
+
+  .cardDescription {
+    font-size: 01em;
+    margin-top:1.3em;
+    padding: 1.4em;
+    height: 45%;
+  }
+
+ 
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+  .serviceCard{
+    width: 30vw;
+    height: 60vh;
+    padding: 0;
+    margin: auto;
+  }
+
+  .cardTitle {   
+    font-size: 2.2rem;
+  }
+
+  .cardPrice {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1em;  
+  }
+
+  .cardDescription {
+    font-size: 0.9rem;
+    margin-top:1.3em;
+    padding: 1.4em;
+    height: 45%;
+  }
+ 
+}
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+
+  .serviceCard{
+    width: 40vw;
+    height: 60vh;
+    padding: 0;
+    margin: auto;
+  }
+
+  .cardTitle {   
+    font-size: 2.1rem;
+  }
+
+  .cardPrice {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1rem;  
+  }
+
+  .cardDescription {
+    font-size: 0.9rem;  
+  }
+
+  
+ 
+}
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .serviceCard{
+    width: 45vw;
+    height: 55vh;
+    padding: 0;
+    margin: auto;
+  }
+
+  .cardPrice {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1em;  
+  }
+
+  .cardDescription {
+    font-size: 0.9rem;
+    margin-top:1.3em;
+    padding: 1.8em;
+    height: 45%;
+  }
+
+}
+
