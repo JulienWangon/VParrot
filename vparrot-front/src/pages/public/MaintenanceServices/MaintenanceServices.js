@@ -7,6 +7,7 @@ import Footer from '../../../components/Footer/Footer';
 import ServiceCard from '../../../components/Services/public/ServiceCard/ServiceCard';
 
 import './maintenanceServices.css';
+import SectionService from '../../../components/Services/public/SectionService/SectionService';
 
 const MaintenanceServices = () => {
 
@@ -30,21 +31,21 @@ const MaintenanceServices = () => {
             </article>
           </div>
 
+          <SectionService
+              title="Services d'Entretien Signés V.Parrot"
+              introduction="
+                            Dans notre section dédiée à l'entretien, nous mettons l'accent sur la prévention. 
+                            Nous savons que chaque détail compte pour assurer la durabilité et la performance de votre véhicule. 
+                            Nos programmes d'entretien régulier sont conçus pour anticiper les besoins de votre voiture, avec des contrôles méticuleux et des interventions préventives. 
+                            Notre approche personnalisée signifie que nous nous adaptons au profil unique de chaque véhicule et à son historique, en assurant ainsi un suivi précis et attentif. 
+                            Fiez-vous à notre savoir-faire pour garder votre véhicule en condition optimale, pour votre sérénité sur la route.
+                            "
+              services={servicesGroupedByType.entretien}
+
+          />
+
           {loading && <p>Chargement des services...</p>}
           {error && <p>Erreur de chargement: {error}</p>}
-          {!loading && !error && (
-              <div className="servicesGrid">
-                  {servicesGroupedByType.entretien.map((service) => (
-                      <ServiceCard
-                          key={service.id_service}
-                          name={service.service_name}
-                          description={service.description}
-                          price={service.price}
-                          pathImg={service.path_img}
-                      />
-                  ))}
-              </div>
-          )}
 
           <div className="articleMaintenanceContainer">
             <article className="maintenanceConclusion">
@@ -53,7 +54,8 @@ const MaintenanceServices = () => {
                   Nous prenons le temps de comprendre vos besoins spécifiques pour vous fournir un service personnalisé qui surpasse vos attentes.
                 </p>
                 <p>Faites confiance à V.Parrot pour tous vos besoins en matière d'entretien automobile. 
-                  Nous vous invitons à prendre rendez-vous dès aujourd'hui pour découvrir la différence V.Parrot. 
+                  Nous vous invitons
+                   à prendre rendez-vous dès aujourd'hui pour découvrir la différence V.Parrot. 
                   Que vous ayez besoin d'un entretien de routine ou d'un service plus spécifique, nous sommes impatients de vous servir et de vous aider à maintenir votre véhicule en parfait état. 
                   Rendez-vous chez V.Parrot, où la qualité rencontre l'excellence en matière de services d'entretien automobile.
                 </p>
