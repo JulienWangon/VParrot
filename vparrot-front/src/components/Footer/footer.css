@@ -73,11 +73,11 @@ footer {
     z-index: 2000;
 }
 
-.contactContainer {
+.footerBtn {
   text-align: center;
 }
 
-.contactContainer > button {
+.footerBtn > button {
   width: 40vw;
   z-index :2000;
 
@@ -92,12 +92,12 @@ footer {
     justify-content: space-around;
   }
 
-  .contactContainer > button {
+  .footerBtn > button {
     width: 15vw;
     font-size: 1.1rem;
   }
 
-  .contactContainer {
+  .footerBtn {
     width: 25%;
   }
 
@@ -126,12 +126,12 @@ footer {
       justify-content: space-around;
     }
 
-    .contactContainer > button {
+    .footerBtn > button {
       width: 15vw;
       font-size: 1.1rem;
     }
 
-    .contactContainer {
+    .footerBtn {
       width: 25%;
     }
 
@@ -161,12 +161,12 @@ footer {
       justify-content: space-around;
     }
 
-    .contactContainer > button {
+    .footerBtn > button {
       width: 15vw;
       font-size: 1.1rem;
     }
 
-    .contactContainer {
+    .footerBtn {
       width: 25%;
     }
 
@@ -179,7 +179,7 @@ footer {
 
 @media screen and (max-width: 991px) and (min-width: 768px) {
 
-    .contactContainer > button {
+    .footerBtn > button {
         width: 20vw;
         font-size: 1.1rem;;
     }
@@ -193,7 +193,7 @@ footer {
       text-align: center;
     }
 
-    .contactContainer {
+    .footerBtn {
       text-align: center;  
     }
 
@@ -213,7 +213,7 @@ footer {
 
 @media screen and (max-width: 767px) and (min-width: 576px) {
   
-    .contactContainer > button {
+    .footerBtn > button {
       width: 30vw; 
     }
 

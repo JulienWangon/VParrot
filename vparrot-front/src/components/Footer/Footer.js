@@ -35,7 +35,7 @@ const Footer = () => {
             )}
         </div>
         
-        <div className="contactContainer">
+        <div className="footerBtn">
             <ContactBtn/>
         </div>      
     </footer>
