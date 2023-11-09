@@ -13,8 +13,8 @@ const useFetchCarsBriefDetails = () => {
 
         try {
 
-          const carsBriefDetails = await fetchCarsBriefDetails();
-          setCarBriefDetails(carsBriefDetails);
+          const details = await fetchCarsBriefDetails();
+          setCarBriefDetails(details);
         } catch (error) {
 
           setError(error.message || "Une erreur est survenue lors de la récupération des détails des véhicules. ")
