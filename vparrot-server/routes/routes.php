@@ -12,6 +12,7 @@ header("Access-Control-Allow-Credentials: true");
 
 
 //require controllers
+require_once './vparrot-server/controllers/CarsController.php';
 require_once './vparrot-server/controllers/ServicesController.php';
 require_once './vparrot-server/controllers/SchedulesController.php';
 require_once './vparrot-server/controllers/TestimoniesController.php';
@@ -19,6 +20,7 @@ require_once './vparrot-server/controllers/UsersController.php';
 require_once './vparrot-server/controllers/AuthController.php';
 
 require_once './vparrot-server/repository/ServicesRepository.php';
+require_once './vparrot-server/repository/CarsRepository.php';
 
 //require models
 require_once './vparrot-server/models/Schedules.php';
@@ -35,6 +37,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 
 $servicesRepo = new ServicesRepository();
+$carRepo = new CarsRepository();
 //Dependency Injection;
 
 $schedules = new Schedules();
@@ -47,6 +50,7 @@ $validator = new Validator();
 //LOADING CONTROLLERS
 $controllers = [
 
+    'cars' => new CarsController($carRepo),
     'services' => new ServicesController($servicesRepo, $validator),
     'schedules' => new SchedulesController($validator, $schedules),
     'testimonies' => new TestimoniesController($validator, $testimonies),
@@ -58,6 +62,7 @@ $controllers = [
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
+        '/vparrot/cars/briefs' => [$controllers['cars'], 'getCarBriefDetails'],
         '/vparrot/services' => [$controllers['services'], 'getAllServicesList' ],
         '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
