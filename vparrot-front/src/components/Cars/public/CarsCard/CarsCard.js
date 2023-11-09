@@ -10,7 +10,7 @@ const CarsCard = ({ car }) => {
     <div className="carCards">
 
         <div className="carImgContainer">
-            <img className="carImg" src={car.file_path} alt={`${car.brand} ${car.model}`}/>
+            <img className="carImg" src={car.image} alt={`${car.brand} ${car.model}`}/>
         </div>
 
         <div className="carNameContainer">
