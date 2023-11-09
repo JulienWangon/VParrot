@@ -4,10 +4,10 @@ import useServicesGroupedByType from '../../../components/Services/hooks/useServ
 
 import Header from '../../../components/common/Header/Header';
 import Footer from '../../../components/Footer/Footer';
-import ServiceCard from '../../../components/Services/public/ServiceCard/ServiceCard';
+import SectionService from '../../../components/Services/public/SectionService/SectionService';
 
 import './maintenanceServices.css';
-import SectionService from '../../../components/Services/public/SectionService/SectionService';
+
 
 const MaintenanceServices = () => {
 
@@ -41,7 +41,6 @@ const MaintenanceServices = () => {
                             Fiez-vous à notre savoir-faire pour garder votre véhicule en condition optimale, pour votre sérénité sur la route.
                             "
               services={servicesGroupedByType.entretien}
-
           />
 
           {loading && <p>Chargement des services...</p>}
