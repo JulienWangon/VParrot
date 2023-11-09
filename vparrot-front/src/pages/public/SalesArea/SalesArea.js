@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../../components/common/Header/Header';
 
-
+import './salesArea.css';
 
 const SalesArea = () => {
   return (
