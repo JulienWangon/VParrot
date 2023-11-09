@@ -22,22 +22,24 @@
 }
 
 .cardContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   bottom: 0;
   left: 0;
   right: 0;
   height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   z-index: 2000;
   color: white;
   transition: height 0.5s ease;
   height: 100%; 
-  position: relative;
+  
 }
 
 .cardTitle {
   position: absolute;
+  font-family: 'Alumni Sans', sans-serif;
   font-size: 2rem;
   width: 100%;
   bottom: 2%; 
@@ -47,16 +49,33 @@
 }
 
 .contactContainer {
-    margin-top: 1rem;
     opacity: 0;
+    margin-top: 2em;
     transform: translateY(0);
     transition: opacity 0.5s ease, transform 0.5s ease; 
 }
 
 .cardDescription, .cardPrice {
+  font-family:'Anek Tamil', sans-serif;;
   margin: 0;
   opacity: 0;
   transition: opacity 0.5s ease;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  text-align: justify;
+  padding: 2em;
+  margin-top: 1em;
+  height: 50%;
+  
+ 
+}
+
+.cardPrice {
+  font-size: 2.5rem;
+  font-weight: 600;
+  height: 15%
 }
 
 .serviceCard:hover .overlay,
@@ -71,5 +90,7 @@
 .serviceCard:hover .cardDescription,
 .serviceCard:hover .cardPrice,
 .serviceCard:hover .contactContainer {
-  opacity: 1; 
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s; 
 }
