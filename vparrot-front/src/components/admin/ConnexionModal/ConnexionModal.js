@@ -4,7 +4,7 @@ import { useMessage } from '../../../contexts/MessagesContext';
 import ReCAPTCHA from "react-google-recaptcha";
 
 import H2Title from '../../common/H2Title/H2Title';
-import TextInput from '../../common/TextInput/TextInput';
+import TextInput from '../../common/Input/TextInput/TextInput';
 import Button from '../../common/Buttons/Button/Button';
 
 import { validateEmail, validatePassword } from '../../../_utils/validation';
