@@ -27,6 +27,82 @@ class CarsRepository extends Database {
         }
     }
 
+
+    public function getFilteredCars($filters) {
+
+        try {
+
+            $db = $this->getBdd();
+
+            $req = "SELECT cars.*, car_features.* FROM cars
+                    LEFT JOIN car_features ON cars.id_car = car_features.car_id
+                    WHERE 1=1";
+
+            if(!empty($filters['brand'])) {
+                $req .= " AND cars.brand = :brand";
+            }
+
+            if(!empty($filters['model'])) {
+                $req .= " AND cars.model = :model";
+            }
+
+            if(!empty($filters['fuel'])) {
+                $req .= " AND car_features.fuel = :fuel";
+            }
+
+            if(!empty($filters['transmission'])) {
+                $req .= " AND car_features.transmission = :transmission";
+            }
+
+            if(!empty($filters['yearMin'])) {
+                $req .= " AND car_features.years >= :yearMin";
+            }
+
+            if(!empty($filters['kmMax'])) {
+                $req .= " AND car_features.kilometer <= :kmMax";
+            }
+
+            $stmt = $db->prepare($req);
+
+
+            if(!empty($filters['brand'])) {
+                $stmt->bindValue(":brand", $filters['brand'], PDO::PARAM_STR);
+            }
+
+            if(!empty($filters['model'])) {
+                $stmt->bindValue(":model", $filters['model'], PDO::PARAM_STR);
+            }
+
+            if(!empty($filters['fuel'])) {
+                $stmt->bindValue(":fuel", $filters['fuel'], PDO::PARAM_STR);
+            }
+
+            if(!empty($filters['transmission'])) {
+                $stmt->bindValue(":transmission", $filters['transmission'], PDO::PARAM_STR);
+            }
+
+            if(!empty($filters['yearMin'])) {
+                $stmt->bindValue(":yearMin", $filters['yearMin'], PDO::PARAM_STR);
+            }
+
+            if(!empty($filters['kmMax'])) {
+                $stmt->bindValue(":kmMax", $filters['kmMax'], PDO::PARAM_STR);
+            }
+
+            $stmt->execute();
+            $filteredCars = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $filteredCars;
+
+        } catch (PDOException $e) {
+
+            $this->handleException($e, "extraction des véhicules filtrés");
+        }
+    }
+
+
+
+
     public function getDistinctBrands () {
 
         try {
