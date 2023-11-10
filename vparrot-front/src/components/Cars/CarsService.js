@@ -1,10 +1,11 @@
-import axios from '../../_utils/axios';
+import instanceAxios from '../../_utils/axios';
+
 
 // Get cars brief details
 export const fetchCarsBriefDetails = async () => {
     try {
 
-        const response = await axios.get('/cars/briefs');
+        const response = await instanceAxios.get('/cars/briefs');
         if (response.data && response.data.status === 'success') {
 
           return response.data.data;
@@ -19,3 +20,6 @@ export const fetchCarsBriefDetails = async () => {
   }
 
 };
+
+//Get distinct brand
+export const fetchDistinctBrands = await 
