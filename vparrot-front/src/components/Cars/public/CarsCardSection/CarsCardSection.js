@@ -3,12 +3,14 @@ import useFetchCarsBriefDetails from '../../hooks/useFetchCarsBriefDetails';
 
 import CarsCard from '../CarsCard/CarsCard';
 
+import './carsCardSection.css';
+
 const CarsCardSection = () => {
 
     const { carsBriefDetails, loading, error} = useFetchCarsBriefDetails();
 
     return (
-      <section className="CarsCardGrid">
+      <section className="carsCardGrid">
 
           {loading && <p>Chargement des services...</p>}
           {error && <p>Erreur de chargement: {error}</p>}
