@@ -23,6 +23,7 @@ class CarsController {
       exit();
     }
 
+
     //Gell all car brief details
     public function getCarBriefDetails() {
         
@@ -36,14 +37,73 @@ class CarsController {
               $carsDetails[$key]['image'] = BASE_PATH . $car['image'];
           }
 
-          $this->sendResponse(["status" => "success", "data" => $carsDetails], 200);
+          $this->sendResponse(["status" => "success", "data" => $carsDetails]);
 
         } catch(Exception $e) {
 
           $this->sendResponse(['error' => $e->getMessage()], 400);
 
         }
-    } 
+    }
+
+    //Get all distinct brands
+    public function getAllDistinctBrands () {
+
+        try {
+
+            $brands = $this->carsRepository->getDistinctBrands();
+            $this->sendResponse(["status" => "success", "data" => $brands]);
+
+        } catch(Exception $e) {
+
+            $this->sendResponse(["error" => $e->getMessage()], 400);
+        }
+    }
+
+
+    //Get all distinct models
+    public function getAllDistinctModels () {
+
+        try {
+
+            $models = $this->carsRepository->getDistinctmModels();
+            $this->sendResponse(["status" => "success", "data" => $models]);
+
+        } catch(Exception $e) {
+
+            $this->sendResponse(["error" => $e->getMessage()], 400);
+        }
+    }
+
+    //Get all distinct fuel types
+    public function getAllDistinctFuelTypes () {
+
+        try {
+
+            $fuelTypes = $this->carsRepository->getDistinctFuelTypes();
+            $this->sendResponse(["status" => "success", "data" => $fuelTypes]);
+
+        } catch(Exception $e) {
+
+            $this->sendResponse(["error" => $e->getMessage()], 400);
+        }
+    }
+
+    //Get all distinct transmission types
+    public function getAllDistinctTransmissionTypes () {
+
+        try {
+
+            $transmissionTypes = $this->carsRepository->getDistinctTransmissions();
+            $this->sendResponse(["status" => "success", "data" => $transmissionTypes]);
+
+        } catch(Exception $e) {
+
+            $this->sendResponse(["error" => $e->getMessage()], 400);
+        }
+    }
+    
+
 
 }
 
