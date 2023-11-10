@@ -24,7 +24,7 @@ class Validator {
 
         //Checking input format
         }else {
-            if(!preg_match("/^[A-Za-z'-]+$/", $input)) {
+            if(!preg_match("/^[A-Za-z'\s-]+$/", $input)) {
                 $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type peut uniquement contenir des lettres (majuscule et minuscules), des apostrophes et des tirets."];
                 return false;
             }
@@ -174,6 +174,35 @@ class Validator {
         }
 
         return empty($this->errors["json"]);
+    }
+
+    //Validate Number 
+    public function validateNumber($number, $type, $min = null, $max = null) {
+        // Vérifier si le nombre existe
+        if (!$number || $number === "") {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
+            return false;
+        }
+    
+        // Vérifier si le nombre est réellement un nombre
+        if (!is_numeric($number)) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit être un nombre."];
+            return false;
+        }
+    
+        // Vérifier la limite inférieure, si spécifiée
+        if ($min !== null && $number < $min) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit être supérieur ou égal à $min."];
+            return false;
+        }
+    
+        // Vérifier la limite supérieure, si spécifiée
+        if ($max !== null && $number > $max) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit être inférieur ou égal à $max."];
+            return false;
+        }
+    
+        return empty($this->errors[$type]);
     }
 
     //Return validator error
