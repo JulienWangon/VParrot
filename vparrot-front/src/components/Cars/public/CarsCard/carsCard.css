@@ -10,7 +10,7 @@
 
 .carImgContainer {
   width: 100%;
- 
+  height: auto; 
 }
 
 .carImg {
@@ -63,7 +63,91 @@
   width: 40%;
 }
 
+@media screen and (min-width: 1400px) {
 
+  .carCards {  
+    width: 20vw; 
+  }
+
+  .carName {
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .tradeName {
+    font-size: 0.8em;
+  }
+
+  .priceContainer {
+    margin: 0.6em;
+    font-size: 1.3rem;  
+  }
+
+  .refCar {
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 1.2rem;
+  }
+
+}
+
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+
+  .carCards {  
+    width: 20vw; 
+  }
+
+  .carName {
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .tradeName {
+    font-size: 0.8em;
+  }
+
+  .priceContainer {
+    margin: 0.6em;
+    font-size: 1.3rem;  
+  }
+
+  .refCar {
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 1.2rem;
+  }
+
+ 
+
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+  .carCards {  
+    width: 30vw; 
+  }
+
+  .carName {
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .tradeName {
+    font-size: 0.9em;
+  }
+
+  .priceContainer {
+    margin: 0.6em;
+    font-size: 1.5rem;  
+  }
+
+  .refCar {
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 1.3rem;
+  }
+
+}
 
 @media screen and (max-width: 991px) and (min-width: 768px) {
 
