@@ -62,6 +62,10 @@ $controllers = [
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
+        '/vparrot/cars/distinct-transmission-types' => [$controllers['cars'], 'getAllDistinctTransmissionTypes'],
+        '/vparrot/cars/distinct-fuel-types' => [$controllers['cars'], 'getAllDistinctFuelTypes'],
+        '/vparrot/cars/distinct-models' => [$controllers['cars'], 'getAllDistinctModels'],
+        '/vparrot/cars/distinct-brands' => [$controllers['cars'], 'getAllDistinctBrands'],
         '/vparrot/cars/briefs' => [$controllers['cars'], 'getCarBriefDetails'],
         '/vparrot/services' => [$controllers['services'], 'getAllServicesList' ],
         '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
