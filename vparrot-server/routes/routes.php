@@ -3,7 +3,7 @@
 //CORS configuration
 
 //localhost:3000 access (accès autorisé à l'API)
-header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Origin: *");
 //allowed HTTP methods (méthode autorisées)
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 //Allowed headers (en-tête autorisés)
