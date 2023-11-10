@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from '../../_utils/axios';
 
 //Get all Schedules 
 export const fetchSchedules = async () => {
     
     try {
 
-        const response = await axios.get('http://localhost/vparrot/schedules');
+        const response = await axios.get('/schedules');
         if (response.data && response.data.status === 'success') {
 
             return response.data.data;

@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from '../../_utils/axios';
 
 //Get all services grouped by ype
 export const fetchAllServicesGroupedByType = async () => {
 
     try {
 
-        const response = await axios.get('http://localhost/vparrot/services');
+        const response = await axios.get('/services');
         if (response.data && response.data.status === 'success') {
           
             return response.data.data;
