@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from 'axios';
+import instanceAxios from "../_utils/axios";
 import { useNavigate } from "react-router-dom";
+
 
 //Création d'un context avec une valeur vide par défaut
 const AuthContext = createContext();
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) => {
     const checkUserSession = async () => {
 
         try {
-            const response = await axios.get('http://localhost/vparrot/check-session', {  withCredentials: true});
+            const response = await instanceAxios.get('/check-session', {  withCredentials: true});
 
             if (response.status === 200) {
                 setCurrentUser({
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
               user_password: password
             };
   //Envoyer la requête POST pour la connexion
-            const response = await axios.post('http://localhost/vparrot/login', JSON.stringify(data), {
+            const response = await instanceAxios.post('/vparrot/login', JSON.stringify(data), {
   
               headers: {
                 'Content-Type' : 'application/json'
@@ -95,7 +96,7 @@ export const AuthProvider = ({ children }) => {
           try {
 
   //envoyer une requête POST pour déconnecter l'utilisateur
-              const response = await axios.post('http://localhost/vparrot/logout', {}, {
+              const response = await instanceAxios.post('/logout', {}, {
                   withCredentials: true,
               });
   
