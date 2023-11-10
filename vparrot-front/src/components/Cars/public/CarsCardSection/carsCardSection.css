@@ -9,15 +9,38 @@
 
 @media screen and (min-width: 1400px) {
 
+  .carsCardGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    justify-items: center;
+    padding: 2em; 
+  }
+
 }
 
 
 @media screen and (max-width: 1399px) and (min-width: 1201px) {
 
+  .carsCardGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    justify-items: center;
+    padding: 1em;; 
+  }
+
 }
 
 
 @media screen and (max-width: 1200px) and (min-width: 992px) {
+
+  .carsCardGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2em;
+    justify-items: center;
+    padding: 0; 
+  }
+
 
 }
 
