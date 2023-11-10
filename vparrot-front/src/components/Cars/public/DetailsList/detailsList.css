@@ -14,8 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  
+  width: 100%;  
 }
 
 .carCardIcon {
@@ -28,6 +27,52 @@
   font-weight: 600;
   font-size: 1rem;
   margin-top: 0.3em;
+}
+
+@media screen and (min-width: 1400px) {
+
+  .detailsContainer {
+      padding: 0.5em;
+}
+
+  .carInfo {   
+    font-size: 0.8rem;
+    margin-top: 0.2em;
+  }
+
+  .carCardIcon {
+    width: 45%;
+    height: 45%;
+  }
+
+}
+
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+
+  .carInfo {   
+    font-size: 0.7rem;
+    margin-top: 0.2em;
+  }
+
+  .carCardIcon {
+    width: 40%;
+    height: 40%;
+  } 
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+  .carInfo {   
+    font-size: 0.9rem;
+    margin-top: 0.2em;
+  }
+
+  .carCardIcon {
+    width: 50%;
+    height: 50%;
+  }
+ 
+
 }
 
 @media screen and (max-width: 991px) and (min-width: 768px) {
@@ -43,6 +88,8 @@
   }
 
 }
+
+
 
 @media screen and (max-width: 767px) and (min-width: 576px) {
 
