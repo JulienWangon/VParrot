@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../../components/common/Header/Header';
+import CarsCardSection from '../../../components/Cars/public/CarsCardSection/CarsCardSection';
+import CarFilters from '../../../components/Cars/public/CarFilters/CarFilters';
+
 
 import './salesArea.css';
-import CarsCardSection from '../../../components/Cars/public/CarsCardSection/CarsCardSection';
+
 
 const SalesArea = () => {
+
+    const [filteredCars, setFilteredCars] = useState({})
+
+    const handleApplyFilter = (filters) => {
+
+
+    }
+
+    const handleRestFilter = () => {
+        setFilteredCars(null);
+    }
+
+
+
   return (
     <>
       <Header title="Espace Vente" slogan="Véhicules d'occasions toutes marques"/>
@@ -22,6 +39,8 @@ const SalesArea = () => {
               Chez Garage V.Parrot, nous sommes impatients de vous aider à trouver le véhicule d'occasion de vos rêves !
           </p>
       </article>
+
+      <CarFilters onApplyFilter={handleApplyFilter} onResetFilter={handleRestFilter}/>
 
       <CarsCardSection/>
 
