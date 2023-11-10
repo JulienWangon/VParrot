@@ -64,7 +64,8 @@
 }
 
 
-@media screen and (max-width: 767px) and (min-width: 576px) {
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
 
   .carCards {  
     width: 45vw; 
@@ -74,6 +75,33 @@
     font-family: 'Alumni Sans', sans-serif;
     font-size: 1.4rem;
     font-weight: 600;
+  }
+
+  .tradeName {
+    font-size: 0.9em;
+  }
+
+  .priceContainer {
+    margin: 0.6em;
+    font-size: 1.7rem;  
+  }
+
+  .refCar {
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 1.3rem;
+  }
+
+
+}
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .carCards {  
+    width: 45vw; 
+  }
+
+  .carName { 
+    font-size: 1.4rem;
   }
 
   .tradeName {
