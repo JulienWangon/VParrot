@@ -1,0 +1,48 @@
+.detailsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0.2em;
+    width: 90%;
+    margin-top: 1em;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.featureContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  
+}
+
+.carCardIcon {
+  width: 50%;
+  height: 30%;
+}
+
+.carInfo {
+  font-family: 'Anek Tamil', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 0.3em;
+}
+
+
+
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .carInfo {
+    
+    font-size: 0.9rem;
+    margin-top: 0.2em;
+  }
+
+
+
+}
+
+
+
