@@ -97,25 +97,25 @@
 @media screen and (max-width: 767px) and (min-width: 576px) {
 
   .carCards {  
-    width: 45vw; 
+    width: 80vw; 
   }
 
   .carName { 
-    font-size: 1.4rem;
+    font-size: 1.9rem;
   }
 
   .tradeName {
-    font-size: 0.9em;
+    font-size: 1.2em;
   }
 
   .priceContainer {
-    margin: 0.6em;
-    font-size: 1.7rem;  
+    margin: 1em;
+    font-size: 2rem;  
   }
 
   .refCar {
     font-family: 'Anek Tamil', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
   }
 
 }

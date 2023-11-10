@@ -3,8 +3,6 @@
   flex-direction: column;
   align-items: center; 
   gap: 3em;
-  padding: 0; 
-
 }
 
 
@@ -41,7 +39,7 @@
 
   .carsCardGrid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: 1fr; 
     gap: 1em;
     justify-items: center;
     padding: 0; 
