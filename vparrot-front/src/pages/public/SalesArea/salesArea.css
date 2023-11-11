@@ -4,6 +4,7 @@
 
 
 .salesIntroduction {
+  text-align: justify;
   font-family: 'Anek Tamil', sans-serif;
   padding: 1em;
 }
