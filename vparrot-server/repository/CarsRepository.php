@@ -34,8 +34,10 @@ class CarsRepository extends Database {
 
             $db = $this->getBdd();
 
-            $req = "SELECT cars.*, car_features.* FROM cars
+            $req = "SELECT cars.*, car_features.*, cars_images.file_path AS image
+                    FROM cars
                     LEFT JOIN car_features ON cars.id_car = car_features.car_id
+                    LEFT JOIN cars_images ON cars.id_car = cars_images.car_id AND cars_images.is_main = 1
                     WHERE 1=1";
 
             if(!empty($filters['brand'])) {
@@ -82,11 +84,11 @@ class CarsRepository extends Database {
             }
 
             if(!empty($filters['yearMin'])) {
-                $stmt->bindValue(":yearMin", $filters['yearMin'], PDO::PARAM_STR);
+                $stmt->bindValue(":yearMin", $filters['yearMin'], PDO::PARAM_INT);
             }
 
             if(!empty($filters['kmMax'])) {
-                $stmt->bindValue(":kmMax", $filters['kmMax'], PDO::PARAM_STR);
+                $stmt->bindValue(":kmMax", $filters['kmMax'], PDO::PARAM_INT);
             }
 
             $stmt->execute();
