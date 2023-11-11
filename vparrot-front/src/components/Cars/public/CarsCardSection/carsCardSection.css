@@ -5,6 +5,19 @@
   gap: 3em;
 }
 
+.noCars {
+  text-align: center;
+  font-size: 0.9rem;
+  font-family: 'Anek Tamil', sans-serif;
+  font-weight: 600;
+  color: rgba(187, 39, 26, 0.9);
+  padding: 0.5em;
+  margin-bottom: 2em;
+  border: 1px solid rgba(187, 39, 26, 0.9);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
 
 
 @media screen and (min-width: 1400px) {
