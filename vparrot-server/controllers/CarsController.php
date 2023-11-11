@@ -8,10 +8,12 @@ class CarsController {
 
  
     private $carsRepository;
+    private $validator;
 
-    public function __construct(CarsRepository $carsRepository) {
+    public function __construct(CarsRepository $carsRepository, Validator $validator) {
 
         $this->carsRepository = $carsRepository;
+        $this->validator = $validator;
        
     }
 
@@ -45,6 +47,62 @@ class CarsController {
 
         }
     }
+
+    public function getFilteredCarsList() {
+
+        $filters = $_GET;
+
+        if(isset($filters['brand'])) {
+            $this->validator->validateStringForNames($filters['brand'], 'marque');
+        }
+
+        if(isset($filters['model'])) {
+            $this->validator->validateStringForNamesAndNumbers($filters['model'], 'modèle');
+        }
+
+        if(isset($filters['transmission'])) {
+            $this->validator->validateStringForNames($filters['transmission'], 'transmission');
+        }
+
+        if(isset($filters['fuel'])) {
+            $this->validator->validateStringForNames(($filters['fuel']), 'carburant');
+        }
+
+        if(isset($filters['yearMin'])) {
+            $this->validator->validateNumber($filters['yearMin'], 'yearMin', 1990);
+        }
+
+        if (isset($filters['kmMax'])) {
+            $this->validator->validateNumber($filters['kmMax'], 'kmMax', 0);
+        } 
+        
+        if(!empty($this->validator->getErrors())) {
+            $this->sendResponse(["error" => $this->validator->getErrors()], 400);
+            return;
+        }
+
+        try {
+
+            $cars = $this->carsRepository->getFilteredCars($filters);
+
+            foreach ($cars as $key => $car) {
+                if (!empty($car['image'])) {
+                    $cars[$key]['image'] = BASE_PATH . $car['image'];
+                }
+            }
+        
+            $this->sendResponse(["status" => "success", "data" => $cars]);
+
+        } catch (Exception $e) {
+            $this->sendResponse(["status" =>"error", "message" => $e->getMessage()]);
+        }
+
+
+
+
+
+    }
+
 
     //Get all distinct brands
     public function getAllDistinctBrands () {
