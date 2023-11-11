@@ -3,7 +3,7 @@
 //CORS configuration
 
 //localhost:3000 access (accès autorisé à l'API)
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost:3000");
 //allowed HTTP methods (méthode autorisées)
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 //Allowed headers (en-tête autorisés)
@@ -50,7 +50,7 @@ $validator = new Validator();
 //LOADING CONTROLLERS
 $controllers = [
 
-    'cars' => new CarsController($carRepo),
+    'cars' => new CarsController($carRepo, $validator),
     'services' => new ServicesController($servicesRepo, $validator),
     'schedules' => new SchedulesController($validator, $schedules),
     'testimonies' => new TestimoniesController($validator, $testimonies),
@@ -62,6 +62,7 @@ $controllers = [
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
+        '/vparrot/cars/filtered' => [$controllers['cars'], 'getFilteredCarsList'],
         '/vparrot/cars/distinct-transmission-types' => [$controllers['cars'], 'getAllDistinctTransmissionTypes'],
         '/vparrot/cars/distinct-fuel-types' => [$controllers['cars'], 'getAllDistinctFuelTypes'],
         '/vparrot/cars/distinct-models' => [$controllers['cars'], 'getAllDistinctModels'],
