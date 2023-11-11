@@ -48,16 +48,11 @@ main {
 /* Appareils mobiles en orientation paysage */
 @media screen and (max-width: 767px) and (min-width: 576px) {
   html {
-    font-size: 15px; /* Ajusté pour les mobiles en orientation paysage */
+    font-size: 14px; /* Ajusté pour les mobiles en orientation paysage */
   }
 }
 
-/* Mobiles en orientation portrait */
-@media screen and (max-width: 575px) {
-  html {
-    font-size: 14px; /* Taille de base pour les mobiles en orientation portrait */
-  }
-}
+
 
 
 
