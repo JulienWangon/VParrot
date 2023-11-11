@@ -62,6 +62,24 @@ class CarsRepository extends Database {
         }
     }
 
+    public function checkCarExists($carId) {
+        try {
+
+            $db = $this->getBdd();
+
+            $req = "SELECT COUNT(*) FROM cars WHERE id_car = :carId";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":carId", $carId, PDO::PARAM_INT);
+            $stmt->execute();
+            $count = $stmt->fetchColumn();
+
+            return $count > 0;
+
+        } catch (PDOException $e ) {
+
+            $this->handleException($e, "vérification existance d'une voiture");
+        }
+    }
 
     public function getFilteredCars($filters) {
 
@@ -136,9 +154,6 @@ class CarsRepository extends Database {
             $this->handleException($e, "extraction des véhicules filtrés");
         }
     }
-
-
-
 
     public function getDistinctBrands () {
 
