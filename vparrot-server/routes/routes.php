@@ -62,6 +62,7 @@ $controllers = [
 //ROUTES DEFINITION
 $routes = [
     'GET' => [
+        '#^/vparrot/cars/details/(\d+)$#' => [$controllers['cars'], 'getFullCarDetails'],
         '/vparrot/cars/filtered' => [$controllers['cars'], 'getFilteredCarsList'],
         '/vparrot/cars/distinct-transmission-types' => [$controllers['cars'], 'getAllDistinctTransmissionTypes'],
         '/vparrot/cars/distinct-fuel-types' => [$controllers['cars'], 'getAllDistinctFuelTypes'],
@@ -119,8 +120,7 @@ if(isset($routes[$requestMethod][$uri])) {
 //If no exact route is found, check the routes with regex
 if (!$foundRoute) {
 
-    foreach($routes[$requestMethod] as $pattern =>$function) {
-      echo "Attempting to match: $uri with pattern: $pattern <br>";    
+    foreach($routes[$requestMethod] as $pattern =>$function) {    
         if (preg_match($pattern, $uri, $matches)) {
    
             array_shift($matches); 
