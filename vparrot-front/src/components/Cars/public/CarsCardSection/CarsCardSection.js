@@ -28,7 +28,7 @@ const CarsCardSection = ({ filteredCars }) => {
                 carsBriefDetails.map((car) => <CarsCard key={car.id_car} car={car} />)
             ) : filteredCars.length === 0 ? (
                 // Afficher le message "aucun résultat" si filteredCars est un tableau vide
-                <p>Aucun véhicule ne correspond à vos critères de recherche.</p>
+                <p className="noCars">Aucun véhicule ne correspond à vos critères de recherche.</p>
             ) : (
                 // Afficher les voitures filtrées
                 filteredCars.map((car) => <CarsCard key={car.id_car} car={car} />)
