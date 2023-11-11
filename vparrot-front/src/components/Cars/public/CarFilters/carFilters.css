@@ -1,32 +1,216 @@
-.filtersList{
+
+.filtersSection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90vw;
   background-color: #D9D9D9;
+  width: 90vw;
   border-radius: 20px;
-  padding: 1em;
+  margin-bottom: 3em;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
+.filtersTitle {
+  font-size: 1.5rem;
+  padding: 0.3em;
+  margin-bottom: 0.8em;
+}
 
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  margin: 0.5em;
+.filtersList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #D9D9D9;     
+  }
+
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 0.2em;
 }
 
 label {
-  font-family: 'Anek Tamil', sans-serif;
-  font-size: 1.1em;
-  font-weight: 400;
-  padding: 0.1em;
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 1em;
+    padding: 0.1em;
 }
 
 .inputFilter {
-  width: 55vw;
-  height: 2em;
-  font-family: 'Anek Tamil', sans-serif;
-  font-size: 1em;
+    width: 55vw;
+    height: 2em;
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 0.8em;
+}
+
+.filterActions {
+  text-align: center;
+  width: 100%;
+  padding: 0.5em;
+}
+
+.filterActions > button {
+  font-size: 0.8rem;
+  width: 40%;
+  margin: 1em;
+}
+
+
+
+@media screen and (min-width: 1400px) {
+
+  .filtersSection {
+    width: 80vw;
+    margin-bottom: 4em;
+  }
+
+  .filtersList{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6em;
+    width: 80%;
+    background-color: #D9D9D9;     
+  }
+
+  .inputFilter {
+    width: 80%;
+    height: 2em;
+    font-size: 0.8em;
+  }
+
+  .filterActions > button {
+    font-size: 0.8rem;
+    width: 20%;
+    margin: 2em;
+  }
+ 
+
 
 }
+
+/* Grands écrans de bureau */
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+  .filtersSection {
+    width: 80vw;
+    margin-bottom: 4em;
+  }
+ 
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+ 
+  }
+
+  .filtersList{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6em;
+    width:80%;
+    background-color: #D9D9D9;     
+  }
+
+  .inputFilter {
+    width: 100%;
+    height: 2em;
+    font-size: 0.8em;
+  }
+
+  .filterActions > button {
+    font-size: 0.8rem;
+    width: 20%;
+    margin: 2em;
+  }
+
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+    .filtersSection {
+      width: 60vw;
+      margin-bottom: 4em;
+    }
+
+    .filtersList{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6em;
+      width:80%;
+      background-color: #D9D9D9;     
+    }
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inputFilter {
+      width: 100%;
+      height: 2em;
+      font-size: 0.8em;
+    }
+
+    .filterActions > button {
+      font-size: 0.9rem;
+      width: 25%;
+      margin: 1em;
+    }
+
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+
+     .filtersSection {
+    width: 60vw;
+    margin-bottom: 4em;
+    }
+
+    .inputFilter {
+      width: 40vw;
+      height: 2em;
+      font-family: 'Anek Tamil', sans-serif;
+      font-size: 0.8em;
+    }
+
+    .filterActions > button {
+      font-size: 0.9rem;
+      width: 35%;
+      margin: 1em;
+    }
+ 
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+    .filtersSection {
+      width: 60vw;
+      margin-bottom: 4em;
+    }
+
+    .filtersTitle {
+      font-size: 1.8rem;
+    }
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      margin: 0.4em;
+    }
+
+    .inputFilter {
+      width: 40vw;
+      height: 2em;
+      font-family: 'Anek Tamil', sans-serif;
+      font-size: 0.8em;
+    }
+
+    .filterActions > button {
+      font-size: 1rem;
+      width: 30%;
+      margin: 1em;
+    }
+
+}
+
