@@ -5,6 +5,8 @@ import TextInput from '../../../common/Input/TextInput/TextInput';
 import SelectInput from '../../../common/Input/SelectInput/SelectInput';
 import Button from '../../../common/Buttons/Button/Button';
 
+import './carFilters.css';
+
 const CarFilters = ({ onApplyFilter, onResetFilter}) => {
 
     const { filterData, loading, error } = useFetchCarFilterData();
@@ -76,9 +78,9 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                   inputClassName="inputFilter"
                   label="Transmission"
                   name="transmission"
-                  value={filters.trannsmission}
+                  value={filters.transmission}
                   onChange={handleChange}
-                  options={[{ id: '', value: '', label: 'Choisir une transmission' }, ...filterData.transmissionTypes.map(transmissionObj => ({ id:transmissionObj.transmission, value: transmissionObj.model, label: transmissionObj.transmission }))]}    
+                  options={[{ id: '', value: '', label: 'Choisir une transmission' }, ...filterData.transmissionTypes.map(transmissionObj => ({ id:transmissionObj.transmission, value: transmissionObj.transmission, label: transmissionObj.transmission }))]}    
               />
 
               <TextInput
@@ -101,8 +103,8 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
           </div>
 
           <div className="filterActions">
-                <Button onClick={handleSubmit} className="applyFilterBtn">Appliquer</Button>
-                <Button onClick={handleReset} className="resetFilterBtn">Réinitialiser</Button>
+                <Button onClick={handleSubmit} className="applyFilterBtn" colorStyle='redBtn'>Appliquer</Button>
+                <Button onClick={handleReset} className="resetFilterBtn" colorStyle='whiteBtn'>Réinitialiser</Button>
           </div>
 
       </section>
