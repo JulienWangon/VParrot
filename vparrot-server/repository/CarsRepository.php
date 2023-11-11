@@ -35,24 +35,26 @@ class CarsRepository extends Database {
 
             $db = $this->getBdd();
             
-            $req = "SELECT
-                        c.*
-                        cf.years, cf.fuel, cf.power, cf.kilometer, cf.transmission, cf.body,
-                        GROUP_CONCAT(ci.file_path SEPARATOR '; ') AS images,
-                        GROUP_CONCAT(CONCAT(et.type_name, ':', e.denomination) SEPARATOR '; ' AS equipments
-                    FROM cars c
-                    LEFT JOIN car_features cf ON c.id_car = cf.car_id
-                    LEFT JOIN cars_images ci ON c.id_car = ci.car_id
-                    LEFT JOIN car_equipments ce ON c.id_car = ce.car_id
-                    LEFT JOIN equipments e ON ce.equipment_id = e.id_equipment
-                    LEFT JOIN equipment_types et ON e.type_id = et.id_type
-                    WHERE c.id_car = :carId
-                    GROUP BY c.id_car";
+            $db->exec("SET SESSION group_concat_max_len = 1000000");
+
+        $req = "SELECT
+                    c.*,
+                    cf.years, cf.fuel, cf.power, cf.kilometer, cf.transmission, cf.body,
+                    GROUP_CONCAT(ci.file_path SEPARATOR '; ') AS images,
+                    GROUP_CONCAT(CONCAT(et.type_name, ':', e.denomination) SEPARATOR '; ') AS equipments
+                FROM cars c
+                LEFT JOIN car_features cf ON c.id_car = cf.car_id
+                LEFT JOIN cars_images ci ON c.id_car = ci.car_id
+                LEFT JOIN car_equipments ce ON c.id_car = ce.car_id
+                LEFT JOIN equipments e ON ce.equipment_id = e.id_equipment
+                LEFT JOIN equipment_types et ON e.type_id = et.id_type
+                WHERE c.id_car = :carId
+                GROUP BY c.id_car";
 
                     $stmt = $db->prepare($req);
                     $stmt->bindValue(":carId", $carId, PDO::PARAM_INT);
-                    $stmt->execute;
-                    $carDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $stmt->execute();
+                    $carDetails = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     return $carDetails;
 
