@@ -33,6 +33,34 @@ class Validator {
         return empty($this->errors[$type]);
     }
 
+    public function validateStringForNamesAndNumbers($input, $type, $maxLength = 50) {
+        // Vérification de l'existence de l'entrée
+        if(!$input || $input === "") {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
+            return false;
+        }
+    
+        // Vérification de la longueur minimale
+        if (strlen($input) < 3) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit comporter au moins 3 caractères."];
+            return false;
+        }
+    
+        // Vérification de la longueur maximale
+        if (strlen($input) > $maxLength) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pas dépasser $maxLength caractères."];
+            return false;
+        }
+    
+        // Vérification du format de l'entrée
+        if (!preg_match("/^[A-Za-z0-9'\s-]+$/", $input)) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type peut uniquement contenir des lettres, des chiffres, des espaces, des apostrophes et des tirets."];
+            return false;
+        }
+    
+        return empty($this->errors[$type]);
+    }
+
     //Validate testimony's rating 
     public function validateRating($rating) {
 
