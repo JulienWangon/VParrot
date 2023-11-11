@@ -3,6 +3,7 @@
 require_once './vparrot-server/repository/CarsRepository.php';
 require_once './vparrot-server/Validator/Validator.php';
 require_once './vparrot-server/config/config.php';
+require_once './vparrot-server/DTOs/CarDetailsDTO.php';
 
 class CarsController {
 
@@ -27,8 +28,7 @@ class CarsController {
 
 
     //Gell all car brief details
-    public function getCarBriefDetails() {
-        
+    public function getCarBriefDetails() {    
         try{
 
             $carsDetails = $this->carsRepository->carBriefDetails();
@@ -47,6 +47,31 @@ class CarsController {
 
         }
     }
+
+
+    public function getFullCarDetails($carId) {
+        try {
+
+            if(!$this->carsRepository->checkCarExists($carId)) {
+                $this->sendResponse(["status" => "error", "message" => "Voiture non trouvée"], 404);
+                return;
+            }
+
+            $carData = $this->carsRepository->getCarDetailsById($carId);
+            $fullCarDetails = new CarDetailsDTO($carData);
+
+            $this->sendResponse(["status" => "success", "data" => $fullCarDetails]);
+
+        } catch(Exception $e) {
+
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
+        }
+    }
+
+
+
+
+
 
     public function getFilteredCarsList() {
 
@@ -96,17 +121,11 @@ class CarsController {
         } catch (Exception $e) {
             $this->sendResponse(["status" =>"error", "message" => $e->getMessage()]);
         }
-
-
-
-
-
     }
 
 
     //Get all distinct brands
     public function getAllDistinctBrands () {
-
         try {
 
             $brands = $this->carsRepository->getDistinctBrands();
@@ -121,7 +140,6 @@ class CarsController {
 
     //Get all distinct models
     public function getAllDistinctModels () {
-
         try {
 
             $models = $this->carsRepository->getDistinctmModels();
@@ -135,7 +153,6 @@ class CarsController {
 
     //Get all distinct fuel types
     public function getAllDistinctFuelTypes () {
-
         try {
 
             $fuelTypes = $this->carsRepository->getDistinctFuelTypes();
@@ -149,7 +166,6 @@ class CarsController {
 
     //Get all distinct transmission types
     public function getAllDistinctTransmissionTypes () {
-
         try {
 
             $transmissionTypes = $this->carsRepository->getDistinctTransmissions();
