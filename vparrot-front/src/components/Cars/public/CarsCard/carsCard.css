@@ -181,15 +181,15 @@
 @media screen and (max-width: 767px) and (min-width: 576px) {
 
   .carCards {  
-    width: 80vw; 
+    width: 70vw; 
   }
 
   .carName { 
-    font-size: 1.9rem;
+    font-size: 1.7rem;
   }
 
   .tradeName {
-    font-size: 1.2em;
+    font-size: 1.3em;
   }
 
   .priceContainer {
