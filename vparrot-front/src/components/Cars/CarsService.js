@@ -21,6 +21,26 @@ export const fetchCarsBriefDetails = async () => {
 
 };
 
+export const fetchFilteredCars = async (filters) => {
+
+    
+    try {
+
+        const response = await instanceAxios.get('/cars/filtered', { params: filters });
+        if (response.data && response.data.status === 'success') {
+
+            return response.data.data;
+        } else {
+
+            throw new Error("Données reçues non valides ou erreur de requête. ");
+        }       
+    } catch (error) {
+
+        console.error('Erreur lors du filtrage des voitures:', error);
+        throw error;
+    }
+};
+
 //Get distinct brand
 export const fetchDistinctBrands = async () => {
     try {
