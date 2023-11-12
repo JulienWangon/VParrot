@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+import useFetchFilteredCars from '../../../components/Cars/hooks/useFetchFileteredCars';
+
 import Header from '../../../components/common/Header/Header';
 import H2Title from '../../../components/common/H2Title/H2Title';
 import CarsCardSection from '../../../components/Cars/public/CarsCardSection/CarsCardSection';
 import CarFilters from '../../../components/Cars/public/CarFilters/CarFilters';
 import Footer from '../../../components/Footer/Footer';
-import useFetchFilteredCars from '../../../components/Cars/hooks/useFetchFileteredCars';
+import CarModal from '../../../components/Cars/public/CarModal/CarModal';
 
 import './salesArea.css';
 
-
 const SalesArea = () => {
 
+    const { filteredCars, onApplyFilter, resetFilter, error } = useFetchFilteredCars();
 
-  const { filteredCars, onApplyFilter, resetFilter, error } = useFetchFilteredCars();
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCar, setSelectedCar] = useState(null);
 
-
+    const handleCarDetailsClick = (carId) => { 
+            setSelectedCar(carId);
+            setIsModalOpen(true);
+    };
 
   return (
-    <body>
+    <>
         <Header title="Espace Vente" slogan="Véhicules d'occasions toutes marques"/>
         <main>
             <section>
@@ -41,13 +46,14 @@ const SalesArea = () => {
 
             <CarFilters onApplyFilter={onApplyFilter} onResetFilter={resetFilter}/>
 
-            <CarsCardSection filteredCars={filteredCars}/>
+            <CarsCardSection filteredCars={filteredCars} onCarDetailsClick={handleCarDetailsClick}/>
+            <CarModal carId={selectedCar} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
         </main>
 
         <Footer/>
 
       
-    </body>
+    </>
   );
 };
 
