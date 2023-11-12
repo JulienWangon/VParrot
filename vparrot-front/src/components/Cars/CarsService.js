@@ -21,10 +21,10 @@ export const fetchCarsBriefDetails = async () => {
 
 };
 
-export const fetchAllCarDetails = async () => {
+export const fetchAllCarDetailsById = async (carId) => {
     try {
 
-        const response = await instanceAxios.get(`/cars/details/$[{carId}]`);
+        const response = await instanceAxios.get(`/cars/details/${carId}`);
         if (response.data && response.data.status === 'success') {
 
             return response.data.data;
