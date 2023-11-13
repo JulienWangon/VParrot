@@ -1,0 +1,37 @@
+.carSlider {
+width: 100%;
+height: auto;
+}
+
+.fullGallery {
+  margin-bottom: 2.5em;
+  width: 100%;
+  max-width: 768px;
+}
+
+
+.imgGallery {
+  width: 100%;
+}
+
+.pics {
+  width: 100%;
+}
+
+.carPics {
+width: 100%;
+height: auto;
+}
+
+.slick-slider {
+  width: 100%;
+}
+
+.slick-list {
+   background-color: rgba(187, 39, 26, 0.8);
+}
+
+
+
+
+
