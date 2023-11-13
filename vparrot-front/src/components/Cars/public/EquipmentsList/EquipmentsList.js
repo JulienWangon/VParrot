@@ -1,13 +1,15 @@
 import React from 'react';
 
+import './equipmentsList.css'
+
 const EquipmentsList = ({ data, labelFunction }) => {
   return (
     <div className="accordionSection">
 
         {Object.keys(data).map((key, index) => (
             <div className="accordion" id={`accordion-${index}`} key={key}>
-                <div className="accordion-item">
-                    <h2 className="accordion-header accordionTitle ">
+                <div className="accordionItem">
+                    <h2 className="accordionHeader accordionTitle ">
                         <button
                               className={`accordion-button customHeader ${
                               data[key].length > 0 ? 'active' : ''
@@ -27,7 +29,7 @@ const EquipmentsList = ({ data, labelFunction }) => {
                       <div className="accordion-body">
                           <ul>
                               {data[key].map((item, subIndex) => (
-                                <li key={subIndex}>{item}</li>
+                                <li className="itemEquipment" key={subIndex}>{item}</li>
                               ))}
                           </ul>
                       </div>
