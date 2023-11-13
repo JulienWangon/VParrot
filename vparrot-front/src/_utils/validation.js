@@ -53,6 +53,25 @@ export const validateName =(testName) => {
    return error;
 }
 
+export const validateStringWithNumber = (string) => {
+
+    let error = null;
+
+    if(!string) {
+        error = "Le champ est requis"
+    } else if (string.length < 3) {
+        error = "Le champ doit comporter au moins 3 caractères.";
+    } else if (string.length > 50) {
+        error = "Le champ ne doit pas dépasser 50 caractères"
+    } else {
+        const testRegex = /^[A-Za-z0-9'-]+$/;
+        if(!testRegex.test(string)) {
+            error = "Le champ peut uniquement contenir des liettres (majuscules et minuscules), des apostrophes des tirets et des chiffres";
+        }
+    }
+     return error;
+}
+
 //RATING VALIDATION
 export const validateRating = (rating) => {
   let error = null; 
@@ -71,7 +90,7 @@ export const validateRating = (rating) => {
 export const validateComment = (comment) => {
   let error =  null;
 
-  const commentRegex = /^[A-Za-z0-9 .,!?()-]+$/;
+  const commentRegex = /^[A-Za-z0-9 .,!?()-éèêëàâäôöûüçîïÉÈÊËÀÂÄÔÖÛÜÇÎÏ]+$/;
   const urlRegex = /(www\.|https?:\/\/)[^\s]+?\.[a-zA-Z]{2,}/;
 
   if(!comment) {
@@ -87,6 +106,23 @@ export const validateComment = (comment) => {
   }
 
   return error;
+}
+
+//PHONE NUMBER VALIDATION
+export const validatePhoneNumber = (phoneNumber) => {
+    let error = null;
+
+    const phoneRegex = /^\+?\d+$/;
+
+    if (!phoneNumber) {
+        error = "Le numéro de téléphone est requis.";
+    } else {
+        if (!phoneRegex.test(phoneNumber)) {
+            error = "Veuillez saisir un numéro de téléphone valide.";
+        }
+    }
+
+    return error;
 }
 
 
