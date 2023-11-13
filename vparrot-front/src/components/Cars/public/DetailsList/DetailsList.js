@@ -2,9 +2,9 @@ import React from 'react';
 
 import './detailsList.css';
 
-const DetailsList = ( {features}) => {
+const DetailsList = ( {features, className}) => {
   return (
-    <div className="detailsContainer">
+    <div className={`detailsContainer ${className}`}>
         <div className="featureContainer">
             <svg 
                 className="carCardIcon" 
