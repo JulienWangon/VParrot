@@ -233,6 +233,35 @@ class Validator {
         return empty($this->errors[$type]);
     }
 
+    //Vérifier le token du captcha de Google
+    public function verifyGoogleCaptcha($captchaToken) {
+        if(empty($captchaToken)) {
+            $this->errors['captcha'][] = ['status' => 'error', 'message' => 'Le CAPTCHA est requis.'];
+        }
+
+        $googleKey ="6Le8ugwpAAAAAE_wzdBiLe7m7G5z9uA4KqVDd8x4";
+        $verifyUrl = "https://www.google.com/recaptcha/api/siteverify?secret=$googleKey&response=$captchaToken";
+
+        $response = file_get_contents($verifyUrl);
+        if(!$response) {
+            $this->errors['captcha'][] = ['status' => 'error', 'message' => 'Échec de la vérification du CAPTCHA.'];
+            return false;
+        }
+
+        $responseData = json_decode($response);
+        if (!$responseData->success) {
+            $this->errors['captcha'][] = ['status' => 'error', 'message' => 'CAPTCHA invalide.'];
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+
+
+
     //Return validator error
     public function getErrors() {
         return $this->errors;
