@@ -56,16 +56,24 @@ class AuthController {
             //Assign Data to Variables
             $userEmail = $data["user_email"];
             $userPassword = $data["user_password"];
+            $captchaToken = $data['captchaToken'];
 
             //Data validation
             $validUserEmail = $this->validator->validateEmail($userEmail);
             $validUserPassword = $this->validator->validatePassword($userPassword);
+            $validCaptchaToken = $this->validator->verifyGoogleCaptcha($captchaToken);
 
             if(!$validUserEmail || !$validUserPassword) {
 
                 $errors = $this->validator->getErrors();
                 $this->sendResponse(["status" => "error", "message" => $errors], 400);
                 return;
+            }
+
+            if(!$validCaptchaToken) {
+                $errors = $this->validator->getErrors();
+                $this->sendResponse(['status' => 'error', 'message' => $errors], 401);
+
             }
 
             //Retrieve User
@@ -108,7 +116,7 @@ class AuthController {
             ]);
 
         } catch(Exception $e) {
-            $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
 
         }
     }
@@ -134,7 +142,7 @@ class AuthController {
             }
         } catch (Exception $e) {
             
-            $this->sendResponse(["status" => "error", "message" => $e->getMessage()]);
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
         }
     }
 
@@ -146,7 +154,7 @@ class AuthController {
                 // Vérifier le token du cookie
                 $token = $_COOKIE["token"];
                 // Remplacer 'your_key' par la clé que vous avez utilisée lors de la création des JWT
-                $secretKey = $_SERVER['SECRET_KEY'];
+                $secretKey = $_ENV['SECRET_KEY'];
                 $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
                 
                 // Vérifiez que le token n'est pas expiré et que les données de l'utilisateur sont toujours valides
@@ -165,11 +173,11 @@ class AuthController {
                 }
             } else {
                 // Répondre avec une erreur si aucun token n'est trouvé
-                $this->sendResponse(['status' => 'success', 'user' => null]);
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucun token trouvé.'], 401);
             }
         } catch (ExpiredException $e) {
             // Gérer l'exception si le token est expiré
-            $this->sendResponse(['status' => 'error', 'message' => 'Session expirée.'], 401);
+            $this->sendResponse(['status' => 'error', 'message' => 'Session expirée.'], 500);
         } catch (Exception $e) {
             // Gérer toute autre exception
             $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
