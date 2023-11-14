@@ -1,5 +1,7 @@
 <?php
 
+require_once './vparrot-server/util/SecurityUtil.php';
+
 trait CsrfTokenManager {
 
     public function generateCsrfToken() {
@@ -9,7 +11,7 @@ trait CsrfTokenManager {
             session_start();
         }
 
-        $token = bin2hex(random_bytes(32));
+        $token = SecurityUtil::generateSecuretokn();
         $_SESSION['csrf_token'] = $token;
 
         return $token;
