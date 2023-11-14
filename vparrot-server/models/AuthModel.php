@@ -13,7 +13,7 @@ require_once './vparrot-server/vendor/autoload.php';
       //Create JWT token for user
       public function createJWTForUser($user) {
           //Take secret key 
-          $secretKey = $_SERVER['SECRET_KEY'];
+          $secretKey = $_ENV['SECRET_KEY'];
 
           if(!$secretKey) {
             throw new Exception("clé secrète introuvable");
