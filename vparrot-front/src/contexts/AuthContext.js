@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import instanceAxios from "../_utils/axios";
 import { useNavigate } from "react-router-dom";
-
+import { useMessage } from "./MessagesContext";
 
 //Création d'un context avec une valeur vide par défaut
 const AuthContext = createContext();
@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }) => {
 
   //State pour stocker l'utilisateur actuel
       const [currentUser, setCurrentUser] = useState(null);
-  //State pour stocker les erreurs de connexion
-      const [error, setError] = useState(null);
-  
+ 
       const navigate = useNavigate();
+
+      const { showMessage } = useMessage();
 
   // check if user is connect
     const checkUserSession = async () => {
@@ -32,11 +32,10 @@ export const AuthProvider = ({ children }) => {
                   id: response.data.user.id,
                   role: response.data.user.role
                 });
-                console.log('Current user updated after session check:', response.data.user);
+          
             }
         } catch (error) {
-
-            
+        
             setCurrentUser(null);
         } 
         setLoading(false);
@@ -44,20 +43,20 @@ export const AuthProvider = ({ children }) => {
 
     // Utiliser l'effet pour vérifier la session une fois que le composant AuthProvider est monté
   useEffect(() => {
-    console.log('Checking user session...');
     checkUserSession();
   }, []);
   
   //Méthode e connexion de l'utilisateur    
-      const login = async (email, password) => {
+      const login = async (email, password, captchaToken) => {
           try {
   //Configurer les données du formulaire pour la requête POST
             const data = {
               user_email: email,
-              user_password: password
+              user_password: password,
+              captchaToken: captchaToken
             };
   //Envoyer la requête POST pour la connexion
-            const response = await instanceAxios.post('/vparrot/login', JSON.stringify(data), {
+            const response = await instanceAxios.post('/login', JSON.stringify(data), {
   
               headers: {
                 'Content-Type' : 'application/json'
@@ -65,28 +64,28 @@ export const AuthProvider = ({ children }) => {
               withCredentials: true
             });
   
-            
-  //Vérifier la répoonse si la connexion est réussi mettre à jour l' utilisateur actuel
-            if(response.status === 200) {
-                              
+      
+  //Vérifier la réponse si la connexion est réussi mettre à jour l' utilisateur actuel
+            if(response.data.status === "success") {
+              showMessage(response, "success");             
               setCurrentUser({
                 id: response.data.user.id,
                 role: response.data.user.role
               }); 
-                         
+                                 
                 navigate('/accueiladmin');
-            } else if (response.status === 401) {
+            } else if (response.data.status === "error") {
               // Utilisateur non trouvé ou authentification échouée
               throw new Error(response.data.message || "Erreur de connexion");
               
             }
           } catch (error) {
-  // En cas d'erreur réseau ou de problème avec la requête, stockez un message d'erreur.
-  if (error.response && error.response.status === 401) {
-      setError(error.response.data.message || "Erreur de connexion");
-    } else {
-      setError("Une erreur s'est produite lors de la connexion.");
-    }
+      // En cas d'erreur réseau ou de problème avec la requête, stockez un message d'erreur.
+      if (error.response && error.response.status === 401) {
+          showMessage(error.response.data.message, "error");
+        } else {
+          showMessage("Une erreur s'est produite lors de la connexion.", "error");
+        }
           } 
       };
   
@@ -103,20 +102,20 @@ export const AuthProvider = ({ children }) => {
   //Vérifier la réponse si la déconnexion est réussie, reinitialiser l'utilisateur actuel
               if(response.data.status === 'success') {
                   setCurrentUser(null);
-                  console.log('Current user updated after session check:', response.data.user);
+                  showMessage(response, "success");
                   navigate('/access-panel');
               } else {             
   //Si la réponse indique un échec, stockez le message d'erreur.
-                  setError(response.data.message || "Erreur de déconnexion");
+                  showMessage(response.data.message, "error");
               }
-          } catch (e) {
+          } catch (error) {
              
-              if (e.response && e.response.data) {
+              if (error.response && error.response.data) {
                   // Si l'erreur a une réponse et que les données de réponse sont disponibles, utilisez le message d'erreur de l'API
-                  setError(e.response.data.message || "une erreur s'est produite lors de la connexion.");
+                  showMessage(error.response.data.message, "error");
               } else {
                   // Si ce n'est pas une erreur API (comme un problème réseau), utilisez un message d'erreur générique
-                  setError("une erreur s'est produite lors de la connexion.");
+                  showMessage("Une erreur s'est produite lors de la connexion.");
               }
   
           }
@@ -124,13 +123,11 @@ export const AuthProvider = ({ children }) => {
   
   
       const clearErrors = () => {
-          setError(null);
+          showMessage(null);
         };
   //Liste des valeurs disponibles dans le contexte pour les composants enfants
       const contextValue = {
         currentUser,
-        error,
-        setError,
         login,
         logout,
         loading,
