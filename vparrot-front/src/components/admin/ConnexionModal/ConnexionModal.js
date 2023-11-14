@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
-import { useMessage } from '../../../contexts/MessagesContext';
+
 import ReCAPTCHA from "react-google-recaptcha";
 
 import H2Title from '../../common/H2Title/H2Title';
@@ -11,86 +11,81 @@ import { validateEmail, validatePassword } from '../../../_utils/validation';
 
 import ModalStyle from './connexionModal.module.css';
 
-const maxLoginAttemps = 4;
-const reCaptchaKey ="6LfaqvUoAAAAALPzrRTvifhm7qlDBmh7RfEfTUOI";
+
+const reCaptchaKey ="6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
 const ConnexionModal = ({ handleCloseModal }) => {
 
+    
+
     const { login, error, loading, clearErrors } = useAuth();
-    const [loginAttempts, setLoginAttempts] = useState(0);
     const [captchaValue, setCaptchaValue] = useState(false);
-
-    const [data, setData] = useState({
-        email: "",
-        password: ""
-    });
-
-    const { showMessage } = useMessage();
+    const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
+    const [areFieldsValid, setAreFieldsValid] = useState(false);
+
+
+  
 
     const validate = () => {
         let isValid = true;
-        let errors = {};
+        let newErrors = {};
         // Utiliser les fonctions importées pour la validation
-        errors.email = validateEmail(data.email);
-        errors.password = validatePassword(data.password);
+        newErrors.email = validateEmail(data.email);
+        newErrors.password = validatePassword(data.password);
         // Vérifie si des erreurs ont été définies
-        if(errors.email || errors.password) {
+        if(newErrors.email || newErrors.password) {
             isValid = false;
         }
         // Mettre à jour l'état des erreurs dans le composant        
-        setErrors(errors);
+        setErrors(newErrors);
+        setAreFieldsValid(isValid);
         // Retourner si le formulaire est valide ou non         
         return isValid;
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setData((prevData) => ({
-            ...prevData, 
-            [name]: value
-        }));
-        setErrors({}); // Reset field-level errors upon input change
-        clearErrors();  // Reset auth error upon input change
+        setData((prevData) => ({ ...prevData, [name]: value }));
+        setErrors({}); 
+
+        let newErrors = {
+            email: name === 'email' ? validateEmail(value) : validateEmail(data.email),
+            password: name === 'password' ? validatePassword(value) : validatePassword(data.password)
+        };
+        setErrors(newErrors);
+
+        const isValid = !newErrors.email && !newErrors.password;
+        setAreFieldsValid(isValid);
+
+        clearErrors();
+ 
     };
 
+    
     const handleCaptcha = (value) => {
         setCaptchaValue(value); // Mettre à jour la valeur du CAPTCHA
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        if (loginAttempts >= maxLoginAttemps && !captchaValue) {
-            showMessage("Veuillez compléter le CAPTCHA.", "error");
-            return;
-        }
+    const handleSubmit = async (e) => {
+    e.preventDefault();
 
         if (validate()) {
-            try {
-                const result = await login(data.email, data.password);
 
-                if (result) {
-                showMessage("Connecté avec succès!", "success");
+            const response = await login(data.email, data.password, captchaValue);
+
+            if (response && response.data && response.data.status === 'success') {
+                // Connexion réussie
                 setCaptchaValue(null);
-                setLoginAttempts(0);
-                handleCloseModal();
-            } else {
-                throw new Error("Identifiants invalides"); // Utilisez l'état `error` ou un message par défaut
-            }
-            } catch (error) {
-                setLoginAttempts((prev) => prev + 1);
-                showMessage("Identifiants invalides", "error");
-            }
-        } else {
-            showMessage("La validation du formulaire a échoué.", "error");
-        }
+                handleCloseModal();    
+            }     
+        } 
     };
 
     return (
 
-
-        <div className={ModalStyle.formContainer}>
+        <div className="formContainer">
             <div className={ModalStyle.opacityLayer}></div>
             <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
 
@@ -116,27 +111,22 @@ const ConnexionModal = ({ handleCloseModal }) => {
                 />
                 {errors.password && <div className="errorMessage">{errors.password}</div>}
 
-                {loginAttempts >= maxLoginAttemps && (
+                {areFieldsValid && (
                     <ReCAPTCHA
                         sitekey={reCaptchaKey}
                         onChange={handleCaptcha}
                     />
                 )}
-
+                
                 <Button
                     content="Connexion"
                     type="submit"
                     className="submitBtn"
-                    disabled={loginAttempts >= maxLoginAttemps} // Désactiver le bouton après le nombre maximum de tentatives            
+                    disabled={!captchaValue && areFieldsValid} // Désactiver le bouton après le nombre maximum de tentatives            
                 />
                 {error && <div className="errorMessage">{error}</div>}
                 {loading && <div className="loadingMessage">Chargement...</div>}
 
-                {loginAttempts > 0 && loginAttempts < maxLoginAttemps && (
-                    <div className="infoMessage">
-                        {`Vous avez ${maxLoginAttemps - loginAttempts} tentative(s) restante(s).`}
-                    </div>
-                )}
             </form>      
         
         </div>
