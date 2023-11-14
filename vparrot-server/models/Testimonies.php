@@ -5,13 +5,13 @@ require_once 'Database.php';
 class Testimonies extends Database {
 
     private ?int $idTestimony = null;
-    private ?string $firstName = null;
-    private ?string $lastName = null;
-    private ?string $content = null;
-    private ?int $rating = null;
-    private ?bool $isModerated = null;
+    private string $firstName;
+    private string $lastName;
+    private string $content;
+    private int $rating;
+    private bool $isModerated;
 
-    public function __construct(?string $firstName = null, ?string $lastName = null, ?string $content = null, ?int $rating = null, ?bool $isModerated = null, ?int $idTestimony = null) {
+    public function __construct(string $firstName, string $lastName, string $content, int $rating, bool $isModerated, ?int $idTestimony = null) {
 
         $this->idTestimony = $idTestimony;
         $this->firstName = $firstName;
@@ -22,7 +22,7 @@ class Testimonies extends Database {
     }
 
 //Getters List
-    public function getId() :int {
+    public function getIdTestimony() :int {
         return $this->idTestimony;
     }
 
@@ -68,49 +68,6 @@ class Testimonies extends Database {
     }
 
 //CRUD Methods
-
-//GET all testimonies 
-    public function getAllTestimonies() :array {
-
-        try {
-
-            $db = $this->getBdd();
-            $req = "SELECT * FROM testimonies";
-            $stmt = $db->prepare($req);
-            $stmt->execute();
-            $testimonies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $testimonies;
-
-        } catch(PDOException $e) {
-
-            $this->handleException($e, "extraction liste utilisateur");
-        }
-    }
-
-    //Get Testimonies by moderation status
-    public function getModerationTestimonies($isModerated) :array {
-        try {
-
-            $db = $this->getBdd();
-            $req = "SELECT * FROM testimonies WHERE is_moderated = :isModerated";
-            $stmt = $db->prepare($req);
-            $stmt->bindValue(":isModerated", $isModerated, PDO::PARAM_BOOL);
-            $stmt->execute();
-    
-            $testimonies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $stmt->closeCursor();
-    
-            return $testimonies;
-            
-        } catch(PDOException $e) {
-
-            $this->handleException($e, "extraction liste utilisateur");
-        }
-    }
-    
-
-
 
 //CREATE testimony 
     public function addTestimony() :bool {
