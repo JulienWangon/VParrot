@@ -111,6 +111,7 @@ class CarsController {
             $cars = $this->carsRepository->getFilteredCars($filters);
 
             foreach ($cars as $key => $car) {
+                $cars[$key]['price'] = number_format($car['price'], 0, '', ' ') . ' €';
                 if (!empty($car['image'])) {
                     $cars[$key]['image'] = BASE_PATH . $car['image'];
                 }
