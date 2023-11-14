@@ -5,14 +5,15 @@ require_once 'Database.php';
 class Schedules extends Database {
 
     private ?int $idOpeningDay = null;
-    private ?string $dayOfWeek = null;
-    private ?string $morningOpening = null;
-    private ?string $morningClosing = null;
-    private ?string $afternoonOpening = null;
-    private ?string $afternoonClosing = null;
+    private string $dayOfWeek;
+    private string $morningOpening;
+    private string $morningClosing;
+    private string $afternoonOpening;
+    private string $afternoonClosing;
 
-    public function __construct(?string $dayOfWeek = null, ?string $morningOpening = null, ?string $morningClosing = null, ?string $afternoonOpening = null, ?string $afternoonClosing = null, ?int $idOpeningDay = null ) {
-          
+    public function __construct( string $dayOfWeek, string $morningOpening, string $morningClosing, string $afternoonOpening, string $afternoonClosing, ?int $idOpeningDay = null) {
+        
+        $this->idOpeningDay = $idOpeningDay;
         $this->dayOfWeek = $dayOfWeek;
         $this->morningOpening = $morningOpening;
         $this->morningClosing = $morningClosing;
@@ -21,7 +22,7 @@ class Schedules extends Database {
     }
 
 //Getters List
-    public function getIdOpeningDay() : int {
+    public function getIdOpeningDay() : ?int {
         return $this->idOpeningDay;
     }
 
@@ -68,23 +69,7 @@ class Schedules extends Database {
 
 //CRUD Methods
 
-//GET all Schedules
-    public function getAllSchedules() : array {
-        try {
 
-            $db = $this->getBdd();
-            $req = "SELECT * FROM schedules";
-            $stmt = $db->prepare($req);
-            $stmt->execute();
-            $schedules = $stmt->fetchALL(PDO::FETCH_ASSOC);
-       
-            return $schedules;
-
-        } catch(PDOException $e) {
-
-            $this->handleException($e, "extraction liste des horaires d'ouverture");
-        }
-    }
 
 //UPDATE Schedule
     public function UpdateHours($idOpeningDay, $newValues) : bool {
