@@ -1,16 +1,17 @@
 <?php
 
 require_once './vparrot-server/models/Schedules.php';
+require_once './vparrot-server/repository/SchedulesRepository.php';
 require_once './vparrot-server/Validator/Validator.php';
 
 class SchedulesController {
 
     private $validator;
-    private $schedules;
+    private $schedulesRepository;
 
-    public function __construct($validator, $schedules) {
+    public function __construct(SchedulesRepository $schedulesRepository, Validator $validator) {
         $this->validator = $validator;
-        $this->schedules = $schedules;
+        $this->schedulesRepository = $schedulesRepository;
     }
 
 
@@ -27,15 +28,26 @@ class SchedulesController {
     public function getSchedulesList() {
         try {
 
-            $data= $this->schedules->getAllSchedules();
-            $this->sendResponse(["status" => "success", "data" => $data], 200);
+            $schedules = $this->schedulesRepository->getAllSchedules();
 
+            $schedulesArray = array_map(function ($schedule) {
+                return [
+                    'idOpeningDay' => $schedule->getIdOpeningDay(),
+                    'dayOfWeek' => $schedule->getDayOfWeek(),
+                    'morningOpening' => $schedule->getMorningOpening(),
+                    'morningClosing' => $schedule->getMorningClosing(),
+                    'afternoonOpening' => $schedule->getAfternoonOpening(),
+                    'afternoonClosing' => $schedule->getAfternoonClosing()    
+                ];
+            }, $schedules);
+
+            $this->sendResponse(['status' => 'success', 'data' => $schedulesArray]);
+         
         } catch (Exception $e) {
 
             $this->sendResponse(['error' => $e->getMessage()], 400);
         }
-       
-        
+               
     }
 
     //Update Schedules
@@ -83,7 +95,7 @@ class SchedulesController {
         }
 
         //If id not exists
-        if(!$this->schedules->idExists($idSchedules)) {
+        if(!$this->schedulesRepository->idExists($idSchedules)) {
 
             $this->sendResponse([
                 "status" => "error",
@@ -96,7 +108,7 @@ class SchedulesController {
         //Update Schedules
         try {
 
-            $result = $this->schedules->UpdateSchedule($idSchedules, [
+            $result = $this->schedulesRepository->UpdateSchedule($idSchedules, [
                 "morning_opening" => $data["morning_opening"],
                 "morning_closing" => $data["morning_closing"],
                 "afternoon_opening" => $data["afternoon_opening"],
