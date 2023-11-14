@@ -1,10 +1,13 @@
 <?php
 
 require_once './vparrot-server/models/Database.php';
+require_once './vparrot-server/models/Service.php';
+require_once './vparrot-server/models/ServiceTypes.php';
 
 class ServicesRepository extends Database {
+    
 
-    public function getAllServicesGroupedByType() : array {
+    public function getAllServicesAndServiceTypes() : array {
 
         try {
 
@@ -18,9 +21,33 @@ class ServicesRepository extends Database {
               
             $stmt = $db->prepare($req);
             $stmt->execute();
-            $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $servicesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $types;
+            $serviceTypes = [];
+            $services = [];
+            foreach ($servicesData as $serviceData) {
+
+                if (!isset($serviceTypes[$serviceData['id_type']])) {
+                    $serviceTypes[$serviceData['id_type']] = new ServiceTypes(     
+                        $serviceData['type_name'],
+                        $serviceData['id_type']
+                    );      
+                }
+
+                $service = new Service(
+                    $serviceData['id_type'],
+                    $serviceData['service_name'],
+                    $serviceData['description'],
+                    $serviceData['price'],
+                    $serviceData['path_img'],
+                    $serviceData['id_service']
+                );
+
+                $services[] = $service;
+
+            }
+
+            return ['services' => $services, 'serviceTypes' => $serviceTypes];
               
         } catch(PDOException $e) {
 
