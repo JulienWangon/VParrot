@@ -1,17 +1,17 @@
 <?php
 
 require_once 'Database.php';
-
+ 
 class Users extends Database {
 
     private ?int $idUser = null;
-    private ?string $firstName = null;
-    private ?string $lastName = null;
-    private ?string $userEmail = null;
+    private string $firstName;
+    private string $lastName;
+    private string $userEmail;
     private ?string $userPassword = null;
-    private ?int $roleId = null;
+    private int $roleId;
 
-    public function __construct(?string $firstName = null, ?string $lastName = null, ?string $userEmail = null, ?string $userPassword = null, ?string $roleId = null, ?int $idUser = null) {
+    public function __construct(string $firstName, string $lastName, string $userEmail, ?int $idUser = null, ?int $roleId = null, ?string $userPassword = null) {
 
         $this->idUser = $idUser;
         $this->firstName = $firstName;
@@ -71,28 +71,7 @@ class Users extends Database {
 
     //CRUD Method
 
-    //GET all users
-    public function getAllUsers() :array {
-
-        try {
-
-            $db = $this->getBdd();
-            $req = "SELECT u.id_user, u.first_name, u.last_name, u.user_email, r.id_role, r.role_name 
-                    FROM users u 
-                    JOIN roles r 
-                    ON u.role_id = r.id_role";
-
-            $stmt = $db->prepare($req);
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $users;
-
-        } catch(PDOException $e) {
-
-            $this->handleException($e, "extraction des utilisateurs");
-        }
-    }
+   
 
     //CREATE new user 
     public function addUser(string $firstName, string $lastName, string $userEmail, string $userPassword, int $roleId ) :bool {
