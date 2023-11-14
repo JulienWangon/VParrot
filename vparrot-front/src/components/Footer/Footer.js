@@ -27,8 +27,8 @@ const Footer = () => {
             ) : (
                 <ul>
                     {schedules.map((schedule) => (
-                        <li key={schedule.id_opening_day}>
-                            <strong>{schedule.day_of_week.substring(0, 3)}:</strong> {schedule.morning_opening.substring(0, 5)} - {schedule.morning_closing.substring(0,5)} / {schedule.afternoon_opening.substring(0, 5)} - {schedule.afternoon_closing.substring(0, 5)} 
+                        <li key={schedule.idOpeningDay}>
+                            <strong>{schedule.dayOfWeek.substring(0, 3)}:</strong> {schedule.morningOpening.substring(0, 5)} - {schedule.morningClosing.substring(0,5)} / {schedule.afternoonOpening.substring(0, 5)} - {schedule.afternoonClosing.substring(0, 5)} 
                         </li>
                     ))}
                 </ul>
