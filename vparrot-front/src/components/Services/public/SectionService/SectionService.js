@@ -14,11 +14,11 @@ const SectionService = ({ title, introduction, services, className, h2Text }) =>
             <div className="serviceGrid">
                 {services.map(service => (
                     <ServiceCard
-                        key={service.id_service}
-                        name={service.service_name}
+                        key={service.idService}
+                        name={service.serviceName}
                         description={service.description}
                         price={service.price}
-                        pathImg={service.path_img}
+                        pathImg={service.pathImg}
                     />
                 ))}
             </div>          
