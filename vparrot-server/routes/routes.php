@@ -21,9 +21,10 @@ require_once './vparrot-server/controllers/AuthController.php';
 
 require_once './vparrot-server/repository/ServicesRepository.php';
 require_once './vparrot-server/repository/CarsRepository.php';
+require_once './vparrot-server/repository/SchedulesRepository.php';
+require_once './vparrot-server/repository/TestimoniesRepository.php';
 
-//require models
-require_once './vparrot-server/models/Schedules.php';
+
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/Users.php';
 require_once './vparrot-server/models/AuthModel.php';
@@ -38,10 +39,12 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 $servicesRepo = new ServicesRepository();
 $carRepo = new CarsRepository();
+$schedulesRepo = new SchedulesRepository();
+$testimoniesRepo = new TestimoniesRepository();
 //Dependency Injection;
 
-$schedules = new Schedules();
-$testimonies = new Testimonies();
+
+
 $usersModel = new Users();
 $authModel = new AuthModel();
 $validator = new Validator();
@@ -52,8 +55,8 @@ $controllers = [
 
     'cars' => new CarsController($carRepo, $validator),
     'services' => new ServicesController($servicesRepo, $validator),
-    'schedules' => new SchedulesController($validator, $schedules),
-    'testimonies' => new TestimoniesController($validator, $testimonies),
+    'schedules' => new SchedulesController($schedulesRepo, $validator),
+    'testimonies' => new TestimoniesController($testimoniesRepo, $validator),
     'users' => new UsersController($validator, $usersModel),
     'auth' => new AuthController($validator, $authModel, $usersModel),
 ];
@@ -69,7 +72,7 @@ $routes = [
         '/vparrot/cars/distinct-models' => [$controllers['cars'], 'getAllDistinctModels'],
         '/vparrot/cars/distinct-brands' => [$controllers['cars'], 'getAllDistinctBrands'],
         '/vparrot/cars/briefs' => [$controllers['cars'], 'getCarBriefDetails'],
-        '/vparrot/services' => [$controllers['services'], 'getAllServicesList' ],
+        '/vparrot/services' => [$controllers['services'], 'getAllServicesListGroupedByType' ],
         '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/testimonies/moderated' => [$controllers['testimonies'], 'getModeratedTestimoniesList'],
