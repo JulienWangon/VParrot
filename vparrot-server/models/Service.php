@@ -3,16 +3,16 @@
 class Service {
 
     private ?int $idService;
-    private ?string $type;
-    private ?string $name;
-    private ?string $description;
-    private ?string $price;
-    private ?string $pathImg;
+    private  int $idType;
+    private string $name;
+    private string $description;
+    private string $price;
+    private string $pathImg;
 
-    public function __construct(?int $idService = null, ?string $type = null, ?string $name = null, ?string $description = null, ?string $price = null, ?string $pathImg = null) {
+    public function __construct(int $idType, string $name, string $description, string $price, string $pathImg, ?int $idService = null ) {
 
       $this->idService = $idService;
-      $this->type = $type;
+      $this->idType = $idType;
       $this->name = $name;
       $this->description = $description;
       $this->price = $price;
@@ -21,12 +21,12 @@ class Service {
   }
 
 //Getters list
-    public function getIdService() :int {
+    public function getIdService() :?int {
       return $this->idService;
     }
 
-    public function getType() :string {
-      return $this->type;
+    public function getIdType() :int {
+      return $this->idType;
     }
 
     public function getName() :string {
@@ -46,8 +46,8 @@ class Service {
     }
 
 //Setters List
-    public function setType(string $type) :void {
-      $this->type = $type;
+    public function setType(int $idType) :void {
+      $this->idType = $idType;
     }
 
     public function setName(string $name) :void {
