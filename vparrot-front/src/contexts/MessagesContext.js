@@ -7,11 +7,15 @@ export const MessageProvider = ({children}) => {
     const[message, setMessage] = useState(null);
     const [type, setType] = useState(null);
     
-    const showMessage = (newMessage, newType="error") => {
-
-        setMessage(newMessage);
-        setType(newType);       
-    };
+    const showMessage = (response, newType = "error") => {
+        console.log("showMessage called with response:", response);
+        if (response && response.data && response.data.message) {
+          setMessage(response.data.message);
+        } else {
+          setMessage(null);
+        }
+        setType(newType);
+      };
 
     // Utilisation de useEffect pour gérer le comportement du message après qu'il soit défini
     useEffect(() => {
@@ -59,7 +63,7 @@ const MessageNotification = ({ message, type}) => {
       
   // Rendu de la notification
       return (
-          <div style={{ position: 'fixed', width: '100%', top: 0, right: 0, background: backgroundColor, color: 'white', padding: '10px', zIndex: "4000" }}>
+          <div style={{ position: 'fixed', width: '100%', top: 0, right: 0, background: backgroundColor, color: 'white', padding: '10px', zIndex: "6000" }}>
               {message}
           </div>
       );
