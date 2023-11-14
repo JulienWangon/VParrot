@@ -68,12 +68,12 @@
   font-size: 0.9rem;
   text-align: justify;
   padding: 2em;
-  margin-top: 1em;
+  margin-top: 2em;
   height: 50%;
 }
 
 .cardPrice {
-  font-size: 2.3rem;
+  font-size: 2.1rem;
   font-weight: 600;
   height: 15%
 }
