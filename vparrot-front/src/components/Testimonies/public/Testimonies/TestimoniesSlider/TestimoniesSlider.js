@@ -99,7 +99,7 @@ const TestimoniesSlider = () => {
     <Slider {...settings}>
 
         {testimonies.map((testimony) => (
-            <div key={testimonies.id_testimony}>
+            <div key={testimony.idTestimony}>
                 <TestimonyCard {...testimony} />
             </div>
         ))}
