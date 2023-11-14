@@ -4,15 +4,15 @@ import StarRating from '../StarRating/StarRating';
 
 import './testimonyCard.css'
 
-const TestimonyCard = ({ last_name, first_name, content, rating }) => {
+const TestimonyCard = ({ lastName, firstName, content, rating }) => {
   return (
     <div className="testimonyCard">
         <div className="testimonyHeader">
             <div className="nameContainer">
-                <span className="testimonyLastName">{last_name}</span>
+                <span className="testimonyLastName">{lastName}</span>
             </div>
             <div className="nameContainer">
-                <span className="testimonyFirstName">{first_name}</span>
+                <span className="testimonyFirstName">{firstName}</span>
             </div>     
         </div>
         <div className="testimonyBody">
