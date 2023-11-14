@@ -23,10 +23,10 @@ require_once './vparrot-server/repository/ServicesRepository.php';
 require_once './vparrot-server/repository/CarsRepository.php';
 require_once './vparrot-server/repository/SchedulesRepository.php';
 require_once './vparrot-server/repository/TestimoniesRepository.php';
+require_once './vparrot-server/repository/UserRepository.php';
 
 
 require_once './vparrot-server/models/Testimonies.php';
-require_once './vparrot-server/models/Users.php';
 require_once './vparrot-server/models/AuthModel.php';
 require_once './vparrot-server/Validator/Validator.php';
 
@@ -37,15 +37,13 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 
+$usersRepo = new UserRepository();
 $servicesRepo = new ServicesRepository();
 $carRepo = new CarsRepository();
 $schedulesRepo = new SchedulesRepository();
 $testimoniesRepo = new TestimoniesRepository();
 //Dependency Injection;
 
-
-
-$usersModel = new Users();
 $authModel = new AuthModel();
 $validator = new Validator();
 
