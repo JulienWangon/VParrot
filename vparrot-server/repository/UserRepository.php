@@ -162,16 +162,16 @@ class UserRepository extends Database {
      * @return bool Renvoie vrai si la mise à jour a réussi, faux sinon.
      */
 
-    public function updateUserPassword(int $idUser, string $hashedPassword) : bool {
+    public function updateUserPassword(string $userEmail, string $hashedPassword) : bool {
         try {
 
             $db = $this->getBdd();
-            $req = "UPDATE users SET user_password = :userPassword WHERE id_user = :idUser";
+            $req = "UPDATE users SET user_password = :userPassword WHERE user_email = :userEmail";
 
             $stmt = $db->prepare($req);
 
             $stmt->bindValue(":userPassword", $hashedPassword, PDO::PARAM_STR);
-            $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
+            $stmt->bindValue(":userEmail", $userEmail, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->rowCount() > 0;
@@ -208,6 +208,66 @@ class UserRepository extends Database {
             return false;
         }
     }
+
+      //Get user by ID
+      public function getUserByID($userId) {
+        
+        try {
+
+            $db = $this->getBdd();
+            $req = "SELECT u.id_user, u.user_email, r.id_role, r.role_name 
+                    FROM users u 
+                    JOIN roles r 
+                    ON u.role_id = r.id_role
+                    WHERE u.id_user = :userId";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":userId", $userId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $user;
+
+        } catch (PDOException $e) {
+
+            $this->handleException($e, "recherche de l'utilisateur.");
+        }
+       
+    }
+
+    //Get user by Email 
+    public function getUserByEmail($userEmail) {
+
+        try {
+            
+            $db = $this->getBdd();
+            $req = "SELECT users.id_user, users.user_password, roles.role_name
+                    FROM users
+                    LEFT JOIN roles
+                    ON users.role_id = roles.id_role
+                    WHERE user_email = :email";
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(':email', $userEmail, PDO::PARAM_STR);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if(!$user) {
+                return null;
+            }
+
+            return [
+                  "user_password" => $user["user_password"],
+                  "id_user" => $user["id_user"],
+                  "role_name" => $user["role_name"]
+            ];
+
+        } catch(PDOException $e) {
+
+            $this->handleException($e, "recherche de l'utilisateur");
+        }
+
+    }
+
 
 
 
