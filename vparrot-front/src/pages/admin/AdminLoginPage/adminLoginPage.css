@@ -1,0 +1,76 @@
+.adminConnexion{ 
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url('../../../assets/images/backgroundAdminConnexion.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;  
+}
+
+
+.titleAndSlogan{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height:50vh;
+}
+
+.adminPanelConnexionTitle {
+    text-align: center;
+    color: white;
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.AdminSlogan{
+  color: white;
+  font-family: 'Alumni Sans', sans-serif;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.adminBtnContainer {
+
+    text-align: center;
+    margin-top: 1em;
+}
+
+.accessBtn {
+  margin: 0.2em;
+  padding: 0.5em;
+
+}
+
+
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+  html {
+    font-size: 16px; /* Un peu plus grand pour les grands écrans de bureau */
+  }
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+  html {
+    font-size: 16px; /* Ajusté pour les écrans moyens */
+  }
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  html {
+    font-size: 16px; /* Plus petit pour les tablettes et grands mobiles */
+  }
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .accessBtn { 
+    width: 15%;
+  }
+ 
+
+}

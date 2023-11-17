@@ -10,14 +10,16 @@
 .redBtn { 
     background-color: rgba(187, 39, 26, 0.9);
     border: none;
-    color: white;    
+    color: white;
+    font-weight: 600;    
 }
 
 .whiteBtn {
     background-color: white;
     color: rgba(187, 39, 26);
     font-weight: 600;
-    border: 1px solid rgba(187, 39, 26, 0.9);
+    border: none;
+  
 }
 
 /*Button :hovver Style*/
@@ -30,5 +32,6 @@
 .whiteBtn:hover {
     background-color: rgba(187, 39, 26, 0.9);
     font-weight: 600;
+    color: white;
    
 }

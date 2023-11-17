@@ -19,7 +19,7 @@ import SchedulesManager from './pages/admin/SchedulesManager';
 import ServicesManager from './pages/admin/ServicesManager';
 import TestimoniesManager from './pages/admin/TestimoniesManager';
 import UsersManager from './pages/admin/UsersManager';
-import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminLoginPage from './pages/admin/AdminLoginPage/AdminLoginPage';
 import PasswordResetRequest from './components/admin/PasswordResetRequest/PasswordResetRequest';
 import ResetPassword from './components/admin/ResetPassword/ResetPassword';
 
