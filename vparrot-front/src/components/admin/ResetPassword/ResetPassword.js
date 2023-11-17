@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
 const ResetPassword = () => {
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,11 +23,12 @@ const ResetPassword = () => {
     const location = useLocation();
     const { loading, changePassword } = useChangeUserPassword();
     const { showMessage } = useMessage();
-    const navigate = useNavigate();
+   
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const jwtToken = queryParams.get('token');
+        console.log("JWT Token:", jwtToken);
         if (jwtToken) {
             setToken(jwtToken);
         }
@@ -66,13 +69,14 @@ const ResetPassword = () => {
 
         try {
            
-            const message = await changePassword(email, newPassword, token, captchaValue);
+            const message = await changePassword(email, newPassword, captchaValue, token);
             showMessage(message, "success");
             setEmail('');
             setNewPassword('');
             setConfirmPassword('');
             setCaptchaValue(null);
-            navigate('/access-panel');
+            navigate("/access-panel");
+          
         } catch (error) {
             showMessage("Erreur lors du changement de mot de passe: " + error.message, "error");
         }
