@@ -25,9 +25,12 @@ require_once './vparrot-server/repository/SchedulesRepository.php';
 require_once './vparrot-server/repository/TestimoniesRepository.php';
 require_once './vparrot-server/repository/UserRepository.php';
 
+require_once './vparrot-server/util/EmailService.php';
+
 
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/AuthModel.php';
+require_once './vparrot-server/models/Users.php';
 require_once './vparrot-server/Validator/Validator.php';
 
 
@@ -44,6 +47,8 @@ $schedulesRepo = new SchedulesRepository();
 $testimoniesRepo = new TestimoniesRepository();
 //Dependency Injection;
 
+$emailService = new EmailService();
+
 $authModel = new AuthModel();
 $validator = new Validator();
 
@@ -55,8 +60,8 @@ $controllers = [
     'services' => new ServicesController($servicesRepo, $validator),
     'schedules' => new SchedulesController($schedulesRepo, $validator),
     'testimonies' => new TestimoniesController($testimoniesRepo, $validator),
-    'users' => new UsersController($validator, $usersModel),
-    'auth' => new AuthController($validator, $authModel, $usersModel),
+    'users' => new UsersController($usersRepo, $validator, $emailService, $authModel),
+    'auth' => new AuthController($validator, $authModel, $usersRepo),
 ];
 
 
@@ -81,6 +86,8 @@ $routes = [
 
     'POST' => [
         '/vparrot/testimonies' => [$controllers['testimonies'], 'createTestimony'],
+        '/vparrot/change-password' => [$controllers['users'], 'resetPassword'],
+        '/vparrot/request-password-reset' => [$controllers['users'], 'requestPasswordReset'],
         '/vparrot/users' => [$controllers['users'], 'addThisUser'],
         '/vparrot/login' => [$controllers['auth'], "login"],
         '/vparrot/logout' => [$controllers['auth'], "logout"],
