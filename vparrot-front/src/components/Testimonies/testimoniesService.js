@@ -45,4 +45,26 @@ export const createTestimony = async (dataToSend) => {
     
         throw new Error(errorMessage);
     }
+};
+
+
+//Approve Testimony 
+export const approveTestimony = async (idTestimony) => {
+    try {
+
+        const response = await instanceAxios.put(`/testimonies/${idTestimony}/approve`);
+        if (response.data && response.data.status === 'success') {
+
+            return response.data;
+        } else {
+
+            throw new Error(response.data.message || "Erreur inconnue lors de la création du témoignage.")
+        } 
+    } catch (error) {
+
+        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
+        console.error('Erreur lors de la création du témoignage:', errorMessage);
+    
+        throw new Error(errorMessage);
+    }
 }
