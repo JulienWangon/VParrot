@@ -34,8 +34,7 @@ class AuthController {
 
             // Retrieve data sent by the client
             $data = json_decode(file_get_contents('php://input'), true);
-            error_log(print_r($data, true));
-
+            
             //Validate json data format
             if (!$this->validator->validateJsonFormat($data)) {
 
@@ -95,6 +94,7 @@ class AuthController {
 
             $jwt = $jwtData["jwt"];
             $expiryTime = $jwtData["exp"];
+            $csrfToken = $jwtData['csrf_token'];
 
             //Create cookie
             setcookie("token", $jwt, [
@@ -112,7 +112,8 @@ class AuthController {
                 "user" => [
                     "id" => $userId,
                     "role" => $roleName
-                ]  
+                ],
+                "csrf_token" => $csrfToken  
             ]);
 
         } catch(Exception $e) {
