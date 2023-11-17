@@ -7,6 +7,3 @@ $dotenv->load();
 
 require_once './vparrot-server/routes/routes.php';
 
-
-
-
