@@ -66,19 +66,24 @@ class TestimoniesController {
 
     //CREATE new testimony    
     public function createTestimony() {
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+            return;
+        }
        
-            // Retrieve data sent by the client
-            $data = json_decode(file_get_contents('php://input'), true);
+        // Récupère les données envoyées
+        $data = json_decode(file_get_contents('php://input'), true);
 
-            //Check if JSON data is formatted correctly
-            if (!$this->validator->validateJsonFormat($data)) {
+        //Vérifie si le format json est valide
+        if (!$this->validator->validateJsonFormat($data)) {
 
-                $this->sendResponse($this->validator->getErrors(), 400);
+            $this->sendResponse($this->validator->getErrors(), 400);
                 return;
-              }
+            }
 
-            //Check if all the necessary keys are present
-            $requireKeys =["firstName", "lastName", "content", "rating"];
+        //Vérifie si toute les clés sont présente
+        $requireKeys =["firstName", "lastName", "content", "rating"];
             foreach ($requireKeys as $key) {
                 if (!isset($data[$key])) {
                     $this->sendResponse(["status" => "error", "message" => "La clé $key est manquante"], 400);
@@ -86,38 +91,48 @@ class TestimoniesController {
                 }
             }
 
-            //Assign Data to Variables
-            $lastName = $data['last_name'];
-            $firstName = $data['first_name'];
-            $content = $data['content'];
-            $rating =intval($data['rating']);
+        //Assign Data to Variables
+        $lastName = $data['lastName'];
+        $firstName = $data['firstName'];
+        $content = $data['content'];
+        $rating =intval($data['rating']);
 
-            //Data validation
-            $this->validator = new Validator();
+        //Data validation
+        $this->validator = new Validator();
 
-            $validLastName = $this->validator->validateStringForNames($lastName, 'lastName');
-            $validFirstName = $this->validator->validateStringForNames($firstName, 'firstName');
-            $validRating = $this->validator->validateRating($rating, 'rating');
-            $validContent = $this->validator->validateMediumContent($content, 'content');
+        $validLastName = $this->validator->validateStringForNames($lastName, 'lastName');
+        $validFirstName = $this->validator->validateStringForNames($firstName, 'firstName');
+        $validRating = $this->validator->validateRating($rating, 'rating');
+        $validContent = $this->validator->validateMediumContent($content, 'content');
 
-            if(!$validLastName || !$validFirstName || !$validRating || $validContent) {
-                $errors = $this->validator->getErrors();
-                $this->sendResponse(["status" => "error", "message" => $errors], 400);
-                return;
-            }
+        if(!$validLastName || !$validFirstName || !$validRating || !$validContent) {
+            $errors = $this->validator->getErrors();
+            $this->sendResponse(["status" => "error", "message" => $errors], 400);
+            return;
+        }
 
-                try {
+        //Instance du model pour la création de l'avis client 
+        $testimony = new Testimonies();
+
+        $testimony->setFirstName($firstName);
+        $testimony->setLastName($lastName);
+        $testimony->setContent($content);
+        $testimony->setRating($rating);
+
+        try {
                    
-        
-                    if ($this->testimoniesRepository->addTestimony($firstName, $lastName, $content, $rating)) {
-                        $this->sendResponse(["status" => "succes", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
+            if ($this->testimoniesRepository->addTestimony($testimony)) {
+
+                $this->sendResponse(["status" => "succes", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
                         
-                    } else {
-                        $this->sendResponse(["status" => "error", "message" => "Echec de la création d'un avis client"], 500);
-                    }
-                } catch (Exception $e) {
-                    $this->sendResponse(["status" => "error", "message" => $e->getMessage(), 500]);
-                }
+            } else {
+
+                $this->sendResponse(["status" => "error", "message" => "Echec de la création d'un avis client"], 500);
+            }
+        } catch (Exception $e) {
+
+            $this->sendResponse(["status" => "error", "message" => $e->getMessage(), 500]);
+        }
     }
 
 //Approve Testimony
