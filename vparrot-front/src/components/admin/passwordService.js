@@ -17,11 +17,11 @@ export const requestPasswordReset = async (email, captchaValue) => {
 
 
 
-export const changeUserPassword = async (email, newPassword, token, captchaValue) => {
+export const changeUserPassword = async (email, newPassword, captchaValue, token) => {
 
     try {
 
-        const response = await instanceAxios.post('/change-password', {email, newPassword, token, captchaValue });
+        const response = await instanceAxios.post('/change-password', {email, newPassword, captchaValue, token });
         if(response) {
 
             return response.data;
