@@ -11,7 +11,7 @@ trait CsrfTokenManager {
             session_start();
         }
 
-        $token = SecurityUtil::generateSecuretokn();
+        $token = SecurityUtil::generateSecuretoken();
         $_SESSION['csrf_token'] = $token;
 
         return $token;
