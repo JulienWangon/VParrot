@@ -28,6 +28,20 @@ class TestimoniesController {
         $this->sendResponse($data);
     }
 
+
+    /**
+     * Récupère les témoignages en fonction de leur statut de modération.
+     *
+     * Cette méthode interroge la base de données pour obtenir les témoignages
+     * qui ont un statut de modération spécifique (modéré ou non modéré).
+     * Elle renvoie les témoignages sous forme d'un tableau formaté.
+     *
+     * @param bool $isModerated Le statut de modération des témoignages à récupérer.
+     *                          `true` pour les témoignages modérés, `false` pour les non modérés.
+     * @return void Renvoie une réponse HTTP au client avec les données des témoignages
+     *               ou un message d'erreur en cas d'exception.
+     */
+
     //GET testimonies by status
     public function getTestimoniesByStatus($isModerated) {
         try {
@@ -63,6 +77,16 @@ class TestimoniesController {
     }
 
 
+
+    /**
+     * Crée un nouveau témoignage à partir des données reçues via une requête POST.
+     *
+     * Cette méthode traite les données JSON envoyées par le client, 
+     * effectue des validations et crée un nouveau témoignage dans la base de données.
+     * Elle renvoie une réponse HTTP en fonction du résultat de l'opération.
+     *
+     * @return void Renvoie une réponse HTTP au client.
+     */
 
     //CREATE new testimony    
     public function createTestimony() {
