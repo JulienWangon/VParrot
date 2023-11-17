@@ -1,20 +1,48 @@
-import instance from '../../_utils/axios';
+import instanceAxios from '../../_utils/axios';
 
-// Get all moderated Testimonies
+//Optenir tout les témoignages 
 export const fetchModeratedTestimonies = async () => {
     try {
 
-        const response = await instance.get('/testimonies/moderated');
+        const response = await instanceAxios.get('/testimonies/moderated');
         if (response.data && response.data.status === 'success') {
 
             return response.data.data;
         } else {
 
-            throw new Error("Données reçues non valides ou erreur de requête.");
+            throw new Error(response.data.message || "Données reçues non valides ou erreur de requête.");
         }
     } catch (error) {
       
-        console.error('Erreur lors de la récupération des témoignages:', error);
-        throw error;
+        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
+        console.error('Erreur lors de la récupération des témoignages:', errorMessage);
+
+        throw new Error(errorMessage);
     }
 };
+
+
+
+// Create testimony
+export const createTestimony = async (testimonyData) => {
+    try {
+
+        const response = await instanceAxios.post('/testimonies', testimonyData);
+
+        if (response.data && response.data.status === 'success') {
+
+            return response.data;
+        } else {
+
+            throw new Error(response.data.message || "Erreur inconnue lors de la création du témoignage.")
+        } 
+
+
+    }catch (error) {
+
+        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
+        console.error('Erreur lors de la création du témoignage:', errorMessage);
+    
+        throw new Error(errorMessage);
+    }
+}

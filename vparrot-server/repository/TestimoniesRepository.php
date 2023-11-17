@@ -101,14 +101,15 @@ class TestimoniesRepository extends Database {
 
 
     //Approve testimony
-    public function approveTestimony(int $testimonyId) : bool {
+    public function approveTestimony(Testimonies $testimony) : bool {
 
         try {
 
             $db= $this->getBdd();
             $req = "UPDATE testimonies SET is_moderated = true WHERE id_testimony = :id";
+
             $stmt = $db->prepare($req);
-            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->rowCount() > 0;
@@ -120,7 +121,7 @@ class TestimoniesRepository extends Database {
     }
 
     //Rejecte Testimony
-    public function rejectTestimony(int $testimonyId) : bool {
+    public function rejectTestimony(Testimonies $testimony) : bool {
 
         $db = $this->getBdd();
 
@@ -136,13 +137,13 @@ class TestimoniesRepository extends Database {
                     WHERE id_testimony = :id";
             
             $stmt= $db->prepare($req);
-            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
             $stmt->execute();
 
             //Delete testimony in testimonies table
             $reqToDelete = "DELETE FROM testimonies WHERE id_testimony = :id";
             $stmtToDelete = $db->prepare($reqToDelete);
-            $stmtToDelete->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmtToDelete->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
             $stmtToDelete->execute();
 
             //Transaction validation
@@ -159,15 +160,17 @@ class TestimoniesRepository extends Database {
         }
     }
 
+
     //Delete testimony 
-    public function deleteTestimony(int $testimonyId) : bool {
+    public function deleteTestimony(Testimonies $testimony) : bool {
 
         try {
 
             $db = $this->getBdd();
             $req = "DELETE FROM testimonies WHERE id_testimony = :id";
+            
             $stmt = $db->prepare($req);
-            $stmt->bindValue(":id", $testimonyId, PDO::PARAM_INT);
+            $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->rowCount() > 0;
@@ -195,6 +198,32 @@ class TestimoniesRepository extends Database {
         } catch(PDOException $e) {
 
             $this->handleException($e, "vérification de l'existance du témoignage");
+        }
+    }
+
+
+    public function findTestimonyById($idTestimony) {
+
+        $db = $this->getBdd();
+        $req = "SELECT * FROM testimonies WHERE id_testimony = :id";
+
+        $stmt = $db->prepare($req);
+        $stmt->bindValue(":id", $idTestimony, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $testimonyData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($testimonyData) {
+
+            $testimony = new Testimonies();
+            $testimony->setIdTestimony($testimonyData['id_testimony']);
+            $testimony->setFirstName($testimonyData['first_name']);
+            $testimony->setLastName($testimonyData['last_name']);
+            $testimony->setContent($testimonyData['content']);
+            $testimony->setRating($testimonyData['rating']);
+            $testimony->setIsModerated($testimonyData['is_moderated']);
+
+            return $testimony;
         }
     }
 

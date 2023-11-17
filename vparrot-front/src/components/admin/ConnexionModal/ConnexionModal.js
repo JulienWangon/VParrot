@@ -82,51 +82,54 @@ const ConnexionModal = ({ handleCloseModal }) => {
 
     return (
 
-        <div className="formContainer">
-            <div className={ModalStyle.opacityLayer}></div>
-            <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
 
-            <form method="POST" onSubmit={handleSubmit}>
-                <div className="titleContainer">
-                <H2Title className="userFormTitle" h2Text="Identifiez vous"/>
-                </div>
-                <TextInput
-                    label="Email"
-                    name="email"
-                    value={data.email}
-                    onChange={handleChange}
-                    placeholder="Entrez votre email"
-                />
-                {errors.email && <div className="errorMessage">{errors.email}</div>}
-
-                <TextInput
-                    label="Mot de passe"
-                    name="password"
-                    value={data.password}
-                    onChange={handleChange}
-                    placeholder="Entrez votre mot de passe"                            
-                />
-                {errors.password && <div className="errorMessage">{errors.password}</div>}
-                <Link to="/reset-password-request" className={ModalStyle.passwordResetLink}>Mot de passe oublié</Link>
-
-                {areFieldsValid && (
-                    <ReCAPTCHA
-                        sitekey={reCaptchaKey}
-                        onChange={handleCaptcha}
-                    />
-                )}
+        <div className="modalOverlay">
+                <div className={ModalStyle.formContainer}>
                 
-                <Button
-                    content="Connexion"
-                    type="submit"
-                    className="submitBtn"
-                    disabled={!captchaValue && areFieldsValid}         
-                />
-                {error && <div className="errorMessage">{error}</div>}
-                {loading && <div className="loadingMessage">Chargement...</div>}
+                    <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
 
-            </form>      
-        
+                    <form method="POST" onSubmit={handleSubmit}>
+                        <div className={ModalStyle.titleContainer}>
+                        <H2Title className={ModalStyle.useFormTitle} h2Text="Identifiez vous"/>
+                        </div>
+                        <TextInput
+                            label="Email"
+                            name="email"
+                            value={data.email}
+                            onChange={handleChange}
+                            placeholder="Entrez votre email"
+                        />
+                        {errors.email && <div className="errorMessage">{errors.email}</div>}
+
+                        <TextInput
+                            label="Mot de passe"
+                            name="password"
+                            value={data.password}
+                            onChange={handleChange}
+                            placeholder="Entrez votre mot de passe"                            
+                        />
+                        {errors.password && <div className="errorMessage">{errors.password}</div>}
+                        <Link to="/reset-password-request" className={ModalStyle.passwordResetLink}>Mot de passe oublié</Link>
+
+                        {areFieldsValid && (
+                            <ReCAPTCHA
+                                sitekey={reCaptchaKey}
+                                onChange={handleCaptcha}
+                            />
+                        )}
+                        
+                        <Button
+                            content="Connexion"
+                            type="submit"
+                            className={ModalStyle.submitBtn}
+                            disabled={!captchaValue && areFieldsValid}         
+                        />
+                        {error && <div className="errorMessage">{error}</div>}
+                        {loading && <div className="loadingMessage">Chargement...</div>}
+
+                    </form>      
+                
+                </div>
         </div>
     );
 };

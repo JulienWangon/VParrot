@@ -1,9 +1,34 @@
 .passwordResetLink {
-  color: #153c65; 
+  color: rgba(187, 39, 26); 
   text-decoration: none; 
 }
 
 .passwordResetLink:hover {
-  color: red; /* Changement de couleur au survol */
-  text-decoration: underline; /* Souligne le texte au survol */
+  color: red; 
+  text-decoration: underline; 
 }
+
+.formContainer {
+  width: 90vw; 
+  background-color: white;
+  padding: 1em;
+  border-radius: 20px;
+  height: 50%;
+
+}
+
+.circleBtn {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  top: 50px;
+  right: 10px;
+  border-radius: 50%;
+}
+
+
+
+

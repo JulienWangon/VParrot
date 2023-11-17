@@ -89,7 +89,7 @@ export const validateRating = (rating) => {
 // COMMENT VALIDATION
 export const validateComment = (comment) => {
   let error =  null;
-
+  console.log("validateComment called with comment:", comment);
   const commentRegex = /^[A-Za-z0-9 .,!?()-éèêëàâäôöûüçîïÉÈÊËÀÂÄÔÖÛÜÇÎÏ]+$/;
   const urlRegex = /(www\.|https?:\/\/)[^\s]+?\.[a-zA-Z]{2,}/;
 
