@@ -24,10 +24,10 @@ export const fetchModeratedTestimonies = async () => {
 
 
 // Create testimony
-export const createTestimony = async (testimonyData) => {
+export const createTestimony = async (dataToSend) => {
     try {
 
-        const response = await instanceAxios.post('/testimonies', testimonyData);
+        const response = await instanceAxios.post('/testimonies', dataToSend);
 
         if (response.data && response.data.status === 'success') {
 

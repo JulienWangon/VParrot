@@ -7,19 +7,23 @@ const useFetchCreateTestimony = () => {
     const { showMessage } = useMessage();
     const [isloading, setIsLoading] = useState(false);
     
-    const createNewTestimony = async (testimonyData) => {
+    const createNewTestimony = async (dataToSend) => {
 
         setIsLoading(true);
 
         try {
 
-            const response = await createTestimony(testimonyData);
-            showMessage({ data: { message: response.message } }, 'success');
+            const response = await createTestimony(dataToSend);
+          
+         
+
+
+            showMessage({ data: response }, 'success');
             return response;
 
         } catch (error) {
-
-          showMessage({ data: { message: error.message } }, 'error');
+        
+            showMessage({ data: error.response }, 'error');
           throw error;
 
         } finally {
