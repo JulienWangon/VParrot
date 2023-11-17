@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import './h1Title.css';
 
 
-const H1Title = ({h1Text, spanText}) => {
+const H1Title = ({h1Text, spanText, className}) => {
   return (
-    <div className="titleContainer">
+    <div className={`titleContainer ${className}`}>
         <h1>{h1Text}</h1>
         <span className="slogan">{spanText}</span>
     </div>
