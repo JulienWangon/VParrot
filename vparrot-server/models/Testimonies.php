@@ -47,6 +47,9 @@ class Testimonies extends Database {
     }
 
 //Setters List
+    public function setIdTestimony(int $idTestimony) :void {
+        $this->idTestimony = $idTestimony;
+    }
     public function setFirstName(string $firstName) :void {
         $this->firstName = $firstName;
     }
