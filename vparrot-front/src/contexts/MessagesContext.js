@@ -7,15 +7,15 @@ export const MessageProvider = ({children}) => {
     const[message, setMessage] = useState(null);
     const [type, setType] = useState(null);
     
-    const showMessage = (response, newType = "error") => {
-        console.log("showMessage called with response:", response);
+    const showMessage = (response, newType = "error") => {   
+        
         if (response && response.data && response.data.message) {
-          setMessage(response.data.message);
-        } else {
-          setMessage(null);
-        }
-        setType(newType);
-      };
+            setMessage(response.data.message);
+          } else {
+            setMessage(null);
+          }
+          setType(newType);
+        };
 
     // Utilisation de useEffect pour gérer le comportement du message après qu'il soit défini
     useEffect(() => {
