@@ -1,0 +1,9 @@
+.passwordResetLink {
+  color: #153c65; 
+  text-decoration: none; 
+}
+
+.passwordResetLink:hover {
+  color: red; /* Changement de couleur au survol */
+  text-decoration: underline; /* Souligne le texte au survol */
+}
