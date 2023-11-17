@@ -2,7 +2,7 @@
 
 class SecurityUtil {
 
-    public static function generateSecuretokn () {
+    public static function generateSecuretoken () {
 
         return bin2hex(random_bytes(32));
     }
