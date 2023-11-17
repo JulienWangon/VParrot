@@ -12,14 +12,12 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
 
-  const [loading, setLoading] = useState(true);
-
+    const [loading, setLoading] = useState(true);
   //State pour stocker l'utilisateur actuel
-      const [currentUser, setCurrentUser] = useState(null);
- 
-      const navigate = useNavigate();
-
-      const { showMessage } = useMessage();
+    const [currentUser, setCurrentUser] = useState(null);
+    const [csrfToken, setCsrfToken] = useState(null);
+    const navigate = useNavigate();
+    const { showMessage } = useMessage();
 
   // check if user is connect
     const checkUserSession = async () => {
@@ -71,8 +69,8 @@ export const AuthProvider = ({ children }) => {
               setCurrentUser({
                 id: response.data.user.id,
                 role: response.data.user.role
-              }); 
-                                 
+              });
+              setCsrfToken(response.data.csrf_token);       
                 navigate('/accueiladmin');
             } else if (response.data.status === "error") {
               // Utilisateur non trouvé ou authentification échouée
@@ -102,6 +100,7 @@ export const AuthProvider = ({ children }) => {
   //Vérifier la réponse si la déconnexion est réussie, reinitialiser l'utilisateur actuel
               if(response.data.status === 'success') {
                   setCurrentUser(null);
+                  setCsrfToken(null);
                   showMessage(response, "success");
                   navigate('/access-panel');
               } else {             
@@ -128,6 +127,7 @@ export const AuthProvider = ({ children }) => {
   //Liste des valeurs disponibles dans le contexte pour les composants enfants
       const contextValue = {
         currentUser,
+        csrfToken,
         login,
         logout,
         loading,
