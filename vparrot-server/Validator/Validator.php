@@ -4,25 +4,25 @@ class Validator {
 
     protected $errors = [];
 
-    //Names Validation
+    //Validation des string courte length 50
     public function validateStringForNames($input, $type, $maxLength = 50) {
 
-        //Checking if $input exists
+        //Vérifie l'existance de la donnée
         if(!$input || $input === "") {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type est requis."];
             return false;
 
-        //Checking min Length
+        //Vérification de la longueur minimal
         }else if (strlen($input) < 3) {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type doit comporter au moins 3 caractères."];
             return false;
 
-        //Checking max Length
+        //Vérification de la longueur maximal
         }else if (strlen($input) > $maxLength) {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pads dépasser $maxLength caractères."];
             return false;
 
-        //Checking input format
+        //Vérification du format
         }else {
             if(!preg_match("/^[A-Za-z'\s-]+$/", $input)) {
                 $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type peut uniquement contenir des lettres (majuscule et minuscules), des apostrophes et des tirets."];
@@ -61,7 +61,9 @@ class Validator {
         return empty($this->errors[$type]);
     }
 
-    //Validate testimony's rating 
+
+
+    //Validate pour la note de l avis client  
     public function validateRating($rating) {
 
         //Checking if rating exists
@@ -83,6 +85,8 @@ class Validator {
         return empty($this->errors['rating']);
 
     }
+
+    //Validation pour les string medium length 250
 
     public function validateMediumContent($content, $type, $minLength = 20, $maxLength = 250){
 
@@ -109,6 +113,8 @@ class Validator {
         return empty($this->errors[$type]);
     }
 
+
+
     //Validate Email
     public function validateEmail($email) {
 
@@ -127,6 +133,8 @@ class Validator {
     
         return empty($this->errors["email"]);
     }
+
+
 
     //Validate password
     public function validatePassword($password) {
@@ -152,6 +160,8 @@ class Validator {
 
     }
 
+
+
     //Validate hours format
     public function validateHoursFormat ($hourString){
 
@@ -169,6 +179,8 @@ class Validator {
 
         return true;
     }
+
+
 
     //Timeline validation
     public function validateTimeline($hourString) {
@@ -193,6 +205,8 @@ class Validator {
         return count($this->errors) === 0;
     }
 
+
+
     //Validate JSON data format
     public function validateJsonFormat($jsonData) :bool {
 
@@ -203,6 +217,8 @@ class Validator {
 
         return empty($this->errors["json"]);
     }
+
+
 
     //Validate Number 
     public function validateNumber($number, $type, $min = null, $max = null) {
@@ -233,6 +249,8 @@ class Validator {
         return empty($this->errors[$type]);
     }
 
+
+
     //Vérifier le token du captcha de Google
     public function verifyGoogleCaptcha($captchaToken) {
         if(empty($captchaToken)) {
@@ -242,27 +260,35 @@ class Validator {
         $googleKey ="6Le8ugwpAAAAAE_wzdBiLe7m7G5z9uA4KqVDd8x4";
         $verifyUrl = "https://www.google.com/recaptcha/api/siteverify?secret=$googleKey&response=$captchaToken";
 
-        $response = file_get_contents($verifyUrl);
-        if(!$response) {
-            $this->errors['captcha'][] = ['status' => 'error', 'message' => 'Échec de la vérification du CAPTCHA.'];
-            return false;
-        }
+            try {
 
-        $responseData = json_decode($response);
-        if (!$responseData->success) {
-            $this->errors['captcha'][] = ['status' => 'error', 'message' => 'CAPTCHA invalide.'];
-            return false;
-        }
+                $response = file_get_contents($verifyUrl);
+                if ($response === false) {
 
-        return true;
+                    throw new Exception('Échec de la récupération de la réponse du CAPTCHA.');
+                }
+        
+                $responseData = json_decode($response);
+                if ($responseData === null) {
+                    throw new Exception('Réponse du CAPTCHA mal formée.');
+                }
+        
+                if (!$responseData->success) {
+                    $this->errors['captcha'][] = ['status' => 'error', 'message' => 'CAPTCHA invalide.'];
+                    return false;
+                }
+        
+                return true;
+            } catch (Exception $e) {
+
+                $this->errors['captcha'][] = ['status' => 'error', 'message' => $e->getMessage()];
+                return false;
+            }
     }
 
 
 
-
-
-
-    //Return validator error
+    //Retourner les erreurs de validation
     public function getErrors() {
         return $this->errors;
     }
