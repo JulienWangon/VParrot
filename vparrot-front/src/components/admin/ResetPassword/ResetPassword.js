@@ -5,6 +5,9 @@ import TextInput from '../../common/Input/TextInput/TextInput';
 import { validateEmail, validatePassword } from '../../../_utils/validation';
 import useChangeUserPassword from '../hook/useChangeUserPassword';
 import { useMessage } from '../../../contexts/MessagesContext';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
@@ -18,6 +21,7 @@ const ResetPassword = () => {
     const location = useLocation();
     const { loading, changePassword } = useChangeUserPassword();
     const { showMessage } = useMessage();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -68,6 +72,7 @@ const ResetPassword = () => {
             setNewPassword('');
             setConfirmPassword('');
             setCaptchaValue(null);
+            navigate('/access-panel');
         } catch (error) {
             showMessage("Erreur lors du changement de mot de passe: " + error.message, "error");
         }

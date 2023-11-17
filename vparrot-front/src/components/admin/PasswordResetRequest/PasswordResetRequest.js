@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import  useRequestPasswordReset from '../hook/useRequestPasswordReset';
 import { useMessage } from '../../../contexts/MessagesContext';
-
+import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from "react-google-recaptcha";
 import { validateEmail } from '../../../_utils/validation';
 
@@ -15,7 +15,7 @@ const PasswordResetRequest = () => {
   const { showMessage } = useMessage();
 
   const { resetPasswordRequest } = useRequestPasswordReset(); 
-
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -29,7 +29,6 @@ const PasswordResetRequest = () => {
 
     setCaptchaValue(value);
   };
-
 
 
   const handleSubmit = async (e) => {
@@ -46,7 +45,8 @@ const PasswordResetRequest = () => {
       if (response) {
 
           const formattedResponse = { data: { message: response } };
-          showMessage(formattedResponse, 'success');      
+          showMessage(formattedResponse, 'success'); 
+          navigate('/access-panel');     
       }
     } catch (error) {
   
