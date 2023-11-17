@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -16,16 +17,11 @@ const reCaptchaKey ="6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
 const ConnexionModal = ({ handleCloseModal }) => {
 
-    
-
     const { login, error, loading, clearErrors } = useAuth();
     const [captchaValue, setCaptchaValue] = useState(false);
     const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
     const [areFieldsValid, setAreFieldsValid] = useState(false);
-
-
-  
 
     const validate = () => {
         let isValid = true;
@@ -43,6 +39,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
         // Retourner si le formulaire est valide ou non         
         return isValid;
     };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -110,6 +107,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
                     placeholder="Entrez votre mot de passe"                            
                 />
                 {errors.password && <div className="errorMessage">{errors.password}</div>}
+                <Link to="/reset-password-request" className={ModalStyle.passwordResetLink}>Mot de passe oublié</Link>
 
                 {areFieldsValid && (
                     <ReCAPTCHA
@@ -122,7 +120,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
                     content="Connexion"
                     type="submit"
                     className="submitBtn"
-                    disabled={!captchaValue && areFieldsValid} // Désactiver le bouton après le nombre maximum de tentatives            
+                    disabled={!captchaValue && areFieldsValid}         
                 />
                 {error && <div className="errorMessage">{error}</div>}
                 {loading && <div className="loadingMessage">Chargement...</div>}

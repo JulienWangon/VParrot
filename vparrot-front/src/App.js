@@ -20,6 +20,8 @@ import ServicesManager from './pages/admin/ServicesManager';
 import TestimoniesManager from './pages/admin/TestimoniesManager';
 import UsersManager from './pages/admin/UsersManager';
 import AdminLoginPage from './pages/admin/AdminLoginPage';
+import PasswordResetRequest from './components/admin/PasswordResetRequest/PasswordResetRequest';
+import ResetPassword from './components/admin/ResetPassword/ResetPassword';
 
 
 function App() {
@@ -88,6 +90,9 @@ function App() {
                               </ProtectedRoute>
                           }
                         />
+
+                        <Route path="/reset-password-request" element={<PasswordResetRequest />} />
+                        <Route path="/reset-password" element={<ResetPassword/>}/>
 
                         <Route path="*" element={<Error/>}/>
                         
