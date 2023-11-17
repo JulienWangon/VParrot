@@ -3,16 +3,20 @@
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/Validator/Validator.php';
 require_once './vparrot-server/repository/TestimoniesRepository.php';
+require_once './vparrot-server/models/AuthModel.php';
 
 
 class TestimoniesController {
 
     private $validator;
     private $testimoniesRepository;
+    private $authModel;
 
-    public function __construct(TestimoniesRepository $testimoniesRepository, Validator $validator ) {
+    public function __construct(TestimoniesRepository $testimoniesRepository, Validator $validator, AuthModel $authModel ) {
         $this->validator = $validator;
         $this->testimoniesRepository = $testimoniesRepository;
+        $this->authModel = $authModel;
+
     }
 
     private function sendResponse($data, $statusCode = 200) {
@@ -122,8 +126,6 @@ class TestimoniesController {
         $rating =intval($data['rating']);
 
         //Data validation
-        $this->validator = new Validator();
-
         $validLastName = $this->validator->validateStringForNames($lastName, 'lastName');
         $validFirstName = $this->validator->validateStringForNames($firstName, 'firstName');
         $validRating = $this->validator->validateRating($rating, 'rating');
@@ -132,6 +134,14 @@ class TestimoniesController {
         if(!$validLastName || !$validFirstName || !$validRating || !$validContent) {
             $errors = $this->validator->getErrors();
             $this->sendResponse(["status" => "error", "message" => $errors], 400);
+            return;
+        }
+
+        $captchaToken = $data['recaptchaResponse'];
+
+        // Vérifier la réponse du CAPTCHA
+        if (!$this->validator->verifyGoogleCaptcha($captchaToken)) {
+            $this->sendResponse(["status" => "error", "message" => $this->validator->getErrors()], 400);
             return;
         }
 
@@ -147,7 +157,7 @@ class TestimoniesController {
                    
             if ($this->testimoniesRepository->addTestimony($testimony)) {
 
-                $this->sendResponse(["status" => "succes", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
+                $this->sendResponse(["status" => "success", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
                         
             } else {
 
@@ -159,42 +169,157 @@ class TestimoniesController {
         }
     }
 
-//Approve Testimony
-    public function approveThisTestimony(int $testimonyId) {
 
-        //Check if testimony exists
-        if(!$this->testimoniesRepository->testimonyExists($testimonyId)) {
-            $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
+    /**
+     * Approuve un témoignage.
+     * 
+     * Cette méthode met à jour le statut de modération d'un témoignage spécifié par son ID.
+     * Elle effectue plusieurs vérifications, y compris la méthode HTTP, la présence et la validité 
+     * du token CSRF, et l'existence du témoignage dans la base de données.
+    */
+
+    //Approve Testimony
+    public function approveThisTestimony () {
+
+        //Vérifie si la bonne méthode HTTP est utilisée (PUT)
+        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
             return;
         }
 
-        //If testimony exists continue with approval
-        if($this->testimoniesRepository->approveTestimony($testimonyId)) {
-            $this->sendResponse(["status" => "success", "message" => "Témoignage approuvé avec succès"]);
+         // Récupère les données envoyées
+        $data = json_decode(file_get_contents('php://input'), true);
 
-        } else {
-            $this->sendResponse(["status" => "error", "message" => "Erreur lors de l 'approbation du témoignage"], 500);
-        }
-    }
-
-//Reject Testimony
-    public function rejectThisTestimony(int $testimonyId) {
-
-        //Check if testimony exists
-        if(!$this->testimoniesRepository->testimonyExists($testimonyId)) {
-            $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
+         //Vérifie si le format json est valide
+        if (!$this->validator->validateJsonFormat($data)) {
+ 
+            $this->sendResponse($this->validator->getErrors(), 400);
             return;
         }
 
-        //If testimony exists continue with reject method
-        if($this->testimoniesRepository->rejectTestimony($testimonyId)) {
-            $this->sendResponse(["status" => "success", "message" => "Témoignage rejeté avec succès"]);
-
-        } else {
-            $this->sendResponse(["status" => "error", "message" => "Erreur lors du rejet du témoignage"], 500);
+        //Vérifie la présence des donnée id et token csrf
+        if (empty($data['idTestimony']) || empty($data['csrfToken'])) {
+            
+            $this->sendResponse(['status' => 'error', 'message'=> 'identitfiant témoignage ou token csrf manquant'], 400);
+            return;
         }
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+        //Vérification de l'existance du témoignage dans la base de donnée
+        if(!$this->testimoniesRepository->testimonyExists($data['idTestimony'])) {
+            $this->sendResponse(['status'=> 'error', 'message' => 'Témoignage non trouvé '], 404);
+            return;
+        }
+
+        // Récupère le témoignage et met à jour son statut de modération.
+        $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
+        $testimony->setIsModerated(true);
+
+        try {
+
+             // Tente d'approuver le témoignage et renvoie une réponse appropriée.
+            if($this->testimoniesRepository->approveTestimony($testimony)) {
+
+                $this->sendResponse(['status' => 'success', 'message' => 'Témoignage approuvé avec success']);
+            } else  {
+
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucune modification effectuée'], 400);
+            }
+        } catch (Exception $e) {
+
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+   }
+
+
+
+    //Reject Testimony
+    public function rejectThisTestimony() {
+     
+        //Vérifie si la bonne méthode HTTP est utilisée (PUT)
+        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+            return;
+        }
+
+         // Récupère les données envoyées
+        $data = json_decode(file_get_contents('php://input'), true);
+
+         //Vérifie si le format json est valide
+        if (!$this->validator->validateJsonFormat($data)) {
+ 
+            $this->sendResponse($this->validator->getErrors(), 400);
+            return;
+        }
+
+        //Vérifie la présence des donnée id et token csrf
+        if (empty($data['idTestimony']) || empty($data['csrfToken'])) {
+            
+            $this->sendResponse(['status' => 'error', 'message'=> 'identitfiant témoignage ou token csrf manquant'], 400);
+            return;
+        }
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+        //Vérification de l'existance du témoignage dans la base de donnée
+        if(!$this->testimoniesRepository->testimonyExists($data['idTestimony'])) {
+
+            $this->sendResponse(['status'=> 'error', 'message' => 'Témoignage non trouvé '], 404);
+            return;
+        }
+
+        // Récupère le témoignage et met à jour son statut de modération.
+        $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
+        $testimony->setIsModerated(true);
+
+        try {
+
+            // Tente de rejet le témoignage et renvoie une réponse appropriée.
+           if($this->testimoniesRepository->rejectTestimony($testimony)) {
+
+               $this->sendResponse(['status' => 'success', 'message' => 'Témoignage approuvé avec success']);
+           } else  {
+
+               $this->sendResponse(['status' => 'error', 'message' => 'Aucune modification effectuée'], 400);
+           }
+        } catch (Exception $e) {
+
+           $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+
+
+
+
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
 //Delete Testimony
     public function deleteThisTestimony(int $testimonyId) {
        
