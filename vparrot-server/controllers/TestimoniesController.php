@@ -302,42 +302,68 @@ class TestimoniesController {
            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
 
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     
 //Delete Testimony
-    public function deleteThisTestimony(int $testimonyId) {
-       
-        //Check if testimony exists
-        if($this->testimoniesRepository->testimonyExists($testimonyId)) {
-            $this->sendResponse(["status" => "error", "message" => "Témoignage non trouvé"], 400);
+    public function deleteThisTestimony() {
+
+        //Vérifie si la bonne méthode HTTP est utilisée (DELETE)
+        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
             return;
         }
 
-        //If testimony exists continue with delete method
-        if($this->testimoniesRepository->deleteTestimony($testimonyId)) {
-            $this->sendResponse(["status" => "success", "message" => "Témoignage supprimé avec succès"]);
+         // Récupère les données envoyées
+        $data = json_decode(file_get_contents('php://input'), true);
 
-        } else {
-            $this->sendResponse(["status" => "error", "message" => "Erreur lors due la suppression du témoignage"], 500);
+         //Vérifie si le format json est valide
+        if (!$this->validator->validateJsonFormat($data)) {
+ 
+            $this->sendResponse($this->validator->getErrors(), 400);
+            return;
+        }
+
+        //Vérifie la présence des donnée id et token csrf
+        if (empty($data['idTestimony']) || empty($data['csrfToken'])) {
+            
+            $this->sendResponse(['status' => 'error', 'message'=> 'identitfiant témoignage ou token csrf manquant'], 400);
+            return;
+        }
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+        //Vérification de l'existance du témoignage dans la base de donnée
+        if(!$this->testimoniesRepository->testimonyExists($data['idTestimony'])) {
+
+            $this->sendResponse(['status'=> 'error', 'message' => 'Témoignage non trouvé '], 404);
+            return;
+        }
+
+        // Récupère le témoignage et met à jour son statut de modération.
+        $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
+
+        try {
+
+            // Tente de rejet le témoignage et renvoie une réponse appropriée.
+           if($this->testimoniesRepository->deleteTestimony($testimony)) {
+
+               $this->sendResponse(['status' => 'success', 'message' => 'Témoignage supprimé avec success']);
+           } else  {
+
+               $this->sendResponse(['status' => 'error', 'message' => 'Aucune suppression effectuée'], 400);
+           }
+        } catch (Exception $e) {
+
+           $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
-
-    
 
 }
