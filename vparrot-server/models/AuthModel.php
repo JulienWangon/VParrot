@@ -30,7 +30,7 @@ use Firebase\JWT\Key;
               "iat" => $issueAt,
               "exp" => $expiryTime,
               "id_user" => $user["id_user"],
-              "role_name" => $user["role_name"],
+              "role" => $user["role_name"],
               "csrf_token" => $csrfToken
           ];
 
@@ -53,10 +53,10 @@ use Firebase\JWT\Key;
             try {
 
               $jwt = $_COOKIE['token'];
-              $decoded = JWT::decode($jwt, new Key($secretKey, "HS265"));
+              $decoded = JWT::decode($jwt, new Key($secretKey, "HS256"));
 
               if(!isset($decoded->id_user) || !isset($decoded->role) || !isset($decoded->csrf_token)) {
-
+                error_log("JWT décodé manque des champs requis: " . json_encode($decoded));
                   throw new Exception ("Données JWT incomplètes.");
               }
 
