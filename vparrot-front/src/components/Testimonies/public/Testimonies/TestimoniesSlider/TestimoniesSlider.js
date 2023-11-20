@@ -7,12 +7,14 @@ import TestimonyCard from '../TestimonyCard/TestimonyCard';
 import TestimonyModal from '../../TestimonyModal/TestimonyModal';
 import './testimoniesSlider.css';
 
+//import du hook pour récupérer les avis clients modérés
 import useFetchModeratedTestimonies from '../../../hooks/useFetchModeratedTestimonies';
 import Button from '../../../../common/Buttons/Button/Button';
 
 
 const TestimoniesSlider = () => {
 
+    //récupération des avis clients de l"tat de chargemnt et des erreurs
     const { testimonies, loading, error } = useFetchModeratedTestimonies();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,7 +25,7 @@ const TestimoniesSlider = () => {
     if (error) return <div errorContainer>Erreur: {error}</div>
 
 
-    //Slider settings
+    //configuration du carrousel
     const settings = {
       arrows: false,
       dots: true,
@@ -111,7 +113,7 @@ const TestimoniesSlider = () => {
         <p className="testimoniesTextSection">Tu nous as confié ton véhicule, tu as trouvé le véhicule de tes rêves parmi notre large sélection de véhicules d'occasion ? Raconte-nous ton expérience en laissant un avis ! Nous apprécions sincèrement chaque retour de nos clients, car il nous aide à améliorer continuellement notre service. Ton opinion est précieuse pour nous et pour la communauté des conducteurs qui, comme toi, recherchent qualité et fiabilité. Partage ton histoire et contribue à construire la réputation de confiance qui est la marque de Garage V.Parrot.</p>
         <Button className="addTestimonyBtn" colorStyle="redBtn" onClick={() => setIsModalOpen(true)}>Déposer un avis</Button>
     </div>
-    {isModalOpen && <TestimonyModal onClose={() => setIsModalOpen(false)} />}
+    {isModalOpen && <TestimonyModal mode="creation" onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };
