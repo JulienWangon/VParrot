@@ -51,7 +51,7 @@ const Navbar = () => {
         {text: "Horaires", url: "/horaires"},
         {text: "Services", url: "/services"},
         {text: "Parc auto", url: "/parcauto"},
-
+        {text: "Contact", url:"/contact"},
     ]
 
     const links = currentUser ? adminLinks : publicLinks;
