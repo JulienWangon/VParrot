@@ -50,7 +50,7 @@ export const useMessage = () => {
 
 // S'assurer que ce Hook est utilisé dans un composant enfant du fournisseur de contexte
     if(!context) {
-      throw new Error("useMessage must be used within a MessageProvider"); 
+      throw new Error("useMessage doit ^tre utilisé dans un MessageProvider"); 
     }
     return context;
 };
