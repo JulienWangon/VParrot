@@ -18,19 +18,21 @@ export const AuthProvider = ({ children }) => {
     const [csrfToken, setCsrfToken] = useState(null);
     const navigate = useNavigate();
     const { showMessage } = useMessage();
-
+    
   // check if user is connect
     const checkUserSession = async () => {
 
         try {
             const response = await instanceAxios.get('/check-session', {  withCredentials: true});
-
+           
             if (response.status === 200) {
                 setCurrentUser({
                   id: response.data.user.id,
                   role: response.data.user.role
                 });
-          
+
+                setCsrfToken(response.data.user.csrfToken);
+            
             }
         } catch (error) {
         
@@ -43,6 +45,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     checkUserSession();
   }, []);
+
+  
   
   //Méthode e connexion de l'utilisateur    
       const login = async (email, password, captchaToken) => {
@@ -65,6 +69,7 @@ export const AuthProvider = ({ children }) => {
       
   //Vérifier la réponse si la connexion est réussi mettre à jour l' utilisateur actuel
             if(response.data.status === "success") {
+              console.log("CSRF Token reçu:", response.data.csrf_token);
               showMessage(response, "success");             
               setCurrentUser({
                 id: response.data.user.id,
