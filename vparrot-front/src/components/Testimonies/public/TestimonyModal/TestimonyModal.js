@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+//Hook pour la création d'un avis client
 import useFetchCreateTestimony from '../../hooks/useFetchCreateTestimony';
+//Hook pour le rejet d'u avis client
+import useFetchRejectTestimony from '../../hooks/useFetchRejectTestimony';
+//hook pour approuver un avis lcient
+import useFetchApproveTestimony from '../../hooks/useFetchApproveTestimony';
+//import de google recaptcha
 import ReCAPTCHA from 'react-google-recaptcha';
+//Import utilitaire pour validation des entrées utilisateur
 import { validateEmail, validateRating, validateComment, validateName } from '../../../../_utils/validation';
 
+//import des composants 
 import TextInput from '../../../common/Input/TextInput/TextInput';
 import SelectInput from '../../../common/Input/SelectInput/SelectInput';
 import TextArea from '../../../common/Input/TextArea/TextArea';
@@ -12,28 +20,49 @@ import H2Title from '../../../common/H2Title/H2Title';
 
 import TestimonyStyle from './testimonyModal.module.css';
 
+//Clé API pour google recaptcha
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
-const TestimonyModal = ({ onClose }) => {
+const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
 
+    //Etat local pour stocker les données de l'avis client
     const [testimonyData, setTestimonyData] = useState({
         firstName: "",
         lastName: "",
         content: "",
         rating: ""
          })
-
+    
+    //Etat pour stocker les erreurs de validations des champs
     const [ errors, setErrors] = useState({});
+
+    //Etat pour la valeur du recaptcha
     const [captchaValue, setCaptchaValue] = useState(null);
+    
+    //Hooks personnalisés pour créer, approuver ou rejeter un témoignage.
+    const { createNewTestimony, isLoading: isCreating } = useFetchCreateTestimony();
+    const { approveThisTestimony, isLoading: isApproving } = useFetchApproveTestimony();
+    const { rejectThisTestimony, isLoading: isRejecting } = useFetchRejectTestimony();
+    
+    //Remplissage des données en mode modération
+    useEffect(() => {
+      if (mode === "moderation" && testimony) {
+          setTestimonyData({
+              firstName: testimony.firstName,
+              lastName: testimony.lastName,
+              content: testimony.content,
+              rating: testimony.rating
+          });
+          
+      }
+    }, [mode, testimony]);
 
-    const { createNewTestimony, isLoading } = useFetchCreateTestimony();
-
-
-
+    //Fermeture de la modal
     const closeModal = () => {
       onClose();
     };
     
+    //Gestion des changemetns dans les champs du formulaire
     const handleInputChange = (e) => {
         const  {name, value} = e.target;
         setTestimonyData({
@@ -41,6 +70,7 @@ const TestimonyModal = ({ onClose }) => {
           [name]: value,
         });
 
+        //Validations des entrées de champs en fonction des régles de validation
         const newErrors = { ...errors };
   
         switch (name) {
@@ -64,27 +94,41 @@ const TestimonyModal = ({ onClose }) => {
         setErrors(newErrors);     
     };
 
+    //Vérification de l'absence d'erreurs
     const hasNoErrors = () => {
       return Object.values(errors).every(error => !error);
     };
 
+    //Vérifie si tout les champs sont rempli
     const areAllFieldsFilled = () => {
       return Object.values(testimonyData).every(value => value !== '');
     };
 
-
-
+    //Varification si le formulaire est pret a etre envoyer
     const isFormReadyForSubmission = () =>{
-      return hasNoErrors() && testimonyData && !isLoading && captchaValue;
+      return hasNoErrors() && testimonyData && !isCreating && captchaValue;
     }
 
+    //Préparation des données à envoyer avec le recaptcha
     const dataToSend = {
       ...testimonyData,
       recaptchaResponse: captchaValue
   };
 
-    
-    //sousmission du formulaire 
+    //Gestion de l approbation d'un avis client
+    const handleApprove = async () => {
+      await approveThisTestimony(testimony.idTestimony);
+      onApproved();
+      onClose(); 
+    };
+
+    //Gestion du rejet d'un avis client
+    const handleReject = async () => {
+    await rejectThisTestimony(testimony.idTestimony);
+    onClose(); 
+    };
+
+    //soumission du formulaire dans le cas de la création d'un avis client
     const handleSubmit = async (e) => {
         e.preventDefault();
       
@@ -102,7 +146,7 @@ const TestimonyModal = ({ onClose }) => {
         }
     }
 
-    //Tableau d'option pour le chox de la note
+    //Tableau d'option pour le choix de la note
     const ratingOptions = [
       { id: 0, value: "", label: "Choisir une note" },
       { id: 1, value: 1, label: "1" },
@@ -115,7 +159,7 @@ const TestimonyModal = ({ onClose }) => {
     return (
       <div className="modalOverlay">
           <div className={TestimonyStyle.formContainer}>
-              <H2Title h2Text="Votre témoignage"/>
+              <H2Title h2Text={mode === "creation" ? "Votre témoignage" : "Modération du témoignage"}/>
               <form onSubmit={handleSubmit} className={TestimonyStyle.createTestimony}>
                   <TextInput
                     label="Prénom"
@@ -148,27 +192,28 @@ const TestimonyModal = ({ onClose }) => {
                     options={ratingOptions}
                     error={errors.rating}
                   />
-                  {areAllFieldsFilled() && hasNoErrors() && (
+                  {mode === "creation" && areAllFieldsFilled() && hasNoErrors() && (
                       <ReCAPTCHA
                           sitekey={reCaptchaKey}
                           onChange={(value) => setCaptchaValue(value)}
                       />
                   )}
-                  <Button
-                      type="submit"
-                      disabled={!isFormReadyForSubmission()}
-                      colorStyle="redBtn"
-                      className={TestimonyStyle.submitTestimony}
-                  >
-                      Créer le témoignage
-                  </Button>
-                  <Button
-                      type="button"
-                      onClick={closeModal}
-                      className={TestimonyStyle.closeBtn} 
-                  >
-                      X
-                  </Button>
+                   {mode === "creation" && (
+                        <Button disabled={!isFormReadyForSubmission()} onClick={handleSubmit} >Créer le témoignage</Button>
+                    )}
+                    {mode === "moderation" && (
+                        <>
+                            <Button onClick={handleApprove} disabled={isApproving}>Approuver</Button>
+                            <Button onClick={handleReject} disabled={isRejecting}>Rejeter</Button>
+                        </>
+                    )}
+                    <Button
+                        type="button"
+                        onClick={onClose}
+                        className={TestimonyStyle.closeBtn}
+                    >
+                        X
+                    </Button>
               </form>
           </div>  
       </div>

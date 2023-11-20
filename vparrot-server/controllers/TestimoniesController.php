@@ -80,8 +80,7 @@ class TestimoniesController {
         $this->getTestimoniesByStatus(1);
     }
 
-
-
+    
     /**
      * Crée un nouveau témoignage à partir des données reçues via une requête POST.
      *
@@ -305,7 +304,7 @@ class TestimoniesController {
     }
 
     
-//Delete Testimony
+    //Delete Testimony
     public function deleteThisTestimony() {
 
         //Vérifie si la bonne méthode HTTP est utilisée (DELETE)

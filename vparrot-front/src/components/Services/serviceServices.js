@@ -1,11 +1,11 @@
-import axios from '../../_utils/axios';
+import instanceAxios from '../../_utils/axios';
 
-//Get all services grouped by ype
+//Obtenir la liste des services groupés par type
 export const fetchAllServicesGroupedByType = async () => {
 
     try {
 
-        const response = await axios.get('/services');
+        const response = await instanceAxios.get('/services');
         if (response.data && response.data.status === 'success') {
           
             return response.data.data;

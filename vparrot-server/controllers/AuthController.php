@@ -154,7 +154,7 @@ class AuthController {
             if (isset($_COOKIE["token"])) {
                 // Vérifier le token du cookie
                 $token = $_COOKIE["token"];
-                // Remplacer 'your_key' par la clé que vous avez utilisée lors de la création des JWT
+                // Décoder le JWT 
                 $secretKey = $_ENV['SECRET_KEY'];
                 $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
                 
@@ -162,10 +162,15 @@ class AuthController {
                 $userId = $decoded->id_user;
                 $user = $this->usersModel->getUserById($userId);
                 if ($user) {
-                    // Renvoyer uniquement l'ID et le rôle de l'utilisateur dans la réponse
+
+                    //Récuperer le csrf du token JWT
+                    $csrfToken = $decoded->csrf_token;
+
+                    // Renvoyer le role l'Id et le token csrf
                     $responseUser = [
                         "id" => $user["id_user"],
-                        "role" => $user["role_name"]
+                        "role" => $user["role_name"],
+                        "csrfToken" => $csrfToken
                     ];
                     $this->sendResponse(['status' => 'success', 'user' => $responseUser]);
                 } else {

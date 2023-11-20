@@ -3,19 +3,22 @@
 require_once './vparrot-server/models/Schedules.php';
 require_once './vparrot-server/repository/SchedulesRepository.php';
 require_once './vparrot-server/Validator/Validator.php';
+require_once './vparrot-server/models/AuthModel.php';
 
 class SchedulesController {
 
     private $validator;
     private $schedulesRepository;
+    private $authModel;
 
-    public function __construct(SchedulesRepository $schedulesRepository, Validator $validator) {
+    public function __construct(SchedulesRepository $schedulesRepository, Validator $validator, AuthModel $authModel) {
         $this->validator = $validator;
         $this->schedulesRepository = $schedulesRepository;
+        $this->authModel = $authModel;
     }
 
 
-    //Setting Response
+    //Paramétrage réponse global 
     private function sendResponse($data, $statusCode = 200) {
 
       header("Content-Type: application/json");
@@ -24,7 +27,7 @@ class SchedulesController {
 
     }
 
-    //Get all schedules list
+    //Obtenir la liste des horaires d'ouvertures de la semaine
     public function getSchedulesList() {
         try {
 
@@ -51,19 +54,19 @@ class SchedulesController {
     }
 
     //Update Schedules
-    public function updateSchedule($idSchedules) {
+    public function updateSchedule($idOpeningDay) {
 
-        // Retrieve data sent by the client
+        // Récupérer les données transmise par le client
         $data = json_decode(file_get_contents('php://input'), true);
 
-        //Validate json data format
+        //Validation format json
         if (!$this->validator->validateJsonFormat($data)) {
 
             $this->sendResponse($this->validator->getErrors(), 400);
             return;
         }
 
-        $requireKeys =["day_of_week", "morning_opening", "morning_closing", "afternoon_opening", "afternoon_closing"];
+        $requireKeys =["morningOpening", "morningClosing", "afternoonOpening", "afternoonClosing", "idOpeningDay", "dayOfWeek"];
             foreach ($requireKeys as $key) {
                 if (!isset($data[$key])) {
 
@@ -71,6 +74,30 @@ class SchedulesController {
                     return;
                 }
             }
+
+        //Vérifie la présence des donnée id et token csrf
+        if (empty($data['idOpeningDay']) || empty($data['csrfToken'])) {
+            
+            $this->sendResponse(['status' => 'error', 'message'=> 'identitfiant jour ou token csrf manquant'], 400);
+            return;
+        }
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+        $captchaToken = $data['recaptchaResponse'];
+
+        // Vérifier la réponse du CAPTCHA
+        if (!$this->validator->verifyGoogleCaptcha($captchaToken)) {
+            $this->sendResponse(["status" => "error", "message" => $this->validator->getErrors()], 400);
+            return;
+        }
 
 
         //Data validation
@@ -94,46 +121,39 @@ class SchedulesController {
             return;
         }
 
-        //If id not exists
-        if(!$this->schedulesRepository->idExists($idSchedules)) {
 
-            $this->sendResponse([
-                "status" => "error",
-                "message" => "L'id du jour n'existe pas."
-            ], 400);
-
-            return;
-        }
-
-        //Update Schedules
+        //Mise à jour des horaires d'ouverture
         try {
 
-            $result = $this->schedulesRepository->UpdateSchedule($idSchedules, [
-                "morning_opening" => $data["morning_opening"],
-                "morning_closing" => $data["morning_closing"],
-                "afternoon_opening" => $data["afternoon_opening"],
-                "afternoon_closing" => $data["afternoon_closing"]
-            ]);
+            $schedule = $this->schedulesRepository->getScheduleById($idOpeningDay);
+
+            if (!$schedule) {
+                $this->sendResponse(["status" => "error", "message" => "Aucun horaire trouvé pour l'ID spécifié."], 404);
+                return;
+            }
+
+            $schedule->setMorningOpening($data['morningOpening']);
+            $schedule->setMorningClosing($data['morningClosing']);
+            $schedule->setAfternoonOpening($data['afternoonOpening']);
+            $schedule->setAfternoonClosing($data['afternoonClosing']);
+            $schedule->setDayOfWeek($data['dayOfWeek']);
+            $schedule->setIdOpeningDay($data['idOpeningDay']);
+            
+
+            $result = $this->schedulesRepository->UpdateSchedules($schedule);
 
             if ($result) {
 
-                $this->sendResponse([
-                    "status" => "success",
-                    "message" => "Horaires mises à jour avec succès."
-                ]);
+                $this->sendResponse(["status" => "success", "message" => "Horaires mises à jour avec succès."]);
             } else {
 
-                $this->sendResponse([
-                    "status" => "error",
-                    "message" => "Aucune mise à jour éffectuée."
-                ], 400);
+                $this->sendResponse(["status" => "error", "message" => "Aucune mise à jour effectuée."], 400);
             }
-        } catch (Exception $e) {
 
-            $this->sendResponse([
-                "status" => "error",
-                "message" => $e->getMessage()
-            ], 500);
+            
+            } catch (Exception $e) {
+
+                $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
         }
     }
 }
