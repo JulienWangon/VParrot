@@ -1,6 +1,6 @@
 <?php
 
-//CORS configuration
+//configuration CORS
 
 //localhost:3000 access (accès autorisé à l'API)
 header("Access-Control-Allow-Origin: http://localhost:3000");
@@ -12,6 +12,7 @@ header("Access-Control-Allow-Credentials: true");
 
 
 //require controllers
+require_once './vparrot-server/controllers/RejectedTestimoniesController.php';
 require_once './vparrot-server/controllers/CarsController.php';
 require_once './vparrot-server/controllers/ServicesController.php';
 require_once './vparrot-server/controllers/SchedulesController.php';
@@ -19,6 +20,7 @@ require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
 require_once './vparrot-server/controllers/AuthController.php';
 
+require_once './vparrot-server/repository/RejectedTestimoniesRepository.php';
 require_once './vparrot-server/repository/ServicesRepository.php';
 require_once './vparrot-server/repository/CarsRepository.php';
 require_once './vparrot-server/repository/SchedulesRepository.php';
@@ -27,7 +29,7 @@ require_once './vparrot-server/repository/UserRepository.php';
 
 require_once './vparrot-server/util/EmailService.php';
 
-
+require_once './vparrot-server/models/RejectedTestimonies.php';
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/AuthModel.php';
 require_once './vparrot-server/models/Users.php';
@@ -39,33 +41,36 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit();
 }
 
-
+//Instanciation des repository
 $usersRepo = new UserRepository();
 $servicesRepo = new ServicesRepository();
 $carRepo = new CarsRepository();
 $schedulesRepo = new SchedulesRepository();
 $testimoniesRepo = new TestimoniesRepository();
-//Dependency Injection;
+$rejectedTestimoniesRepo = new RejectedTestimoniesRepository();
 
+//Instanciation du service d email
 $emailService = new EmailService();
 
+//Instanciation des models
 $authModel = new AuthModel();
 $validator = new Validator();
 
 
-//LOADING CONTROLLERS
+//instanciations des controllers
 $controllers = [
 
     'cars' => new CarsController($carRepo, $validator),
     'services' => new ServicesController($servicesRepo, $validator),
-    'schedules' => new SchedulesController($schedulesRepo, $validator),
-    'testimonies' => new TestimoniesController($testimoniesRepo, $validator),
+    'schedules' => new SchedulesController($schedulesRepo, $validator, $authModel),
+    'rejectedTestimonies' => new RejectedTestimoniesController($rejectedTestimoniesRepo),
+    'testimonies' => new TestimoniesController($testimoniesRepo, $validator, $authModel),
     'users' => new UsersController($usersRepo, $validator, $emailService, $authModel),
     'auth' => new AuthController($validator, $authModel, $usersRepo),
 ];
 
 
-//ROUTES DEFINITION
+//Définition des routes
 $routes = [
     'GET' => [
         '#^/vparrot/cars/details/(\d+)$#' => [$controllers['cars'], 'getFullCarDetails'],
@@ -77,8 +82,10 @@ $routes = [
         '/vparrot/cars/briefs' => [$controllers['cars'], 'getCarBriefDetails'],
         '/vparrot/services' => [$controllers['services'], 'getAllServicesListGroupedByType' ],
         '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
+        '/vparrot/testimonies/rejected' => [$controllers['rejectedTestimonies'], 'getRejectedTestimonies'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/testimonies/moderated' => [$controllers['testimonies'], 'getModeratedTestimoniesList'],
+        '/vparrot/testimonies/unmoderated' => [$controllers['testimonies'], 'getUnmoderatedTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
         '/vparrot/check-session' => [$controllers['auth'], 'checkSession'],
 
@@ -96,9 +103,9 @@ $routes = [
 
     'PUT' => [
       '#^/vparrot/users/(\d+)$#' => [$controllers['users'], 'updateThisUser'],
-      '#^/vparrot/testimonies/(\d+)/\approve$#' => [$controllers['testimonies'], 'approveThisTestimony'],
-      '#^/vparrot/testimonies/(\d+)/\reject$#' => [$controllers['testimonies'], 'rejectThisTestimony'],
-      '#^/vparrot/schedules/(\d+)$#' => [$controllers['schedules'], 'updateSchedule'],
+      '#^/vparrot/testimonies/(\d+)/approve$#' => [$controllers['testimonies'], 'approveThisTestimony'],
+      '#^/vparrot/testimonies/(\d+)/reject$#' => [$controllers['testimonies'], 'rejectThisTestimony'],
+      '#^/vparrot/schedules/(\d+)/update$#' => [$controllers['schedules'], 'updateSchedule'],
 
     ],
 
@@ -110,22 +117,22 @@ $routes = [
 ];
 
 
-//EXTRACTING THE URI FROM THE REQUEST
+//extractionde l uri de la requête
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 
-//ROUTING SYSTEM
+
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 $foundRoute = false;
 
-//Verification of Exact Routes
+//Vérification des routes exactes
 if(isset($routes[$requestMethod][$uri])) {
   $routes[$requestMethod][$uri]();
   $foundRoute = true;
 }
 
-//If no exact route is found, check the routes with regex
+//Si la route n'est pas exacre contrôle les routes avec les regex
 if (!$foundRoute) {
 
     foreach($routes[$requestMethod] as $pattern =>$function) {    
@@ -139,7 +146,7 @@ if (!$foundRoute) {
     }
 }
 
-//IF ROUTE NOTE FOUND RETURN 404 ERROR
+//Retourne une erreur 404 si la route n est pas trouvée
 if(!$foundRoute) {
   header('HTTP/1.1 404 Not Found');
   echo json_encode(['status' => 'error', 'message' => 'Route not found']);
