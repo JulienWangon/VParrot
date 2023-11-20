@@ -165,7 +165,7 @@ class Validator {
     //Validate hours format
     public function validateHoursFormat ($hourString){
 
-        if(!isset($hourString['morning_opening']) || !isset($hourString['morning_closing']) || !isset($hourString['afternoon_opening']) || !isset($hourString['afternoon_closing'])) {
+        if(!isset($hourString['morningOpening']) || !isset($hourString['morningClosing']) || !isset($hourString['afternoonOpening']) || !isset($hourString['afternoonClosing'])) {
             $this->errors[] = "Tous les champs d'horaires sont nécessaires";
             return false;
         }
@@ -185,10 +185,10 @@ class Validator {
     //Timeline validation
     public function validateTimeline($hourString) {
 
-        $morningOpening = DateTime::createFromFormat("H:i:s", $hourString["morning_opening"]);
-        $morningClosing = DateTime::createFromFormat("H:i:s", $hourString["morning-_closing"]);
-        $afternoonOpening = DateTime::createFromFormat("H:i:s", $hourString["afternoon_opening"]);
-        $afternoonclosing = Datetime::createFromFormat("H:i:s", $hourString["afternoon_closing"]);
+        $morningOpening = DateTime::createFromFormat("H:i:s", $hourString["morningOpening"]);
+        $morningClosing = DateTime::createFromFormat("H:i:s", $hourString["morningClosing"]);
+        $afternoonOpening = DateTime::createFromFormat("H:i:s", $hourString["afternoonOpening"]);
+        $afternoonclosing = Datetime::createFromFormat("H:i:s", $hourString["afternoonClosing"]);
 
         if($morningOpening >= $morningClosing) {
             $this->errors[] = "L'heure d'ouverture du matin doit être avant l'heure de fermeture du matin";
