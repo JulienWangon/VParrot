@@ -22,6 +22,7 @@ import UsersManager from './pages/admin/UsersManager';
 import AdminLoginPage from './pages/admin/AdminLoginPage/AdminLoginPage';
 import PasswordResetRequest from './components/admin/PasswordResetRequest/PasswordResetRequest';
 import ResetPassword from './components/admin/ResetPassword/ResetPassword';
+import ContactManager from './pages/admin/ContactManager/ContactManager';
 
 
 function App() {
@@ -87,6 +88,14 @@ function App() {
                           element={
                               <ProtectedRoute>
                                   <CarsManager/>
+                              </ProtectedRoute>
+                          }
+                        />
+                        <Route 
+                          path="/contact" 
+                          element={
+                              <ProtectedRoute>
+                                  <ContactManager/>
                               </ProtectedRoute>
                           }
                         />
