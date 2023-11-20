@@ -1,0 +1,26 @@
+.moderationCard {
+ margin: 0.5em;
+}
+
+.testyCard {
+padding: 0 !important;
+
+
+}
+
+.testyRow {
+  width: 100% !important;
+  margin: auto !important;
+}
+
+
+
+.testimonyDetails {
+font-family: 'Anek Tamil', sans-serif;
+background-color: rgba(187, 39, 26, 0.9) !important; 
+color: white;
+}
+
+.card-title{
+  font-size: 1.1rem;
+}

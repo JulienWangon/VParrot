@@ -101,7 +101,7 @@
 
   .serviceCard{
     width: 25vw;
-    height: 70vh;
+    height: 50vh;
     padding: 0;
     margin: auto;
   }
@@ -111,7 +111,7 @@
 @media screen and (max-width: 1399px) and (min-width: 1201px) {
   .serviceCard{
     width: 30vw;
-    height: 60vh;
+    height: 50vh;
     padding: 0;
     margin: auto;
   }
@@ -136,7 +136,7 @@
 
   .serviceCard{
     width: 30vw;
-    height: 60vh;
+    height: 50vh;
     padding: 0;
     margin: auto;
   }
@@ -164,7 +164,7 @@
 
   .serviceCard{
     width: 40vw;
-    height: 60vh;
+    height: 50vh;
     padding: 0;
     margin: auto;
   }
@@ -191,7 +191,7 @@
 
   .serviceCard{
     width: 45vw;
-    height: 55vh;
+    height: 45vh;
     padding: 0;
     margin: auto;
   }

@@ -1,0 +1,71 @@
+.unauthorizedModal {
+    color: white;
+    text-align: center;
+    width: 90%;
+    padding: 0.5em;
+    border: 2px solid rgba(187, 39, 26, 0.8);
+    border-radius: 20px;
+  
+}
+.unauthorizedModalTitle {
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 2rem;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.unauthorizedModalBody {
+    text-align:center;
+    font-family: 'Anek Tamil', sans-serif;
+    font-size: 1;  
+}
+
+.unauthorizedModalBtn {
+    width: 30%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+
+@media screen and (min-width: 1400px) {
+ 
+    .unauthorizedModal { 
+      width: 50%;
+    }
+
+}
+
+/* Grands écrans de bureau */
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+
+    .unauthorizedModal { 
+      width: 50%;
+    }
+ 
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+
+    .unauthorizedModal { 
+      width: 50%;
+    }
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  
+    .unauthorizedModal { 
+      width: 60%;
+    }
+
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+    .unauthorizedModal { 
+      width: 70%;
+    }
+  
+}
