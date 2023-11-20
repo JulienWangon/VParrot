@@ -15,9 +15,9 @@ import Error from './_utils/Error';
 // Admin Pages Components Import
 import AdminHome from "./pages/admin/AdminHome";
 import CarsManager from './pages/admin/CarsManager';
-import SchedulesManager from './pages/admin/SchedulesManager';
+import SchedulesManager from './pages/admin/SchedulesManager/SchedulesManager';
 import ServicesManager from './pages/admin/ServicesManager';
-import TestimoniesManager from './pages/admin/TestimoniesManager';
+import TestimoniesManager from './pages/admin/TestimoniesManager/TestimoniesManager';
 import UsersManager from './pages/admin/UsersManager';
 import AdminLoginPage from './pages/admin/AdminLoginPage/AdminLoginPage';
 import PasswordResetRequest from './components/admin/PasswordResetRequest/PasswordResetRequest';
