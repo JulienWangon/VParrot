@@ -4,6 +4,21 @@ require_once './vparrot-server/models/Database.php';
 
 class RejectedTestimoniesRepository extends Database {
 
+    /**
+     * Récupère la liste des témoignages qui ont été rejetés.
+     *
+     * Cette méthode interroge la base de données pour extraire tous les témoignages de la table
+     * 'rejected_testimonies'. Chaque témoignage rejeté est transformé en un objet 'RejectedTestimonies', 
+     * qui contient les informations détaillées telles que l'identifiant du témoignage rejeté, 
+     * l'identifiant du témoignage original, le prénom et le nom de la personne ayant laissé le témoignage, 
+     * ainsi que le contenu et la note du témoignage.
+     *
+     * @return array Renvoie un tableau d'objets 'RejectedTestimonies', chacun représentant un témoignage rejeté.
+     *               Chaque objet contient les informations du témoignage rejeté.
+     *               Renvoie un tableau vide si aucun témoignage rejeté n'est trouvé.
+     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
+    */
+
     //Obtenir la liste des avis rejetés
     public function getRejectedTestimonies () :array {
 

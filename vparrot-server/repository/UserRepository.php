@@ -6,6 +6,19 @@ require_once './vparrot-server/models/Role.php';
 
 class UserRepository extends Database {
 
+    /**
+     * Récupère tous les utilisateurs et leurs rôles associés.
+     *
+     * Cette méthode interroge la base de données pour extraire les informations de tous les utilisateurs
+     * ainsi que leurs rôles respectifs. Elle renvoie un tableau associatif contenant deux tableaux :
+     * un pour les utilisateurs et l'autre pour les rôles. Chaque utilisateur est une instance de la classe 'Users',
+     * et chaque rôle est une instance de la classe 'Role'.
+     *
+     * @return array Renvoie un tableau associatif avec deux clés : 'users' et 'roles'.
+     *               - 'users' est un tableau d'objets 'Users'.
+     *               - 'roles' est un tableau d'objets 'Role', indexé par l'id du rôle.
+     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
+    */
 
 //Extraire la liste des utilisateurs et leur rôle
     public function getAllUsersWithRoles() :array {
@@ -209,6 +222,21 @@ class UserRepository extends Database {
         }
     }
 
+
+    /**
+     * Récupère les informations d'un utilisateur par son identifiant.
+     *
+     * Cette méthode interroge la base de données pour extraire les informations d'un utilisateur spécifique
+     * identifié par son ID. Elle récupère également les informations sur le rôle associé à cet utilisateur.
+     * Les données sont renvoyées sous forme d'un tableau associatif contenant l'ID de l'utilisateur, son email,
+     * l'ID de son rôle, et le nom du rôle.
+     *
+     * @param int $userId L'identifiant de l'utilisateur à rechercher.
+     * @return array|null Renvoie un tableau associatif contenant les données de l'utilisateur et de son rôle
+     *                    si l'utilisateur est trouvé, ou null si aucun utilisateur n'est trouvé.
+     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
+    */
+
       //Get user by ID
       public function getUserByID($userId) {
         
@@ -234,6 +262,20 @@ class UserRepository extends Database {
         }
        
     }
+
+    /**
+     * Récupère les informations d'un utilisateur par son adresse email.
+     *
+     * Cette méthode interroge la base de données pour trouver un utilisateur spécifique par son adresse email.
+     * Elle renvoie les informations de cet utilisateur, y compris son identifiant, son mot de passe (généralement haché),
+     * et le nom de son rôle. La méthode utilise une jointure LEFT JOIN pour récupérer les informations du rôle associé à l'utilisateur.
+     *
+     * @param string $userEmail L'adresse email de l'utilisateur à rechercher.
+     * @return array|null Renvoie un tableau associatif contenant les informations de l'utilisateur, 
+     *                    y compris son mot de passe, identifiant et rôle, si l'utilisateur est trouvé.
+     *                    Renvoie null si aucun utilisateur correspondant n'est trouvé.
+     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
+    */
 
     //Get user by Email 
     public function getUserByEmail($userEmail) {

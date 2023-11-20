@@ -7,6 +7,21 @@ require_once './vparrot-server/models/ServiceTypes.php';
 class ServicesRepository extends Database {
     
 
+    /**
+     * Récupère tous les services et leurs types associés depuis la base de données.
+     *
+     * Cette méthode interroge la base de données pour extraire les informations de tous les services
+     * et de leurs types respectifs. Les services sont joints à leurs types via une jointure SQL.
+     * Elle renvoie un tableau associatif contenant deux listes : une liste de services et une liste de types de services.
+     * Chaque service est représenté par un objet 'Service', et chaque type de service par un objet 'ServiceTypes'.
+     *
+     * @return array Renvoie un tableau associatif avec deux clés :
+     *               - 'services' : un tableau d'objets 'Service', chacun représentant un service.
+     *               - 'serviceTypes' : un tableau d'objets 'ServiceTypes', chacun représentant un type de service.
+     *               Renvoie des tableaux vides si aucun service ou type de service n'est trouvé.
+     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
+    */
+
     public function getAllServicesAndServiceTypes() : array {
 
         try {

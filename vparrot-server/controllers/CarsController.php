@@ -69,10 +69,6 @@ class CarsController {
     }
 
 
-
-
-
-
     public function getFilteredCarsList() {
 
         $filters = $_GET;
