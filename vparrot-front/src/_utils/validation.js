@@ -124,6 +124,34 @@ export const validatePhoneNumber = (phoneNumber) => {
     return error;
 }
 
+//Validation du format des horaires
+export const validateTimeFormat = (time) => {
+    const timePattern = /^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+    if (!timePattern.test(time)) {
+        return "Le format de l'heure est invalide. Utilisez le format HH:mm:ss.";
+    }
+    return null;
+}
+
+//Validation de la chronologie des horaires
+export const validateScheduleTimeline = (morningOpening, morningClosing, afternoonOpening, afternoonClosing) => {
+    const convertTime = (time) => new Date('1970-01-01T' + time + 'Z');
+
+    if (convertTime(morningOpening) >= convertTime(morningClosing)) {
+        return "L'heure d'ouverture du matin doit être avant l'heure de fermeture du matin.";
+    }
+
+    if (convertTime(afternoonOpening) >= convertTime(afternoonClosing)) {
+        return "L'heure d'ouverture de l'après-midi doit être avant l'heure de fermeture de l'après-midi.";
+    }
+
+    if (convertTime(morningClosing) >= convertTime(afternoonOpening)) {
+        return "L'heure de fermeture du matin doit être avant l'heure d'ouverture de l'après-midi.";
+    }
+
+    return null;
+}
+
 
 
 
