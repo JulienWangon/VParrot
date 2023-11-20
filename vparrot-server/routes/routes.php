@@ -19,7 +19,9 @@ require_once './vparrot-server/controllers/SchedulesController.php';
 require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
 require_once './vparrot-server/controllers/AuthController.php';
+require_once './vparrot-server/controllers/ContactController.php';
 
+require_once './vparrot-server/repository/ContactRepository.php';
 require_once './vparrot-server/repository/RejectedTestimoniesRepository.php';
 require_once './vparrot-server/repository/ServicesRepository.php';
 require_once './vparrot-server/repository/CarsRepository.php';
@@ -42,6 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //Instanciation des repository
+$contactRepo = new contactRepository();
 $usersRepo = new UserRepository();
 $servicesRepo = new ServicesRepository();
 $carRepo = new CarsRepository();
@@ -59,7 +62,7 @@ $validator = new Validator();
 
 //instanciations des controllers
 $controllers = [
-
+    'contact' => new ContactController($contactRepo, $validator),
     'cars' => new CarsController($carRepo, $validator),
     'services' => new ServicesController($servicesRepo, $validator),
     'schedules' => new SchedulesController($schedulesRepo, $validator, $authModel),
@@ -73,6 +76,7 @@ $controllers = [
 //Définition des routes
 $routes = [
     'GET' => [
+        '/vparrot/contact' => [$controllers['contact'], 'getContactList'],
         '#^/vparrot/cars/details/(\d+)$#' => [$controllers['cars'], 'getFullCarDetails'],
         '/vparrot/cars/filtered' => [$controllers['cars'], 'getFilteredCarsList'],
         '/vparrot/cars/distinct-transmission-types' => [$controllers['cars'], 'getAllDistinctTransmissionTypes'],
