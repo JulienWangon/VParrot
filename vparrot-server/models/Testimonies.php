@@ -2,7 +2,7 @@
 
 require_once 'Database.php';
 
-class Testimonies extends Database {
+class Testimonies {
 
     private ?int $idTestimony;
     private ?string $firstName;
@@ -69,7 +69,6 @@ class Testimonies extends Database {
     public function setIsModerated(bool $isModerated) :void {
         $this->isModerated = $isModerated;
     }
-
 
 }
 
