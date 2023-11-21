@@ -11,7 +11,7 @@ class Contact {
     private $content;
     private $isTreated;
 
-    public function __construct($id, $firstName, $lastName, $phone, $email, $subject, $content, $isTreated) {
+    public function __construct($id = null, $firstName = null, $lastName = null, $phone = null, $email = null, $subject = null, $content = null, $isTreated = 0) {
 
         $this->id = $id;
         $this->firstName = $firstName;
