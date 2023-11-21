@@ -96,6 +96,7 @@ $routes = [
     ],
 
     'POST' => [
+        '/vparrot/contact' => [$controllers['contact'], 'createContact'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'createTestimony'],
         '/vparrot/change-password' => [$controllers['users'], 'resetPassword'],
         '/vparrot/request-password-reset' => [$controllers['users'], 'requestPasswordReset'],
