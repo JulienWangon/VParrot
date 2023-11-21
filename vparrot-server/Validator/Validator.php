@@ -88,7 +88,7 @@ class Validator {
 
     //Validation pour les string medium length 250
 
-    public function validateMediumContent($content, $type, $minLength = 20, $maxLength = 250){
+    public function validateMediumContent($content, $type, $minLength, $maxLength){
 
         //Checking if content exists
         if (!$content || $content === "") {
@@ -105,7 +105,7 @@ class Validator {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ $type ne doit pas dépasser $maxLength caractères."];
             return false;
 
-        } else if (!preg_match("/^[A-Za-z0-9 .,!?()-]+$/", $content)) {
+        } else if (!preg_match("/^[A-Za-z0-9 .,!?()-éèêëàâäôöûüçîïÉÈÊËÀÂÄÔÖÛÜÇÎÏ]+$/", $content)) {
             $this->errors[$type][] = ["status" => "error", "message" => "Le champ commentaire contient des caractères non autorisés."];
             return false;
         }
