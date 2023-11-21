@@ -51,5 +51,45 @@ class contactRepository extends Database {
             $this->handleException($e, "extraction de la liste des contacts");
         }
     }
+
+
+    /**
+     * Ajoute un nouveau contact dans la base de données.
+     *
+     * Cette méthode prend en paramètre un objet Contact contenant les informations nécessaires
+     * pour créer un nouvel enregistrement dans la table contact de la base de données.
+     * Elle insère ces informations et définit la colonne is_treated à 0 par défaut.
+     *
+     * @param Contact $contact Un objet Contact contenant les données du contact à ajouter.
+     *
+     * @return string Un message indiquant le succès ou l'échec de l'ajout du contact.
+     *
+     * @throws PDOException Si une erreur survient lors de l'exécution de la requête SQL.
+    */
+
+    //Création d'un contact 
+    public function addContact (Contact $contact) :string {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated) VALUES (:firstName, :lastName, :phone, :email, :contact_subject, :content, 0)";
+
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":firstName", $contact->getFirstName(), PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $contact->getLastName(), PDO::PARAM_STR);
+            $stmt->bindValue(":phone", $contact->getPhone(), PDO::PARAM_STR);
+            $stmt->bindValue(":email", $contact->getEmail(), PDO::PARAM_STR);
+            $stmt->bindValue(":contactSubject", $contact->getSubject(), PDO::PARAM_STR);
+            $stmt->bindValue(":content", $contact->getContent(), PDO::PARAM_STR);
+            $stmt->execute();
+
+            return "Contact créé avec succès";
+           
+        } catch (PDOException $e) {
+
+            $this->handleException($e, "ajout d'un contact");
+        }
+    }
   
 }
