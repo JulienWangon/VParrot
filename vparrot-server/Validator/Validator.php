@@ -287,6 +287,31 @@ class Validator {
     }
 
 
+    /**
+     * Valide un numéro de téléphone.
+     *
+     * Cette méthode vérifie si le numéro de téléphone est valide en fonction d'un format spécifique.
+     *
+     * @param string $phoneNumber Le numéro de téléphone à valider.
+     * @param string $type Le type de champ pour l'identification dans les messages d'erreur.
+     *
+     * @return bool Retourne true si le numéro de téléphone est valide, false sinon.
+    */
+    public function validatePhoneNumber($phoneNumber, $type) {
+        // Vérifier si le numéro de téléphone existe
+        if (empty($phoneNumber)) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le numéro de téléphone est requis."];
+            return false;
+        }
+
+        // Vérifier le format du numéro de téléphone
+        if (!preg_match("/^[0-9]{10}$/", $phoneNumber)) {
+            $this->errors[$type][] = ["status" => "error", "message" => "Le format du numéro de téléphone est invalide."];
+            return false;
+        }
+
+        return empty($this->errors[$type]);
+    }
 
     //Retourner les erreurs de validation
     public function getErrors() {
