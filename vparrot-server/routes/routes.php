@@ -76,7 +76,7 @@ $controllers = [
 //Définition des routes
 $routes = [
     'GET' => [
-        '/vparrot/contact' => [$controllers['contact'], 'getContactList'],
+        
         '#^/vparrot/cars/details/(\d+)$#' => [$controllers['cars'], 'getFullCarDetails'],
         '/vparrot/cars/filtered' => [$controllers['cars'], 'getFilteredCarsList'],
         '/vparrot/cars/distinct-transmission-types' => [$controllers['cars'], 'getAllDistinctTransmissionTypes'],
@@ -92,6 +92,7 @@ $routes = [
         '/vparrot/testimonies/unmoderated' => [$controllers['testimonies'], 'getUnmoderatedTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
         '/vparrot/check-session' => [$controllers['auth'], 'checkSession'],
+        '/vparrot/contact' => [$controllers['contact'], 'getContactList'],
 
     ],
 
