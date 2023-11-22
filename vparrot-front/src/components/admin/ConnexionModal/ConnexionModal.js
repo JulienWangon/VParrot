@@ -88,11 +88,12 @@ const ConnexionModal = ({ handleCloseModal }) => {
                 
                     <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
 
-                    <form method="POST" onSubmit={handleSubmit}>
+                    <form method="POST" onSubmit={handleSubmit} className={ModalStyle.loginForm}>
                         <div className={ModalStyle.titleContainer}>
                         <H2Title className={ModalStyle.useFormTitle} h2Text="Identifiez vous"/>
                         </div>
                         <TextInput
+                            inputClassName={ModalStyle.loginInput}
                             label="Email"
                             name="email"
                             value={data.email}
@@ -102,6 +103,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
                         {errors.email && <div className="errorMessage">{errors.email}</div>}
 
                         <TextInput
+                            inputClassName={ModalStyle.loginInput}
                             label="Mot de passe"
                             name="password"
                             value={data.password}
@@ -118,17 +120,14 @@ const ConnexionModal = ({ handleCloseModal }) => {
                             />
                         )}
                         
-                        <Button
-                            content="Connexion"
-                            type="submit"
-                            className={ModalStyle.submitBtn}
-                            disabled={!captchaValue && areFieldsValid}         
-                        />
+                       
+                        <Button type="submit"className={ModalStyle.loginBtn} colorStyle="redBtn" disabled={!captchaValue && areFieldsValid}>Connexion</Button>
+                       
                         {error && <div className="errorMessage">{error}</div>}
                         {loading && <div className="loadingMessage">Chargement...</div>}
 
                     </form>      
-                
+                    
                 </div>
         </div>
     );
