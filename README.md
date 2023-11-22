@@ -7,7 +7,9 @@ Procédure d'installation du projet pour une utilisation sur une machine windows
 
  2. une fois installé se rendre dans le dossier www 
 
-3. ouvrire une fenetre de terminal et naviquez jusqu au dossier front end executez la commande npm install 
+ 3. executez la commande git clone https://github.com/JulienWangon/vparrot.git pour cloner le projet dans le dossier
+
+3. ouvrire une fenetre de terminal et naviquez jusqu au dossier vparrot-front executez la commande npm install 
 Cette commande va créer le dossier node_modules et y installer toutes les dépendances listées dans package.json
 
 4. naviguer vers le dossier vparrot-server et executez la commande composer install pur reinstaller les paquest définis dans le fichier composer.json
