@@ -8,7 +8,7 @@ html {
 /* Ultra grands écrans (ex: 4K) */
 @media screen and (min-width: 2559px) {
   html {
-    font-size: 20px; /* Significativement plus grand pour les écrans ultra-haute résolution */
+    font-size: 18px; /* Significativement plus grand pour les écrans ultra-haute résolution */
   }
 
 }
@@ -16,28 +16,28 @@ html {
 /* Plus grands écrans */
 @media screen and (min-width: 1400px) {
   html {
-    font-size: 24px; /* Augmente pour les très grands écrans */
+    font-size: 16px; /* Augmente pour les très grands écrans */
   }
 }
 
 /* Grands écrans de bureau */
 @media screen and (max-width: 1399px) and (min-width: 1201px) {
   html {
-    font-size: 22px; /* Un peu plus grand pour les grands écrans de bureau */
+    font-size: 16px; /* Un peu plus grand pour les grands écrans de bureau */
   }
 }
 
 /* Tablettes et petits écrans de bureau */
 @media screen and (max-width: 1200px) and (min-width: 992px) {
   html {
-    font-size: 18px; /* Ajusté pour les écrans moyens */
+    font-size: 16px; /* Ajusté pour les écrans moyens */
   }
 }
 
 /* Tablettes en orientation portrait et grands mobiles */
 @media screen and (max-width: 991px) and (min-width: 768px) {
   html {
-    font-size: 18px; /* Plus petit pour les tablettes et grands mobiles */
+    font-size: 16px; /* Plus petit pour les tablettes et grands mobiles */
   }
 }
 
