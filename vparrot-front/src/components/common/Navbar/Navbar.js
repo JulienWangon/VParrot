@@ -84,7 +84,7 @@ const Navbar = () => {
                     ))}
                     {currentUser && (
                         <li className="navItem">
-                            <Button className="navLink btn-danger" onClick={logout}>
+                            <Button className="navLink btn-danger logoutBtn" colorStyle="redBtn" onClick={logout}>
                                  Déconnexion
                             </Button>
                          </li>
