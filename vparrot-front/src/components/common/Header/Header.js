@@ -1,7 +1,7 @@
 import React from 'react';
 
 //Components import
-import H1Title from '../H1Title/H1Title';
+import H1Title from '../H1title/H1Title';
 import Navbar from '../Navbar/Navbar';
 
 //CSS import
