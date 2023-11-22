@@ -15,14 +15,15 @@
 }
 
 .navItem {
-  margin-bottom: 0.8em;
+
+  margin-bottom: 0.4em;
 }
 
 .navItem a {
   text-decoration: none;
   color: white;
-  font-size: 1.3rem;
-  padding: 1.5em;
+  font-size: 1.1rem;
+  padding: 1rem;
   font-weight: 800;
   font-family: 'Alumni Sans', sans-serif;
 }
@@ -44,6 +45,11 @@
 
 i {
   color: white;
+ }
+
+ .logoutBtn {
+    width: 100%;
+    font-size: 0.8rem;
  }
 
 
