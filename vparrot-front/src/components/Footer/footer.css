@@ -45,7 +45,7 @@ footer {
 .schedulesContainer ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 0.5em ; 
+    grid-gap: 0.3em ; 
     padding: 0;
     margin: 0;
     list-style-type: none; 
@@ -55,14 +55,14 @@ footer {
 .schedulesContainer li {
   color: white;
     box-sizing: border-box; 
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-family: 'Anek Tamil', sans-serif;
 }
 
 .adressContainer {
   text-align: center;
   background-color: rgba(187, 39, 26, 0.8);
-  padding: 0.8em;
+  padding: 0.2em;
   border-radius: 20px;;
 }
 
@@ -185,7 +185,7 @@ footer {
     }
 
     .schedulesContainer ul {
-      grid-gap: 1em;
+      grid-gap: 0.5em;
       
     }
 
@@ -202,7 +202,7 @@ footer {
     }
 
     .schedulesTitle, .adressTitle{
-      font-size: 1.8rem;
+      font-size: 1.5rem;
     }
 
     .adress, .phone {
@@ -218,20 +218,20 @@ footer {
     }
 
     .schedulesContainer li {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .schedulesContainer ul {
-      grid-gap: 1em;
+      grid-gap: 0.7em;
       
     }
 
     .schedulesTitle, .adressTitle{
-      font-size: 1.8rem;
+      font-size: 1.3rem;
     }
 
     .adress, .phone {
-      font-size: 1.1rem;
+      font-size: rem;
     }
 }
 
