@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { MessageProvider } from './contexts/MessagesContext';
+import { ContactModalProvider } from './contexts/ContactModalContext';
 import ProtectedRoute from './_utils/ProtectedRoute';
 
 // Publics Pages Components Import
@@ -29,85 +30,88 @@ function App() {
   return (
     <div className="App">
 
-        <BrowserRouter>
+        <BrowserRouter>          
             <MessageProvider>
+                <ContactModalProvider>
+                    <AuthProvider>
 
-                <AuthProvider>
-                    <Routes>
+                        <Routes>
 
-                        <Route index element={<Home/>}/>
+                            <Route index element={<Home/>}/>
 
-                        <Route path="/accueil" element={<Home/>}/>
-                        <Route path="/entretiens" element={<MaintenanceServices/>}/>
-                        <Route path="/reparations" element={<RepairServices/>}/>
-                        <Route path="/ventes" element={<SalesArea/>}/>
-                        <Route path="/access-panel" element={<AdminLoginPage/>}/>
+                            <Route path="/accueil" element={<Home/>}/>
+                            <Route path="/entretiens" element={<MaintenanceServices/>}/>
+                            <Route path="/reparations" element={<RepairServices/>}/>
+                            <Route path="/ventes" element={<SalesArea/>}/>
+                            <Route path="/access-panel" element={<AdminLoginPage/>}/>
 
-                        <Route 
-                          path="/accueiladmin" 
-                          element={
-                              <ProtectedRoute>
-                                  <AdminHome/>
-                              </ProtectedRoute>
-                          }
-                        />
-                        <Route 
-                          path="/utilisateurs" 
-                          element={
-                              <ProtectedRoute>
-                                  <UsersManager/>
-                              </ProtectedRoute>
-                          }
-                        />
-                        <Route 
-                          path="/avisclients" 
-                          element={
-                              <ProtectedRoute>
-                                  <TestimoniesManager/>
-                              </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          path="/horaires"
-                          element={
-                              <ProtectedRoute>
-                                  <SchedulesManager/>
-                              </ProtectedRoute>
-                          }     
-                        />
-                        <Route 
-                          path="/services" 
-                          element={
-                              <ProtectedRoute>
-                                  <ServicesManager/>
-                              </ProtectedRoute>
-                          }
-                        />
-                        <Route 
-                          path="/parcauto" 
-                          element={
-                              <ProtectedRoute>
-                                  <CarsManager/>
-                              </ProtectedRoute>
-                          }
-                        />
-                        <Route 
-                          path="/contact" 
-                          element={
-                              <ProtectedRoute>
-                                  <ContactManager/>
-                              </ProtectedRoute>
-                          }
-                        />
+                            <Route 
+                            path="/accueiladmin" 
+                            element={
+                                <ProtectedRoute>
+                                    <AdminHome/>
+                                </ProtectedRoute>
+                            }
+                            />
+                            <Route 
+                            path="/utilisateurs" 
+                            element={
+                                <ProtectedRoute>
+                                    <UsersManager/>
+                                </ProtectedRoute>
+                            }
+                            />
+                            <Route 
+                            path="/avisclients" 
+                            element={
+                                <ProtectedRoute>
+                                    <TestimoniesManager/>
+                                </ProtectedRoute>
+                            }
+                            />
+                            <Route
+                            path="/horaires"
+                            element={
+                                <ProtectedRoute>
+                                    <SchedulesManager/>
+                                </ProtectedRoute>
+                            }     
+                            />
+                            <Route 
+                            path="/services" 
+                            element={
+                                <ProtectedRoute>
+                                    <ServicesManager/>
+                                </ProtectedRoute>
+                            }
+                            />
+                            <Route 
+                            path="/parcauto" 
+                            element={
+                                <ProtectedRoute>
+                                    <CarsManager/>
+                                </ProtectedRoute>
+                            }
+                            />
+                            <Route 
+                            path="/contact" 
+                            element={
+                                <ProtectedRoute>
+                                    <ContactManager/>
+                                </ProtectedRoute>
+                            }
+                            />
 
-                        <Route path="/reset-password-request" element={<PasswordResetRequest />} />
-                        <Route path="/reset-password" element={<ResetPassword/>}/>
+                            <Route path="/reset-password-request" element={<PasswordResetRequest />} />
+                            <Route path="/reset-password" element={<ResetPassword/>}/>
 
-                        <Route path="*" element={<Error/>}/>
+                            <Route path="*" element={<Error/>}/>
+                            
+                        </Routes>
                         
-                    </Routes>
-                </AuthProvider>
-            </MessageProvider>       
+                    </AuthProvider>
+                </ContactModalProvider>  
+            </MessageProvider>               
         </BrowserRouter>
 
     </div>
