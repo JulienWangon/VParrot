@@ -107,9 +107,9 @@ class TestimoniesController {
 
             $this->sendResponse($this->validator->getErrors(), 400);
                 return;
-            }
+        }
 
-        //Vérifie si toute les clés sont présente
+        //Vérifie si toute les clés sont présentes
         $requireKeys =["firstName", "lastName", "content", "rating"];
             foreach ($requireKeys as $key) {
                 if (!isset($data[$key])) {
@@ -128,7 +128,7 @@ class TestimoniesController {
         $validLastName = $this->validator->validateStringForNames($lastName, 'lastName');
         $validFirstName = $this->validator->validateStringForNames($firstName, 'firstName');
         $validRating = $this->validator->validateRating($rating, 'rating');
-        $validContent = $this->validator->validateMediumContent($content, 'content');
+        $validContent = $this->validator->validateMediumContent($content, 'content', 20, 250);
 
         if(!$validLastName || !$validFirstName || !$validRating || !$validContent) {
             $errors = $this->validator->getErrors();
