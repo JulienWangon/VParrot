@@ -13,7 +13,7 @@ Cette commande va créer le dossier node_modules et y installer toutes les dépe
 4. naviguer vers le dossier vparrot-server et executez la commande composer install pur reinstaller les paquest définis dans le fichier composer.json
 
 
-5. dans le dossier vparrot-server créé un fichier .env et copier le code suivant et collez le à l'interieur , il s'agit de varible d'environnement pour configurer mon service d'email PHP Mailer et la clé secrère pour encoder les token JWT
+5. dans le dossier vparrot-server créé un fichier .env et copier le code suivant et collez le à l'interieur , il s'agit de varible d'environnement pour configurer mon service d'email PHP Mailer et la clé secrète pour encoder les token JWT
 
 SECRET_KEY = "k1#em1zeb-=w@%_ym5+5l6h27y1!tu(2ph@u-+=21igg=8%228"
 
@@ -46,7 +46,7 @@ tout est normalement pret pour que le projet soit fonctionnel.
 utiliser le terminal pour vous rendre dans le dossier vparrot-front et executez la commande : npm start 
 le server de développement se lance vous pouvez maintenant utiliser le projet 
 
-l'accès à la page de connexion se fait via l url : https://garage-vparrot.j-webflow.com/access-panel
+l'accès à la page de connexion se fait via l url : /access-panel
 
 email administrateur : vincent.parrot@garage-vparrot.j-webflow.com
 mot de passe: @Julien57320
