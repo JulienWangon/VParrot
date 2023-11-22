@@ -1,0 +1,43 @@
+.adminConnexion{ 
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url('../../../assets/images/backgroundAdminConnexion.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;  
+}
+
+
+.titleAndSlogan{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height:50vh;
+}
+
+.adminPanelConnexionTitle {
+    text-align: center;
+    color: white;
+    font-family: 'Alumni Sans', sans-serif;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.AdminSlogan{
+  color: white;
+  font-family: 'Alumni Sans', sans-serif;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.adminBtnContainer {  
+    margin: auto;
+}
+
+.connexionAdminBtn, .adminRedirection {
+    padding: 0.5em;
+    width: 150px;
+    margin: 0.2em;
+}
