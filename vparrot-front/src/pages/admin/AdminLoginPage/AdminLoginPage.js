@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/common/Buttons/Button/Button';
 import ConnexionModal from '../../../components/admin/ConnexionModal/ConnexionModal';
 
-import './adminLoginPage.css'
+import adminStyle from './adminLoginPage.module.css'
 
 const AdminLoginPage = () => {
 
@@ -32,18 +32,18 @@ const AdminLoginPage = () => {
 
 
   return (
-    <div className="adminConnexion">
-        <div className= "titleAndSlogan">
-          <h1 className="adminPanelConnexionTitle">Garage V.Parrot</h1>
-          <p className='AdminSlogan'>Connexion à votre espace administrateur</p>
+    <div className={adminStyle.adminConnexion}>
+        <div className= {adminStyle.titleAndSlogan}>
+          <h1 className={adminStyle.adminPanelConnexionTitle}>Garage V.Parrot</h1>
+          <p className={adminStyle.AdminSlogan}>Connexion à votre espace administrateur</p>
 
 
         </div>
         
-        <div className="adminBtnContainer">
-            <Button className="connexionAdminBtn accessBtn " colorStyle="redBtn" onClick={handleOpenModal}>Connexion</Button>
+        <div className={adminStyle.adminBtnContainer}>
+            <Button className={adminStyle.connexionAdminBtn } colorStyle="redBtn" onClick={handleOpenModal}>Connexion</Button>
             {showModal && <ConnexionModal handleCloseModal={handleCloseModal}/>}
-            <Button className="accessBtn adminRedirection" colorStyle="whiteBtn" onClick={handlePublicSiteRedirect}>Accès au site</Button> 
+            <Button className={adminStyle.adminRedirection} colorStyle="whiteBtn" onClick={handlePublicSiteRedirect}>Accès au site</Button> 
         </div>
         
     </div>
