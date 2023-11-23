@@ -73,7 +73,7 @@ class contactRepository extends Database {
         try {
 
             $db = $this->getBdd();
-            $req = "INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated) VALUES (:firstName, :lastName, :phone, :email, :contact_subject, :content, 0)";
+            $req = "INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated) VALUES (:firstName, :lastName, :phone, :email, :contactSubject, :content, 0)";
 
             $stmt = $db->prepare($req);
             $stmt->bindValue(":firstName", $contact->getFirstName(), PDO::PARAM_STR);
