@@ -1,0 +1,64 @@
+.modalOverlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px); 
+  z-index: 3000; 
+  cursor: pointer;
+}
+
+.inputContainer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95vw;
+  max-height: auto;
+  background-color: rgba(187, 39, 26, 0.6);
+  border-radius: 20px;
+  z-index: 3000;
+ 
+  overflow-y: auto; 
+}
+
+.contactTitle {
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 2.3rem;
+  font-weight: 400;
+  color: white;
+}
+
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-top: 1em;
+  color: white;
+  
+}
+
+.ContactForm {
+  border: none;
+  padding: 0.2em;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.btnContainer {
+  width: 100%;
+  text-align: center;
+  
+}
+
+.whiteContactBtn
+ {
+  width: 30%;
+  margin: 1.5em;
+ }
