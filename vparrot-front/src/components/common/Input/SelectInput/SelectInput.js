@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SelectInput = ({ inputClassName, label, name, value, onChange, options, disabled, error }) => {
+const SelectInput = ({ inputClassName, label, name, value, onChange, options, disabled, error, formGroupClass }) => {
     return (
-          <div className="formGroup">
+          <div className={formGroupClass || 'formGroup'}>
               <label htmlFor={name}>{label}</label>
               <select className={inputClassName} id={name} name={name} value={value} onChange={onChange} disabled={disabled}>
                   {options.map((option) => (

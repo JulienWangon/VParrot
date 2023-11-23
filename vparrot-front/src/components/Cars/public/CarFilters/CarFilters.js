@@ -5,7 +5,7 @@ import TextInput from '../../../common/Input/TextInput/TextInput';
 import SelectInput from '../../../common/Input/SelectInput/SelectInput';
 import Button from '../../../common/Buttons/Button/Button';
 
-import './carFilters.css';
+import filterStyle from './carFilters.module.css';
 import H2Title from '../../../common/H2Title/H2Title';
 
 const CarFilters = ({ onApplyFilter, onResetFilter}) => {
@@ -42,16 +42,17 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
     }
 
     return (
-        <section className="filtersSection">
+        <section className={filterStyle.filtersSection}>
         
-            <H2Title className="filtersTitle" h2Text="Filtres de recherche"/>
+            <H2Title className={filterStyle.filtersTitle} h2Text="Filtres de recherche"/>
 
             {loading && <p>Chargement des filtres...</p>}
             {error && <p>Erreur de chargement: {error}</p>}
 
-            <div className="filtersList">
+            <div className={filterStyle.filtersList}>
                 <SelectInput
-                    inputClassName="inputFilter"
+                    inputClassName={filterStyle.inputFilter}
+                    formGroupClass={filterStyle.formGroup}
                     label="Marque"
                     name="brand"
                     value={filters.brand}
@@ -60,7 +61,8 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                 />
 
                 <SelectInput
-                    inputClassName="inputFilter"
+                    inputClassName={filterStyle.inputFilter}
+                    formGroupClass={filterStyle.formGroup}
                     label="Modèle"
                     name="model"
                     value={filters.model}
@@ -69,7 +71,8 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                 />
 
                 <SelectInput
-                    inputClassName="inputFilter"
+                    inputClassName={filterStyle.inputFilter}
+                    formGroupClass={filterStyle.formGroup}
                     label="Carburant"
                     name="fuel"
                     value={filters.fuel}
@@ -78,7 +81,8 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                 />
 
                 <SelectInput
-                    inputClassName="inputFilter"
+                    inputClassName={filterStyle.inputFilter}
+                    formGroupClass={filterStyle.formGroup}
                     label="Transmission"
                     name="transmission"
                     value={filters.transmission}
@@ -87,7 +91,8 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                 />
 
                 <TextInput
-                    inputClassName="inputFilter"
+                    inputClassName={filterStyle.inputFilter}
+                    formGroupClass={filterStyle.formGroup}
                     label="Année Min"
                     name="yearMin"
                     type="number"
@@ -96,7 +101,8 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                 />
 
                 <TextInput
-                    inputClassName="inputFilter"
+                    inputClassName={filterStyle.inputFilter}
+                    formGroupClass={filterStyle.formGroup}
                     label="Kilométrage Max"
                     name="kmMax"
                     type="number"
@@ -105,9 +111,9 @@ const CarFilters = ({ onApplyFilter, onResetFilter}) => {
                 />
             </div>
 
-            <div className="filterActions">
-                    <Button onClick={handleSubmit} className="applyFilterBtn" colorStyle='redBtn'>Appliquer</Button>
-                    <Button onClick={handleReset} className="resetFilterBtn" colorStyle='whiteBtn'>Réinitialiser</Button>
+            <div className={filterStyle.filterActions}>
+                    <Button onClick={handleSubmit} className={filterStyle.applyFilterBtn} colorStyle='redBtn'>Appliquer</Button>
+                    <Button onClick={handleReset} className={filterStyle.resetFilterBtn} colorStyle='whiteBtn'>Réinitialiser</Button>
             </div>
 
         </section>
