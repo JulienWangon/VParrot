@@ -36,7 +36,7 @@ const CarsCard = ({ car, onDetailsClick }) => {
         </div>
 
         <div className="carDetailsBtn">
-            <Button className="openCarModal" colorStyle="redBtn" onClick={() => onDetailsClick(car.id_car)}>Détails</Button>
+            <Button className="openCarModal" colorStyle="redBtn" onClick={() => onDetailsClick(car)}>Détails</Button>
         </div>
 
         <div className="refContainer">
