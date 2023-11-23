@@ -6,20 +6,33 @@ export const useContactModal = () => useContext(ContactModalContext);
 
 export const ContactModalProvider = ({ children }) => {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalData, setModalData] = useState({});
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isAdModalOpen, setIsAdModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
 
-    const openModal = (data = {}) => {
+  const openContactModal = (data = {}) => {
+    console.log("Mise à jour de modalData dans openContactModal:", data);
+      setModalData(data);
+      setIsContactModalOpen(true);
+      setIsAdModalOpen(false);
+  };
 
-        setModalData(data);
-        setIsModalOpen(true);
-    };
+  const closeContactModal = () => {
+      setIsContactModalOpen(false);
+  };
 
-    const closeModal = () => setIsModalOpen(false);
+  const openAdModal = (data = {}) => {
+    setModalData(data);
+    setIsAdModalOpen(true);
+};
+
+  const closeAdModal = () => {
+      setIsAdModalOpen(false);
+  };
 
     return (
 
-        <ContactModalContext.Provider value = {{ isModalOpen, openModal, closeModal, modalData }}>
+        <ContactModalContext.Provider value = {{ isContactModalOpen, openContactModal, closeContactModal, isAdModalOpen, openAdModal, closeAdModal, modalData }}>
             {children}
         </ContactModalContext.Provider>
     );
