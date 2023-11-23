@@ -1,3 +1,4 @@
 .contactBtn {
   position: relative;
+  z-index: 3000;
 }
