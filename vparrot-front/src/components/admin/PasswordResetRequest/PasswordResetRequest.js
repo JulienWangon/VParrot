@@ -4,6 +4,12 @@ import { useMessage } from '../../../contexts/MessagesContext';
 import ReCAPTCHA from "react-google-recaptcha";
 import { validateEmail } from '../../../_utils/validation';
 import { useNavigate } from 'react-router-dom';
+
+import Button from '../../common/Buttons/Button/Button';
+
+import requestStyle from './passwordResetRequest.module.css';
+import TextInput from '../../common/Input/TextInput/TextInput';
+
 const reCaptchaKey ="6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
 const PasswordResetRequest = () => {
@@ -56,13 +62,14 @@ const PasswordResetRequest = () => {
   };
 
   return (
-    <div>
-      <h2>Demande de réinitialisation de mot de passe</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={handleChange} />
-        </label>
+    <div className={requestStyle.pageContainer}>
+      <div className="opacityLayer"></div>
+    <div className={requestStyle.container}>
+      <h2 className="whiteTitle">Demande de réinitialisation de mot de passe</h2>
+      <form className={requestStyle.requestForm} onSubmit={handleSubmit}>
+      
+        <TextInput formGroupClass={requestStyle.formGroup} type="email" label="Email" name="email" value={email} onChange={handleChange} />
+        
         {emailError && <div>{emailError}</div>}
 
         {isEmailValid && ( 
@@ -72,8 +79,9 @@ const PasswordResetRequest = () => {
           />
         )}
 
-        <button type="submit" disabled={!captchaValue}>Envoyer</button>
+        <Button className={requestStyle.submitRequest}colorStyle="redBtn" type="submit" disabled={!captchaValue}>Envoyer</Button>
       </form>
+    </div>
     </div>
   );
 };

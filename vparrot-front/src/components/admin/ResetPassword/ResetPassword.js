@@ -7,7 +7,8 @@ import useChangeUserPassword from '../hook/useChangeUserPassword';
 import { useMessage } from '../../../contexts/MessagesContext';
 import { useNavigate } from 'react-router-dom';
 
-
+import resetStyle from './resetPassword.module.css';
+import Button from '../../common/Buttons/Button/Button';
 
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
@@ -83,41 +84,51 @@ const ResetPassword = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <TextInput
-                label="Email"
-                name="email"
-                type="email"
-                value={email}
-                onChange={handleInputChange}
-                error={errors.email}
-            />
-            <TextInput
-                label="Nouveau Mot de Passe"
-                name="newPassword"
-                type="password"
-                value={newPassword}
-                onChange={handleInputChange}
-                error={errors.newPassword}
-            />
-            <TextInput
-                label="Confirmer le Nouveau Mot de Passe"
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={handleInputChange}
-                error={errors.confirmPassword}
-            />
-            {newPassword && confirmPassword && !errors.newPassword && !errors.confirmPassword && (
-                <ReCAPTCHA
-                    sitekey={reCaptchaKey}
-                    onChange={(value) => setCaptchaValue(value)}
+        
+        <div className={resetStyle.pageContainer}>
+            <div className="opacityLayer"></div>
+            <form className={resetStyle.formContainer} onSubmit={handleSubmit}>
+                <TextInput
+                    formGroupClass={resetStyle.formGroup}
+                    inputClassName={resetStyle.input}
+                    label="Email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={handleInputChange}
+                    error={errors.email}
                 />
-            )}
-            <button type="submit" disabled={!isFormReadyForSubmission()}>
-                Changer le Mot de Passe
-            </button>
-        </form>
+                <TextInput
+                    formGroupClass={resetStyle.formGroup}
+                    inputClassName={resetStyle.input}
+                    label="Nouveau Mot de Passe"
+                    name="newPassword"
+                    type="password"
+                    value={newPassword}
+                    onChange={handleInputChange}
+                    error={errors.newPassword}
+                />
+                <TextInput
+                    formGroupClass={resetStyle.formGroup}
+                    inputClassName={resetStyle.input}
+                    label="Confirmer le Nouveau Mot de Passe"
+                    name="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={handleInputChange}
+                    error={errors.confirmPassword}
+                />
+                {newPassword && confirmPassword && !errors.newPassword && !errors.confirmPassword && (
+                    <ReCAPTCHA
+                        sitekey={reCaptchaKey}
+                        onChange={(value) => setCaptchaValue(value)}
+                    />
+                )}
+                <Button type="submit" className={resetStyle.resetPasswordBtn} colorStyle="redBtn" disabled={!isFormReadyForSubmission()}>
+                    Changer le Mot de Passe
+                </Button>
+            </form>
+        </div>
     );
 };
 

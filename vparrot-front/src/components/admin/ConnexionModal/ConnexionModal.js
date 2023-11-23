@@ -83,7 +83,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
     return (
 
 
-        <div className="modalOverlay">
+        <div className={ModalStyle.modalOverlay}>
                 <div className={ModalStyle.formContainer}>
                 
                     <Button className={ModalStyle.circleBtn} colorStyle="whiteBtn" onClick={handleCloseModal}>X</Button>
@@ -94,6 +94,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
                         </div>
                         <TextInput
                             inputClassName={ModalStyle.loginInput}
+                            formGroupClass={ModalStyle.formGroup}
                             label="Email"
                             name="email"
                             value={data.email}
@@ -104,6 +105,7 @@ const ConnexionModal = ({ handleCloseModal }) => {
 
                         <TextInput
                             inputClassName={ModalStyle.loginInput}
+                            formGroupClass={ModalStyle.formGroup}
                             label="Mot de passe"
                             name="password"
                             value={data.password}
