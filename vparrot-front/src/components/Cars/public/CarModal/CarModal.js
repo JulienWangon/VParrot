@@ -74,7 +74,7 @@ const CarModal = ({ carId, subject }) => {
 
                 <div className={carModalStyle.contactIntro}>
                     <p className={carModalStyle.introContact}>Ce véhicule vous intéresse ? N'hésitez plus !</p>
-                    <ContactBtn additionalData={{ subject: `Information sur le véhicule ${car.brand} ${car.model}` }}/>           
+                    <ContactBtn className="carModalContact" additionalData={{ subject: `Information sur le véhicule ${car.brand} ${car.model}` }}/>           
                 </div>
 
             </div>

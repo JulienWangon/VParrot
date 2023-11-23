@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 import './contactBtn.css';
 import { useContactModal } from '../../../../contexts/ContactModalContext';
 
-const ContactBtn = ( { additionalData }) => {
+const ContactBtn = ( { additionalData, className }) => {
 
     const { openContactModal } = useContactModal();
   
@@ -17,7 +17,7 @@ const ContactBtn = ( { additionalData }) => {
   return (
     <>
 
-        <Button className="contactBtn" colorStyle="redBtn" onClick={handleClick}>Contact</Button>
+        <Button className={`contactBtn ${className}`} colorStyle="redBtn" onClick={handleClick}>Contact</Button>
       
     </>
   );

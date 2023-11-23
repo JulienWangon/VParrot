@@ -21,7 +21,7 @@ const ServiceCard = ({ name, description, price, pathImg }) => {
             <p className="cardDescription">{description}</p>
             <p className="cardPrice">{price}</p>
             <div className="contactContainer">
-                <ContactBtn additionalData={{  subject: `Demande d'info sur ${name}`  }}/>
+                <ContactBtn className="whiteBtn" additionalData={{  subject: `Demande d'info sur ${name}`  }}/>
             </div>
 
         </div>      
