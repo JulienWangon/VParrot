@@ -157,11 +157,13 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
     ];
 
     return (
-      <div className="modalOverlay">
+      <div className={TestimonyStyle.modalOverlay}>
           <div className={TestimonyStyle.formContainer}>
-              <H2Title h2Text={mode === "creation" ? "Votre témoignage" : "Modération du témoignage"}/>
+              <H2Title h2Text={mode === "creation" ? "Votre témoignage" : "Modération du témoignage"} className={TestimonyStyle.testimonyTitle} colorStyle="whiteTitle"/>
               <form onSubmit={handleSubmit} className={TestimonyStyle.createTestimony}>
                   <TextInput
+                    formGroupClass={TestimonyStyle.formGroup}
+                    inputClassName={TestimonyStyle.testimonyInput}
                     label="Prénom"
                     name="firstName"
                     type="text"
@@ -170,6 +172,8 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
                     error={errors.firstName}
                   />
                   <TextInput
+                    formGroupClass={TestimonyStyle.formGroup}
+                    inputClassName={TestimonyStyle.testimonyInput}
                     label="Nom"
                     name="lastName"
                     type="text"
@@ -178,19 +182,23 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
                     error={errors.lastName}
                   />
                   <TextArea
-                        label="Témoignage"
-                        name="content"
-                        value={testimonyData.content}
-                        onChange={handleInputChange}
-                        error={errors.content}
+                      formGroupClass={TestimonyStyle.formGroup}
+                      inputClassName={TestimonyStyle.testimonyInput}
+                      label="Votre avis"
+                      name="content"
+                      value={testimonyData.content}
+                      onChange={handleInputChange}
+                      error={errors.content}
                     />
                   <SelectInput
-                    label="Note"
-                    name="rating"
-                    value={testimonyData.rating}
-                    onChange={handleInputChange}
-                    options={ratingOptions}
-                    error={errors.rating}
+                      formGroupClass={TestimonyStyle.formGroup}
+                      inputClassName={TestimonyStyle.testimonyInput}
+                      label="Note"
+                      name="rating"
+                      value={testimonyData.rating}
+                      onChange={handleInputChange}
+                      options={ratingOptions}
+                      error={errors.rating}
                   />
                   {mode === "creation" && areAllFieldsFilled() && hasNoErrors() && (
                       <ReCAPTCHA
@@ -199,7 +207,7 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
                       />
                   )}
                    {mode === "creation" && (
-                        <Button disabled={!isFormReadyForSubmission()} onClick={handleSubmit} >Créer le témoignage</Button>
+                        <Button className={TestimonyStyle.createTestimonyBtn} disabled={!isFormReadyForSubmission()} onClick={handleSubmit} colorStyle="whiteBtn" >Créer le témoignage</Button>
                     )}
                     {mode === "moderation" && (
                         <>
@@ -211,6 +219,7 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
                         type="button"
                         onClick={onClose}
                         className={TestimonyStyle.closeBtn}
+                        colorStyle="redBtn"
                     >
                         X
                     </Button>
