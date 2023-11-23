@@ -4,7 +4,7 @@ import React from 'react';
 import Header from '../../../components/common/Header/Header';
 import TestimoniesSlider from '../../../components/Testimonies/public/Testimonies/TestimoniesSlider/TestimoniesSlider';
 import Section from '../../../components/common/Section/Section';
-import Button from '../../../components/common/Buttons/Button/Button';
+
 import H3Title from '../../../components/common/H3Title/H3Title';
 
 //Import CSS file
@@ -20,6 +20,7 @@ import article2Photo2 from '../../../assets/images/homePage/article2Photo2.webp'
 import conclusionPhoto1 from '../../../assets/images/homePage/conclusionPhoto1.webp';
 import conclusionPhoto2 from '../../../assets/images/homePage/conclusionPhoto2.webp';
 import Footer from '../../../components/Footer/Footer';
+import ContactBtn from '../../../components/common/Buttons/ContactBtn/ContactBtn';
 
 
 
@@ -149,7 +150,7 @@ const Home = () => {
                     <p className="conclusionText">Chez Garage V.Parrot, votre satisfaction est notre priorité absolue. Faites confiance à notre expertise et à notre engagement envers un service de qualité supérieure. Prenez rendez-vous dès aujourd'hui pour l'entretien de votre véhicule et découvrez pourquoi tant de clients font confiance à notre équipe pour prendre soin de leur voiture.</p>
                 </div>
                 <div className="iconeBtnContainer">
-                    <Button className="iconBtn" colorStyle="redBtn">Contact</Button>
+                    <ContactBtn/>
                 </div>
             </section>
 
