@@ -5,15 +5,24 @@ import ContactForm from '../ContactForm/ContactForm';
 
 const ContactModal = () => {
 
-    const { isModalOpen, closeModal, modalData } = useContactModal();
+    const { isContactModalOpen, closeContactModal, modalData } = useContactModal();
 
-    if (!isModalOpen) return null;
+    if (!isContactModalOpen) return null;
+
+    const handleOverlayClick = (e) => {
+      closeContactModal();
+    };
+
+    const handleModalContentClick = (e) => {
+      e.stopPropagation(); 
+    };
 
     return (
 
-      <div className="modalOverlay">
-
-          <ContactForm closeModal={closeModal} modalData={modalData}/>
+      <div className="modalOverlay" onClick={handleOverlayClick}>
+          <div className="modalContent" onClick={handleModalContentClick}>
+              <ContactForm closeModal={closeContactModal} modalData={modalData}/>
+          </div>
       </div>
     )
 }
