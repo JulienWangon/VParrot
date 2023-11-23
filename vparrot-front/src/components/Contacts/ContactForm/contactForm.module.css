@@ -24,7 +24,6 @@
   background-color: rgba(187, 39, 26, 0.6);
   border-radius: 20px;
   z-index: 3000;
- 
   overflow-y: auto; 
 }
 
@@ -39,7 +38,7 @@
 .formGroup {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 75%;
   margin-top: 1em;
   color: white;
   
@@ -62,3 +61,68 @@
   width: 30%;
   margin: 1.5em;
  }
+
+
+ /* Ultra grands écrans (ex: 4K) */
+@media screen and (min-width: 2559px) {
+  html {
+    font-size: 18px; /* Significativement plus grand pour les écrans ultra-haute résolution */
+  }
+
+}
+
+/* Plus grands écrans */
+@media screen and (min-width: 1400px) {
+  .inputContainer {
+    width: 50vw;
+}
+
+.formGroup {
+    width: 65%;   
+}
+}
+
+/* Grands écrans de bureau */
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+    .inputContainer {
+        width: 50vw;
+    }
+
+    .formGroup {
+        width: 65%;   
+    }
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+    .inputContainer {
+        width: 50vw;
+    }
+
+    .formGroup {
+        width: 65%;   
+    }
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  .inputContainer {
+    width: 70vw;
+  }
+
+  .formGroup {
+    width: 60%;   
+  }
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .inputContainer {
+    width: 80vw;
+  }
+
+  .formGroup {
+    width: 70%;   
+  }
+}
