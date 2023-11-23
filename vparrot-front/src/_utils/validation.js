@@ -64,7 +64,7 @@ export const validateStringWithNumber = (string) => {
     } else if (string.length > 50) {
         error = "Le champ ne doit pas dépasser 50 caractères"
     } else {
-        const testRegex = /^[A-Za-z0-9'-]+$/;
+        const testRegex = /^[A-Za-z0-9éèêëàâäôöûüçîïÉÈÊËÀÂÄÔÖÛÜÇÎÏ'\- ]+$/;
         if(!testRegex.test(string)) {
             error = "Le champ peut uniquement contenir des liettres (majuscules et minuscules), des apostrophes des tirets et des chiffres";
         }
