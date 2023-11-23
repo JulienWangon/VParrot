@@ -31,7 +31,7 @@ export const createTestimony = async (dataToSend) => {
 
         if (response.data && response.data.status === 'success') {
 
-            return response.data;
+            return response.data.data;
         } else {
 
             throw new Error(response.data.message || "Erreur inconnue lors de la création du témoignage.")
