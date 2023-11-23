@@ -1,9 +1,9 @@
 import React from 'react';
 
-const TextInput = ( {inputClassName, label, placeholder, name, type, value, autoComplete, onChange, error}) => {
+const TextInput = ( {inputClassName, label, placeholder, name, type, value, autoComplete, onChange, error, formGroupClass}) => {
 
     return (
-        <div className='formGroup'>
+        <div className={formGroupClass || 'formGroup'}>
             <label htmlFor={name}>{label}</label>
             <input
                 className={inputClassName}
