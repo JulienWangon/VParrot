@@ -34,9 +34,13 @@ const useFetchApproveTestimony = () => {
             return response;
         } catch (error) {
             //Affichage du message d'erreur et propagation de l'erreur
-            showMessage({ data: error.response }, 'error');
-            throw error;
-
+            if (error.response && error.response.data) {
+               
+                showMessage({ data: error}, 'success');
+            } else {
+                
+                showMessage({ data: { message: error.message || "Une erreur s'est produite" } }, 'error');
+            }       
         } finally {
             //Désactivation de l'indicateur de chargement
             setIsLoading(false);

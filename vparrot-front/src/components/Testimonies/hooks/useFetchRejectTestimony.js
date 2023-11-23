@@ -29,7 +29,13 @@ const useFetchRejectTestimony = () => {
             return response;
         } catch (error) {
             //Affichage de l'erreur et propagation
-            showMessage( { data: error.response }, 'error');
+            if (error.response && error.response.data) {
+               
+                showMessage({ data: error}, 'success');
+            } else {
+                
+                showMessage({ data: { message: error.message || "Une erreur s'est produite" } }, 'error');
+            }       
             throw error;
 
         }finally {

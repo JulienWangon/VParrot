@@ -27,7 +27,13 @@ const useFetchCreateTestimony = () => {
 
         } catch (error) {
             //Affiche l'erreur et propagation de l erreur
-            showMessage({ data: error.response }, 'error');
+            if (error.response && error.response.data) {
+               
+                showMessage({ data: error}, 'success');
+            } else {
+                
+                showMessage({ data: { message: error.message || "Une erreur s'est produite" } }, 'error');
+            }       
           throw error;
 
         } finally {
