@@ -27,6 +27,8 @@ class EmailService  {
 
         try {
 
+            $this->mailer->clearAddresses();
+
             $this->mailer->addAddress($to);
 
             $this->mailer->isHTML($isHTML);
