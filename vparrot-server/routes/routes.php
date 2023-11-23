@@ -96,14 +96,14 @@ $routes = [
 
     ],
 
-    'POST' => [
-        '/vparrot/contact' => [$controllers['contact'], 'createContact'],
+    'POST' => [   
         '/vparrot/testimonies' => [$controllers['testimonies'], 'createTestimony'],
         '/vparrot/change-password' => [$controllers['users'], 'resetPassword'],
         '/vparrot/request-password-reset' => [$controllers['users'], 'requestPasswordReset'],
         '/vparrot/users' => [$controllers['users'], 'addThisUser'],
         '/vparrot/login' => [$controllers['auth'], "login"],
         '/vparrot/logout' => [$controllers['auth'], "logout"],
+        '/vparrot/contact' => [$controllers['contact'], 'createContact'],
 
     ],
 
