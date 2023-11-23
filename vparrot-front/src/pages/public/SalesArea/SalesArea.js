@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useFetchFilteredCars from '../../../components/Cars/hooks/useFetchFileteredCars';
+import { useContactModal } from '../../../contexts/ContactModalContext';
 
 import Header from '../../../components/common/Header/Header';
 import H2Title from '../../../components/common/H2Title/H2Title';
@@ -12,14 +13,19 @@ import './salesArea.css';
 
 const SalesArea = () => {
 
+    const { openAdModal } = useContactModal();
+
     const { filteredCars, onApplyFilter, resetFilter, error } = useFetchFilteredCars();
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCar, setSelectedCar] = useState(null);
+    const [contactSubject, setContactSubject] = useState("");
 
-    const handleCarDetailsClick = (carId) => { 
-            setSelectedCar(carId);
-            setIsModalOpen(true);
+    const handleCarDetailsClick = (car) => { 
+
+            setSelectedCar(car.id_car);
+            setContactSubject(`Demande d'information sur ${car.brand} ${car.model}`);
+            console.log("Mise à jour du sujet pour CarModal:", `Demande d'information sur ${car.brand} ${car.model}`);
+            openAdModal({ subject: `Demande d'information sur ${car.brand} ${car.model}` });
     };
 
   return (
@@ -47,7 +53,7 @@ const SalesArea = () => {
             <CarFilters onApplyFilter={onApplyFilter} onResetFilter={resetFilter}/>
 
             <CarsCardSection filteredCars={filteredCars} onCarDetailsClick={handleCarDetailsClick}/>
-            <CarModal carId={selectedCar} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
+            <CarModal carId={selectedCar} subject={contactSubject}/>
         </main>
 
         <Footer/>
