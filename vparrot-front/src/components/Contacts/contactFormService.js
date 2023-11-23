@@ -3,13 +3,13 @@ import instanceAxios from "../../_utils/axios";
 export const sendContactFormData = async (formData) => {
     try {
 
-      const response = await instanceAxios.post('/contact/submit', formData);
+      const response = await instanceAxios.post('/contact', formData);
       if(response.data && response.data.status === "success") {
 
-          return response.data.data
+          return response.data
       } else {
 
-          throw new Error("Données reçues non valides ou erreur de requête. ");
+        throw response.data;
       }
     } catch (error) {
 
@@ -26,10 +26,10 @@ export const fetchAllContact = async () => {
         const response = await instanceAxios.get('/contact');
         if(response.data && response.data.status === "success") {
 
-            return response.data.data
+            return response.data
         } else {
 
-            throw new Error("impossible d'obtenir la liste des contacts");
+            throw response.data;
         }   
     } catch (error) {
 
