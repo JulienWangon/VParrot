@@ -4,6 +4,8 @@ import { MessageProvider } from './contexts/MessagesContext';
 import { ContactModalProvider } from './contexts/ContactModalContext';
 import ProtectedRoute from './_utils/ProtectedRoute';
 
+import ContactModal from './components/Contacts/ContactModal/ContactModal';
+
 // Publics Pages Components Import
 import Home from "./pages/public/Home/Home";
 import MaintenanceServices from "./pages/public/MaintenanceServices/MaintenanceServices";
@@ -33,6 +35,7 @@ function App() {
         <BrowserRouter>          
             <MessageProvider>
                 <ContactModalProvider>
+                    <ContactModal/>
                     <AuthProvider>
 
                         <Routes>
@@ -108,7 +111,7 @@ function App() {
                             <Route path="*" element={<Error/>}/>
                             
                         </Routes>
-                        
+
                     </AuthProvider>
                 </ContactModalProvider>  
             </MessageProvider>               
