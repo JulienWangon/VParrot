@@ -1,10 +1,10 @@
 import instanceAxios from '../../_utils/axios';
 
 //Optenir tout les témoignages 
-export const fetchModeratedTestimonies = async () => {
+export const fetchAllTestimonies = async () => {
     try {
 
-        const response = await instanceAxios.get('/testimonies/moderated');
+        const response = await instanceAxios.get('/testimonies');
         if (response.data && response.data.status === 'success') {
 
             return response.data.data
@@ -125,47 +125,3 @@ export const deleteTestimony = async (idTestimony) => {
     
 };
 
-
-//Obtenir la list des avis client à modérer
-export const getUnmoderatedTestimonies = async () => {
-    try {
-
-        const response = await instanceAxios.get('/testimonies/unmoderated');
-        if (response.data && response.data.status === 'success') {
-
-            return response.data
-        } else {
-
-            throw new Error(response.data.message || "Erreur inconnue lors de la demande de liste de témoignage à modérer.")
-        } 
-    } catch (error) {
-
-        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
-        console.error('Erreur lors de la demande de la liste des témoignages à modérer:', errorMessage);
-    
-        throw new Error(errorMessage);
-    
-    }
-};
-
-
-//Obtenir la liste des avis client rejetés
-export const getRejectedTestimonies = async () => {
-    try {
-
-        const response = await instanceAxios.get('/testimonies/rejected');
-        if (response.data && response.data.status === 'success') {
-
-            return response.data.data;
-        } else {
-
-            throw new Error(response.data.message || "Erreur inconnue lors de la demande de liste des témoignages rejetés.")
-        }
-    } catch (error) {
-
-        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
-        console.error('Erreur lors de la demande de la liste des témoignages rejetés: ', errorMessage);
-
-        throw new Error(errorMessage)
-    }
-}
