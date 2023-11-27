@@ -32,13 +32,13 @@ class TestimoniesRepository extends Database {
           $testimonies = [];
           foreach ($testimoniesData as $testimonyData) {
 
-              $testimony = new Testimonies(
-                  $testimonyData['id_testimony'] ?? null,
+              $testimony = new Testimonies(  
                   $testimonyData['first_name'],
                   $testimonyData['last_name'],
                   $testimonyData['content'],
                   $testimonyData['rating'],
-                  $testimonyData['status']
+                  $testimonyData['status'],
+                  $testimonyData['id_testimony'] ?? null
               );
 
               $testimonies[] = $testimony;     
@@ -89,8 +89,8 @@ class TestimoniesRepository extends Database {
                 $testimony = new Testimonies(      
                     $testimonyData['first_name'],
                     $testimonyData['last_name'],
-                    $testimonyData['content'],
                     $testimonyData['rating'],
+                    $testimonyData['content'],  
                     $testimonyData['is_moderated'],
                     $testimonyData['id_testimony'] ?? null
                 );
