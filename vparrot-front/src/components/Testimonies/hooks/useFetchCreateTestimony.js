@@ -33,7 +33,7 @@ const useFetchCreateTestimony = () => {
             //Affiche l'erreur et propagation de l erreur
             if (error.response && error.response.data) {
                
-                showMessage({ data: error}, 'success');
+                showMessage({ data: error}, 'error');
             } else {
                 
                 showMessage({ data: { message: error.message || "Une erreur s'est produite" } }, 'error');
