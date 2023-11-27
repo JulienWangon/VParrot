@@ -38,13 +38,13 @@ class TestimoniesRepository extends Database {
                   $testimonyData['last_name'],
                   $testimonyData['content'],
                   $testimonyData['rating'],
-                  $testimonyData['is_moderated']
+                  $testimonyData['status']
               );
 
               $testimonies[] = $testimony;     
           }
 
-          return $testimony;
+          return $testimonies;
 
       } catch(PDOException $e) {
 
