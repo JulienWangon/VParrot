@@ -9,16 +9,16 @@ class Testimonies {
     private ?string $lastName;
     private ?string $content;
     private ?int $rating;
-    private ?bool $isModerated;
+    private ?string $status;
 
-    public function __construct(?string $firstName = null, ?string $lastName = null, ?string $content = null, ?int $rating = null, ?bool $isModerated = null, ?int $idTestimony = null) {
+    public function __construct(?string $firstName = null, ?string $lastName = null, ?string $content = null, ?int $rating = null, ?string $status = "en attente", ?int $idTestimony = null) {
 
         $this->idTestimony = $idTestimony;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->content = $content;
         $this->rating = $rating;
-        $this->isModerated = $isModerated;
+        $this->status = $status;
     }
 
 //Getters List
@@ -42,8 +42,8 @@ class Testimonies {
         return $this->rating;
     }
 
-    public function getIsModerated() :bool {
-        return $this->isModerated;
+    public function getStatus() :string {
+        return $this->status;
     }
 
 //Setters List
@@ -66,8 +66,8 @@ class Testimonies {
         $this->rating = $rating;
     }
 
-    public function setIsModerated(bool $isModerated) :void {
-        $this->isModerated = $isModerated;
+    public function setStatus(bool $status) :void {
+        $this->status = $status;
     }
 
 }
