@@ -15,7 +15,7 @@ const useFetchRejectTestimony = () => {
     //Récuperation du token csrf via le context d'authentification
     const { csrfToken } = useAuth();
 
-    //foction asynchrone pour rejeter u navis client
+    //fonction asynchrone pour rejeter u navis client
     const rejectThisTestimony = async (idTestimony, onSuccess) => {
         
         //Activiation de l'indicateur de chargement
@@ -34,7 +34,7 @@ const useFetchRejectTestimony = () => {
             //Affichage de l'erreur et propagation
             if (error.response && error.response.data) {
                
-                showMessage({ data: error}, 'success');
+                showMessage({ data: error}, 'error');
             } else {
                 
                 showMessage({ data: { message: error.message || "Une erreur s'est produite" } }, 'error');
