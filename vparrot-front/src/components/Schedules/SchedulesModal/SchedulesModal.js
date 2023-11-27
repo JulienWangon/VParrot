@@ -6,7 +6,7 @@ import H3Title from '../../common/H3Title/H3Title';
 import TextInput from '../../common/Input/TextInput/TextInput';
 import Button from '../../common/Buttons/Button/Button';
 
-import './schedulesModal.css';
+import scheduleStyle from './schedulesModal.module.css';
 
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
@@ -90,29 +90,30 @@ const SchedulesModal = ({ schedule, onClose, onSave }) => {
     }
 
     return (
-        <div  className="modalOverlay">
-            <div className='schedulesModal'>
-                <H3Title className="schedulesModalTitle" h3Text={`Modification des horaires pour ${schedule.dayOfWeek}`}/>
-                <form className='schedulesForm'>
-                    <div className='morningHours'>
-                      <h4>Matin</h4>
-                        <TextInput inputClassName="inputSchedule" label="Ouverture: " name="morningOpening" type="time" value={schedules.morningOpening}  onChange={handleInputChange}/>
-                        <TextInput inputClassName="inputSchedule" label="Fermeture: " name="morningClosing" type="time" value={schedules.morningClosing}  onChange={handleInputChange}/>
+        <div  className={scheduleStyle.modalOverlay}>
+            <div className={scheduleStyle.schedulesModal}>
+                <H3Title className={scheduleStyle.schedulesModalTitle} h3Text={`Modification des horaires pour ${schedule.dayOfWeek}`}/>
+                <form className={scheduleStyle.schedulesForm}>
+                    <div className={scheduleStyle.hoursContainer}>
+                      <h4 className={scheduleStyle.hoursSectionTitle}>Matin</h4>
+                        <TextInput formGroupClass={scheduleStyle.formGroup} inputClassName={scheduleStyle.inputSchedule} label="Ouverture: " name="morningOpening" type="time" value={schedules.morningOpening}  onChange={handleInputChange}/>
+                        <TextInput formGroupClass={scheduleStyle.formGroup} inputClassName={scheduleStyle.inputSchedule} label="Fermeture: " name="morningClosing" type="time" value={schedules.morningClosing}  onChange={handleInputChange}/>
                     </div>
-                    <div className="afternoonHours">
-                    <h4>Après-midi</h4>
-                      <TextInput inputClassName="inputSchedule" label="Ouverture:" name="afternoonOpening" type="time" value={schedules.afternoonOpening}  onChange={handleInputChange}/>
-                      <TextInput inputClassName="inputSchedule" label="Fermeture: " name="afternoonClosing" type="time" value={schedules.afternoonClosing} onChange={handleInputChange}></TextInput>
+                    <div className={scheduleStyle.hoursContainer}>
+                    <h4 className={scheduleStyle.hoursSectionTitle}>Après-midi</h4>
+                      <TextInput formGroupClass={scheduleStyle.formGroup} inputClassName={scheduleStyle.inputSchedule} label="Ouverture:" name="afternoonOpening" type="time" value={schedules.afternoonOpening}  onChange={handleInputChange}/>
+                      <TextInput formGroupClass={scheduleStyle.formGroup} inputClassName={scheduleStyle.inputSchedule} label="Fermeture: " name="afternoonClosing" type="time" value={schedules.afternoonClosing} onChange={handleInputChange}></TextInput>
                     </div>
-                    
-                    <ReCAPTCHA
-                        sitekey={reCaptchaKey}
-                        onChange={(value) => setCaptchaValue(value)}
-                    />
+                    <div className={scheduleStyle.captchaContainer}>
+                      <ReCAPTCHA
+                          sitekey={reCaptchaKey}
+                          onChange={(value) => setCaptchaValue(value)}
+                      />
+                    </div>
 
-                    <div className="scheduleBtnContainer">
-                      <Button type="submit" className="saveBtn" id="saveSchedule" colorStyle="whiteBtn" onClick={handleSubmit}>Sauvegarder</Button>
-                      <Button type="button" className="cancelBtn" id="cancelSchedule" colorStyle="whiteBtn" onClick={onClose}>Annuler</Button>
+                    <div className={scheduleStyle.scheduleBtnContainer}>
+                      <Button type="submit" className={scheduleStyle.inputSchedule} id="saveSchedule" colorStyle="whiteBtn" onClick={handleSubmit}>Sauvegarder</Button>
+                      <Button type="button" className={scheduleStyle.inputSchedule} id="cancelSchedule" colorStyle="whiteBtn" onClick={onClose}>Annuler</Button>
                     </div>
               </form>
             </div>          
