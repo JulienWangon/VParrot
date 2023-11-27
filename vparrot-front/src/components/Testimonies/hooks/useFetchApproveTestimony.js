@@ -36,15 +36,16 @@ const useFetchApproveTestimony = () => {
 
             return response;
         } catch (error) {
-            //Affichage du message d'erreur et propagation de l'erreur
-            if (error.response && error.response.data) {
-               
-                showMessage({ data: error}, 'success');
+           //Gestion des erreurs
+            if (error.response && error.response.data && error.response.data.status === 'error') {
+            //Affichage erreur provenant de la reponse API 
+                showMessage({ message: error.response.data.message || "Erreur lors de l'opération" }, 'error');
             } else {
-                
-                showMessage({ data: { message: error.message || "Une erreur s'est produite" } }, 'error');
-            }       
+            //Affichage autre erreur (exemple erreur reseau)
+                showMessage({ message: error.message || "Une erreur s'est produite" }, 'error');
+            }
         } finally {
+
             //Désactivation de l'indicateur de chargement
             setIsLoading(false);
         }
