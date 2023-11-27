@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-//Hook pour la création d'un avis client
 import useFetchCreateTestimony from '../../hooks/useFetchCreateTestimony';
-//Hook pour le rejet d'u avis client
-import useFetchRejectTestimony from '../../hooks/useFetchRejectTestimony';
-//hook pour approuver un avis lcient
-import useFetchApproveTestimony from '../../hooks/useFetchApproveTestimony';
+
 //import de google recaptcha
 import ReCAPTCHA from 'react-google-recaptcha';
 //Import utilitaire pour validation des entrées utilisateur
@@ -23,7 +19,9 @@ import TestimonyStyle from './testimonyModal.module.css';
 //Clé API pour google recaptcha
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
-const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
+const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, rejectThisTestimony, onTestimonyCreated }) => {
+
+    const { createNewTestimony, loading } = useFetchCreateTestimony();
 
     //Etat local pour stocker les données de l'avis client
     const [testimonyData, setTestimonyData] = useState({
@@ -39,11 +37,6 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
     //Etat pour la valeur du recaptcha
     const [captchaValue, setCaptchaValue] = useState(null);
     
-    //Hooks personnalisés pour créer, approuver ou rejeter un témoignage.
-    const { createNewTestimony, isLoading: isCreating } = useFetchCreateTestimony();
-    const { approveThisTestimony, isLoading: isApproving } = useFetchApproveTestimony();
-    const { rejectThisTestimony, isLoading: isRejecting } = useFetchRejectTestimony();
-    
     //Remplissage des données en mode modération
     useEffect(() => {
       if (mode === "moderation" && testimony) {
@@ -57,11 +50,7 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
       }
     }, [mode, testimony]);
 
-    //Fermeture de la modal
-    const closeModal = () => {
-      onClose();
-    };
-    
+   
     //Gestion des changemetns dans les champs du formulaire
     const handleInputChange = (e) => {
         const  {name, value} = e.target;
@@ -106,45 +95,36 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
 
     //Varification si le formulaire est pret a etre envoyer
     const isFormReadyForSubmission = () =>{
-      return hasNoErrors() && testimonyData && !isCreating && captchaValue;
+      return hasNoErrors() && testimonyData &&  captchaValue;
     }
-
-    //Préparation des données à envoyer avec le recaptcha
-    const dataToSend = {
-      ...testimonyData,
-      recaptchaResponse: captchaValue
-  };
 
     //Gestion de l approbation d'un avis client
     const handleApprove = async () => {
-      await approveThisTestimony(testimony.idTestimony);
-      onApproved();
-      onClose(); 
+      if (mode === "moderation") {
+          await approveThisTestimony(testimony.idTestimony);
+          onClose();
+      }
     };
 
-    //Gestion du rejet d'un avis client
     const handleReject = async () => {
-    await rejectThisTestimony(testimony.idTestimony);
-    onClose(); 
+      if (mode === "moderation") {
+          await rejectThisTestimony(testimony.idTestimony);
+          onClose();
+      }
     };
 
     //soumission du formulaire dans le cas de la création d'un avis client
     const handleSubmit = async (e) => {
-        e.preventDefault();
-      
-        if (!hasNoErrors()) {
-          return;
-        }
-        try {
-            await createNewTestimony(dataToSend);
-            
-        } catch (error) {
-
-        } finally {
-
-          closeModal();
-        }
-    }
+      e.preventDefault();
+      if (mode === "creation" && areAllFieldsFilled() && hasNoErrors()) {
+          const dataToSend = { ...testimonyData, recaptchaResponse: captchaValue };
+          const response = await createNewTestimony(dataToSend);
+          if (response && response.status === 'success') {
+            onTestimonyCreated(response.data);
+            onClose();
+        }   
+      }
+  };
 
     //Tableau d'option pour le choix de la note
     const ratingOptions = [
@@ -156,7 +136,11 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
       { id: 5, value: 5, label: "5" },
     ];
 
+
+    if(loading) return <div>Chargement...</div>
+
     return (
+
       <div className={TestimonyStyle.modalOverlay}>
           <div className={TestimonyStyle.formContainer}>
               <H2Title h2Text={mode === "creation" ? "Votre témoignage" : "Modération du témoignage"} className={TestimonyStyle.testimonyTitle} colorStyle="whiteTitle"/>
@@ -211,8 +195,8 @@ const TestimonyModal = ({ onClose, mode, testimony, onApproved }) => {
                     )}
                     {mode === "moderation" && (
                         <>
-                            <Button onClick={handleApprove} disabled={isApproving}>Approuver</Button>
-                            <Button onClick={handleReject} disabled={isRejecting}>Rejeter</Button>
+                            <Button onClick={handleApprove}>Approuver</Button>
+                            <Button onClick={handleReject}>Rejeter</Button>
                         </>
                     )}
                     <Button
