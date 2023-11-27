@@ -154,9 +154,19 @@ class TestimoniesController {
 
         try {
                    
-            if ($this->testimoniesRepository->addTestimony($testimony)) {
+            $insertedId = $this->testimoniesRepository->addTestimony($testimony);
 
-                $this->sendResponse(["status" => "success", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage"], 200);
+            if ($insertedId) {
+                $testimonyData = [
+                    'idTestimony' => $insertedId, 
+                    'firstName' => $testimony->getFirstName(),
+                    'lastName' => $testimony->getLastName(),
+                    'content' => $testimony->getContent(),
+                    'rating' => $testimony->getRating(),
+                ];
+    
+
+                $this->sendResponse(["status" => "success", "message" => "Avis client crée avec succès, il sera soumis à la modération avant affichage", "data" => $testimonyData], 200);
                         
             } else {
 
@@ -212,28 +222,27 @@ class TestimoniesController {
             return;
         }
 
-        //Vérification de l'existance du témoignage dans la base de donnée
-        if(!$this->testimoniesRepository->testimonyExists($data['idTestimony'])) {
-            $this->sendResponse(['status'=> 'error', 'message' => 'Témoignage non trouvé '], 404);
-            return;
-        }
+       
 
         // Récupère le témoignage et met à jour son statut de modération.
+       
         $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
-        $testimony->setIsModerated(true);
 
+        // Vérifiez si $testimony est une instance de Testimonies
+
+        if ($testimony === null) {
+            $this->sendResponse(['status' => 'error', 'message' => 'Témoignage non trouvé'], 404);
+            return;
+        }
+        
         try {
-
              // Tente d'approuver le témoignage et renvoie une réponse appropriée.
-            if($this->testimoniesRepository->approveTestimony($testimony)) {
-
-                $this->sendResponse(['status' => 'success', 'message' => 'Témoignage approuvé avec success']);
-            } else  {
-
+            if ($this->testimoniesRepository->approveTestimony($testimony)) {
+                $this->sendResponse(['status' => 'success', 'message' => 'Témoignage approuvé avec succès']);
+            } else {
                 $this->sendResponse(['status' => 'error', 'message' => 'Aucune modification effectuée'], 400);
             }
         } catch (Exception $e) {
-
             $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
    }
@@ -284,14 +293,18 @@ class TestimoniesController {
 
         // Récupère le témoignage et met à jour son statut de modération.
         $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
-        $testimony->setIsModerated(true);
+        if (!$testimony) {
+            $this->sendResponse(['status' => 'error', 'message' => 'Témoignage non trouvé'], 404);
+            return;
+        }
+       
 
         try {
-
+            
             // Tente de rejet le témoignage et renvoie une réponse appropriée.
            if($this->testimoniesRepository->rejectTestimony($testimony)) {
 
-               $this->sendResponse(['status' => 'success', 'message' => 'Témoignage approuvé avec success']);
+               $this->sendResponse(['status' => 'success', 'message' => 'Témoignage rejeté avec success']);
            } else  {
 
                $this->sendResponse(['status' => 'error', 'message' => 'Aucune modification effectuée'], 400);
@@ -350,6 +363,8 @@ class TestimoniesController {
         $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
 
         try {
+
+           
 
             // Tente de rejet le témoignage et renvoie une réponse appropriée.
            if($this->testimoniesRepository->deleteTestimony($testimony)) {
