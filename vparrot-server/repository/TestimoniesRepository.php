@@ -53,6 +53,23 @@ class TestimoniesRepository extends Database {
     }
 
 
+
+    /**
+     * Récupère les témoignages en fonction de leur statut de modération.
+     *
+     * Cette méthode interroge la base de données pour extraire les témoignages qui correspondent
+     * au statut de modération spécifié par le paramètre $isModerated. Elle renvoie une liste 
+     * d'objets 'Testimonies', chacun représentant un témoignage correspondant au critère de modération.
+     * Chaque témoignage inclut des informations telles que le prénom, le nom, le contenu du témoignage,
+     * la note attribuée, le statut de modération, et l'identifiant du témoignage.
+     *
+     * @param bool $isModerated Le statut de modération des témoignages à récupérer. 
+     *                          'True' pour les témoignages modérés, 'False' pour ceux non modérés.
+     * @return array Renvoie un tableau d'objets 'Testimonies', chacun contenant les informations d'un témoignage.
+     *               Renvoie un tableau vide si aucun témoignage correspondant n'est trouvé.
+     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
+    */
+
     //Get Testimonies by moderation status
     public function getModerationTestimonies($isModerated) :array {
         try {
@@ -89,28 +106,14 @@ class TestimoniesRepository extends Database {
         }
     }
 
-    /**
-     * Récupère les témoignages en fonction de leur statut de modération.
-     *
-     * Cette méthode interroge la base de données pour extraire les témoignages qui correspondent
-     * au statut de modération spécifié par le paramètre $isModerated. Elle renvoie une liste 
-     * d'objets 'Testimonies', chacun représentant un témoignage correspondant au critère de modération.
-     * Chaque témoignage inclut des informations telles que le prénom, le nom, le contenu du témoignage,
-     * la note attribuée, le statut de modération, et l'identifiant du témoignage.
-     *
-     * @param bool $isModerated Le statut de modération des témoignages à récupérer. 
-     *                          'True' pour les témoignages modérés, 'False' pour ceux non modérés.
-     * @return array Renvoie un tableau d'objets 'Testimonies', chacun contenant les informations d'un témoignage.
-     *               Renvoie un tableau vide si aucun témoignage correspondant n'est trouvé.
-     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
-     */
+
 
     //Create testimony
     public function addTestimony(Testimonies $testimony) :string {
         try {
 
             $db = $this->getBdd();
-            $req = "INSERT INTO testimonies (first_name, last_name, content, rating, is_moderated) VALUES (:firstName, :lastName, :content, :rating, 0)";
+            $req = "INSERT INTO testimonies (first_name, last_name, content, rating, status) VALUES (:firstName, :lastName, :content, :rating, 'en attente')";
             
             $stmt = $db->prepare($req);
             $stmt->bindValue(":firstName", $testimony->getFirstName() , PDO::PARAM_STR);
