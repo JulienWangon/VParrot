@@ -1,53 +1,66 @@
-import React, { useState} from "react";
-import useGetUnmoderatedTestimonies from "../../hooks/useFetchUnmoderatedTestimonies";
+import React, { useState } from "react";
+
 import TabCardTestimony from "../TabCardTestimony/TabCardTestimony";
 import TestimonyModal from '../../public/TestimonyModal/TestimonyModal';
 
 import './moderationSection.css';
 
 
-const ModerationSection = ( { onTestimonyApproved }) => {
+const ModerationSection = ( { testimonies, onApprove, onReject} ) => {
 
-  const { testimonies, loading } = useGetUnmoderatedTestimonies();
-  const [selectedTestimony, setSelectedTestimony] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTestimony, setSelectedTestimony] = useState(null);
 
-  const handleOpenModal = (testimony) => {
-      setSelectedTestimony(testimony);
-      setIsModalOpen(true);
-  };
+    const handleOpenModal = (testimony) => {
+        setSelectedTestimony(testimony);
+        setIsModalOpen(true);
+    };
 
-  const handleCloseModal = () => {
-      setIsModalOpen(false);
-  };
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedTestimony(null);
+    };
 
-  if (loading) {
-      return <div>Loading...</div>;
-  }
 
-  return (
-    <section className="moderationSection">
-    {testimonies.length > 0 ? (
-        <>
-            <p>Vous avez {testimonies.length} avis en attente de modération.</p>
-            <TabCardTestimony 
-                testimonies={testimonies} 
-                onOpenModal={handleOpenModal} 
-            />
-            {isModalOpen && selectedTestimony && (
-                <TestimonyModal
-                    mode="moderation" 
-                    testimony={selectedTestimony} 
-                    onClose={handleCloseModal}
-                    onApproved={onTestimonyApproved} 
-                />
-            )}
-        </>
-    ) : (
-        <p>Vous n'avez pas d'avis en attente de modération.</p>
-    )}
-</section>
-  );
+    const handleApprove = () => {
+        if(selectedTestimony) {
+            onApprove(selectedTestimony.idTestimony);
+            handleCloseModal();
+        }
+    };
+
+    const handleReject = () => {
+        if(selectedTestimony) {
+            onReject(selectedTestimony.idTestimony)
+            handleCloseModal();
+        }
+    };
+
+    return (
+        <section className="moderationSection">
+
+            {testimonies.length > 0 ? (
+                <>
+                    <p className="validationCount">Vous avez {testimonies.length} avis en attente de modération.</p>
+                    <TabCardTestimony 
+                        testimonies={testimonies} 
+                        onOpenModal={handleOpenModal} 
+                    />
+                    {isModalOpen && selectedTestimony && (
+                        <TestimonyModal
+                            mode="moderation" 
+                            testimony={selectedTestimony} 
+                            onClose={handleCloseModal}
+                            approveThisTestimony={handleApprove}
+                            rejectThisTestimony={handleReject}  
+                        />
+                    )}
+                </>
+        ) : (
+            <p className="validationInfo">Vous n'avez pas d'avis en attente de modération.</p>
+        )}
+        </section>
+    );
 
 }
 
