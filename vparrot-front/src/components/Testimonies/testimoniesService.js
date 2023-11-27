@@ -7,7 +7,7 @@ export const fetchModeratedTestimonies = async () => {
         const response = await instanceAxios.get('/testimonies/moderated');
         if (response.data && response.data.status === 'success') {
 
-            return response.data.data;
+            return response.data.data
         } else {
 
             throw new Error(response.data.message || "Données reçues non valides ou erreur de requête.");
@@ -28,10 +28,10 @@ export const createTestimony = async (dataToSend) => {
     try {
 
         const response = await instanceAxios.post('/testimonies', dataToSend);
-
+     
         if (response.data && response.data.status === 'success') {
 
-            return response.data.data;
+            return response.data;
         } else {
 
             throw new Error(response.data.message || "Erreur inconnue lors de la création du témoignage.")
@@ -133,7 +133,7 @@ export const getUnmoderatedTestimonies = async () => {
         const response = await instanceAxios.get('/testimonies/unmoderated');
         if (response.data && response.data.status === 'success') {
 
-            return response.data;
+            return response.data
         } else {
 
             throw new Error(response.data.message || "Erreur inconnue lors de la demande de liste de témoignage à modérer.")
