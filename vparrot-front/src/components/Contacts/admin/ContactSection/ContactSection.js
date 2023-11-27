@@ -13,7 +13,7 @@ const ContactSection = () => {
       <section className="container mt-4">
             <div className="row row-cols-1 row-cols-md-2 g-4">
                 {contacts.map(contact => (
-                    <div className="col d-flex align-items-stretch">
+                    <div key={contact.idContact} className="col d-flex align-items-stretch">
                         <ContactCard contact={contact} />
                     </div>
                 ))}
