@@ -28,8 +28,38 @@ class TestimoniesController {
 
     //GET all testimonies list
     public function getAllTestimoniesList() {
-        $data = $this->testimoniesRepository->getAllTestimonies();
-        $this->sendResponse($data);
+        try {
+
+            $testimonies = $this->testimoniesRepository->getAllTestimonies();
+
+            if(empty($testimonies)) {
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucuns témoignages trouvés']);
+                return;
+            }
+
+            $sortedTestimonies = [
+                'en attente' => [],
+                'approuvé' => [],
+                'rejeté' => []
+            ];
+
+            foreach ($testimonies as $testimony) {
+                $status = $testimony->getStatus();
+                $sortedTestimonies[$status][] = [
+                    'idTestimony' => $testimony->getIdTestimony(),
+                    'firstName'   => $testimony->getFirstName(),
+                    'lastName'    => $testimony->getLastName(),
+                    'content'     => $testimony->getContent(),
+                    'rating'      => $testimony->getRating(),
+                    'status'      => $status
+                ];
+            }
+
+            $this->sendResponse(['status' => 'success', 'data' => $sortedTestimonies]);
+        } catch (Exception $e) {
+
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
     }
 
 
