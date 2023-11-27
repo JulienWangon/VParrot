@@ -54,58 +54,6 @@ class TestimoniesRepository extends Database {
 
 
 
-    /**
-     * Récupère les témoignages en fonction de leur statut de modération.
-     *
-     * Cette méthode interroge la base de données pour extraire les témoignages qui correspondent
-     * au statut de modération spécifié par le paramètre $isModerated. Elle renvoie une liste 
-     * d'objets 'Testimonies', chacun représentant un témoignage correspondant au critère de modération.
-     * Chaque témoignage inclut des informations telles que le prénom, le nom, le contenu du témoignage,
-     * la note attribuée, le statut de modération, et l'identifiant du témoignage.
-     *
-     * @param bool $isModerated Le statut de modération des témoignages à récupérer. 
-     *                          'True' pour les témoignages modérés, 'False' pour ceux non modérés.
-     * @return array Renvoie un tableau d'objets 'Testimonies', chacun contenant les informations d'un témoignage.
-     *               Renvoie un tableau vide si aucun témoignage correspondant n'est trouvé.
-     * @throws PDOException Si une erreur survient lors de la requête à la base de données.
-    */
-
-    //Get Testimonies by moderation status
-    public function getModerationTestimonies($isModerated) :array {
-        try {
-
-            $db = $this->getBdd();
-            $req = "SELECT * FROM testimonies WHERE is_moderated = :isModerated";
-
-            $stmt = $db->prepare($req);
-            $stmt->bindValue(":isModerated", $isModerated, PDO::PARAM_BOOL);
-            $stmt->execute();
-    
-            $testimoniesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            $testimonies = [];
-            foreach ($testimoniesData as $testimonyData) {
-
-                $testimony = new Testimonies(      
-                    $testimonyData['first_name'],
-                    $testimonyData['last_name'],
-                    $testimonyData['rating'],
-                    $testimonyData['content'],  
-                    $testimonyData['is_moderated'],
-                    $testimonyData['id_testimony'] ?? null
-                );
-
-                $testimonies[] = $testimony;     
-            }
-
-            return $testimonies;
-              
-        } catch(PDOException $e) {
-
-            $this->handleException($e, "extraction des avis clients validés");
-        }
-    }
-
 
 
     //Create testimony
@@ -146,25 +94,24 @@ class TestimoniesRepository extends Database {
      * @throws PDOException Si une erreur survient lors de la requête à la base de données.
      */
 
+
     //Approve testimony
     public function approveTestimony(Testimonies $testimony) : bool {
+    try {
+        $db = $this->getBdd();
+        // Mise à jour de la requête pour changer le statut
+        $req = "UPDATE testimonies SET status = 'approuvé' WHERE id_testimony = :id";
 
-        try {
+        $stmt = $db->prepare($req);
+        $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
+        $stmt->execute();
 
-            $db= $this->getBdd();
-            $req = "UPDATE testimonies SET is_moderated = 1 WHERE id_testimony = :id";
+        return $stmt->rowCount() > 0;
 
-            $stmt = $db->prepare($req);
-            $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->rowCount() > 0;
-
-        } catch(PDOException $e) {
-
-            $this->handleException($e, "approbation du témoignage");
-        }
+    } catch(PDOException $e) {
+        $this->handleException($e, "approbation du témoignage");
     }
+}
 
     /**
      * Rejette un témoignage en le transférant dans une table spécifique des témoignages rejetés.
@@ -183,40 +130,19 @@ class TestimoniesRepository extends Database {
 
     //Rejecte Testimony
     public function rejectTestimony(Testimonies $testimony) : bool {
-
-        $db = $this->getBdd();
-
         try {
-            
-            //Start transaction
-            $db->beginTransaction();
-
-            //Copy testimony to the rejected_testimonies table
-            $req = "INSERT INTO rejected_testimonies (id_testimony, first_name, last_name, content, rating)
-                    SELECT id_testimony, first_name, last_name, content, rating  
-                    FROM testimonies 
-                    WHERE id_testimony = :id";
-            
-            $stmt= $db->prepare($req);
+            $db = $this->getBdd();
+    
+            // Mise à jour du statut du témoignage à 'rejeté'
+            $req = "UPDATE testimonies SET status = 'rejeté' WHERE id_testimony = :id";
+    
+            $stmt = $db->prepare($req);
             $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
             $stmt->execute();
-
-            //Delete testimony in testimonies table
-            $reqToDelete = "DELETE FROM testimonies WHERE id_testimony = :id";
-            $stmtToDelete = $db->prepare($reqToDelete);
-            $stmtToDelete->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
-            $stmtToDelete->execute();
-
-            //Transaction validation
-            $db->commit();
-
+    
             return $stmt->rowCount() > 0;
-
-        } catch (PDOException $e) {
-
-            //Canceling transaction if an error occurs
-            $db->rollBack();
-
+    
+        } catch(PDOException $e) {
             $this->handleException($e, "rejet du témoignage");
         }
     }
@@ -290,33 +216,36 @@ class TestimoniesRepository extends Database {
     */
 
     public function findTestimonyById($idTestimony) {
-        error_log("findTestimonyById called with id: " . $idTestimony);
-        $db = $this->getBdd();
-        $req = "SELECT * FROM testimonies WHERE id_testimony = :id";
-
-        $stmt = $db->prepare($req);
-        $stmt->bindValue(":id", $idTestimony, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $testimonyData = $stmt->fetch(PDO::FETCH_ASSOC);
-        error_log("Query result: " . print_r($testimonyData, true));
-        error_log("testimonyData before if: " . print_r($testimonyData, true));
-        if($testimonyData) {
-
-            $testimony = new Testimonies();
-            $testimony->setIdTestimony($testimonyData['id_testimony']);
-            $testimony->setFirstName($testimonyData['first_name']);
-            $testimony->setLastName($testimonyData['last_name']);
-            $testimony->setContent($testimonyData['content']);
-            $testimony->setRating($testimonyData['rating']);
-            $testimony->setIsModerated($testimonyData['is_moderated']);
-            error_log("Returning Testimonies object");
-            return $testimony;
-        } else {
-            error_log("No testimony found, returning false");
+        try {
+            $db = $this->getBdd();
+            $req = "SELECT * FROM testimonies WHERE id_testimony = :id";
+    
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":id", $idTestimony, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $testimonyData = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($testimonyData) {
+                $testimony = new Testimonies();
+                $testimony->setIdTestimony($testimonyData['id_testimony']);
+                $testimony->setFirstName($testimonyData['first_name']);
+                $testimony->setLastName($testimonyData['last_name']);
+                $testimony->setContent($testimonyData['content']);
+                $testimony->setRating($testimonyData['rating']);
+                $testimony->setStatus($testimonyData['status']); // Assurez-vous que c'est 'status', pas 'is_moderated'
+    
+                return $testimony;
+            } else {
+                // Gérer le cas où aucun témoignage n'est trouvé
+                return null; // ou toute autre valeur ou action indiquant qu'aucun témoignage n'a été trouvé
+            }
+    
+        } catch(PDOException $e) {
+            $this->handleException($e, "Recherche d'un témoignage par ID");
+            // Retourner false ou null selon la convention de votre application en cas d'erreur
+            return false;
         }
-
-        return false;
     }
 
 
