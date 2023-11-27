@@ -119,7 +119,8 @@ class TestimoniesRepository extends Database {
             $stmt->bindValue(":rating", $testimony->getRating() , PDO::PARAM_INT);
             $stmt->execute();
 
-            return "Témoignage créé avec succès, en attente de modération, si votre témoignage n'est pas validé il sera supprimé";
+            $lastInsertId = $db->lastInsertId();
+            return $lastInsertId;
 
         } catch(PDOException $e) {
 
@@ -148,7 +149,7 @@ class TestimoniesRepository extends Database {
         try {
 
             $db= $this->getBdd();
-            $req = "UPDATE testimonies SET is_moderated = true WHERE id_testimony = :id";
+            $req = "UPDATE testimonies SET is_moderated = 1 WHERE id_testimony = :id";
 
             $stmt = $db->prepare($req);
             $stmt->bindValue(":id", $testimony->getIdTestimony(), PDO::PARAM_INT);
@@ -286,7 +287,7 @@ class TestimoniesRepository extends Database {
     */
 
     public function findTestimonyById($idTestimony) {
-
+        error_log("findTestimonyById called with id: " . $idTestimony);
         $db = $this->getBdd();
         $req = "SELECT * FROM testimonies WHERE id_testimony = :id";
 
@@ -295,7 +296,8 @@ class TestimoniesRepository extends Database {
         $stmt->execute();
 
         $testimonyData = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        error_log("Query result: " . print_r($testimonyData, true));
+        error_log("testimonyData before if: " . print_r($testimonyData, true));
         if($testimonyData) {
 
             $testimony = new Testimonies();
@@ -305,9 +307,13 @@ class TestimoniesRepository extends Database {
             $testimony->setContent($testimonyData['content']);
             $testimony->setRating($testimonyData['rating']);
             $testimony->setIsModerated($testimonyData['is_moderated']);
-
+            error_log("Returning Testimonies object");
             return $testimony;
+        } else {
+            error_log("No testimony found, returning false");
         }
+
+        return false;
     }
 
 
