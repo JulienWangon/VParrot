@@ -24,6 +24,7 @@ const useFetchUpdateSchedule = () => {
             //Appelle de la focntion du service pour effectuer la mise à jour de l'horaire
             const response = await fetchUpdateSchedules(idOpeningDay, scheduleData, csrfToken);
             //Affichage message de success via le context de message
+            console.log("Response from API:", response);
             showMessage({ data: response }, 'success');
             return response;
         } catch (error) {
