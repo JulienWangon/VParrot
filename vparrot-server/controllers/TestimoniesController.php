@@ -64,54 +64,6 @@ class TestimoniesController {
 
 
     /**
-     * Récupère les témoignages en fonction de leur statut de modération.
-     *
-     * Cette méthode interroge la base de données pour obtenir les témoignages
-     * qui ont un statut de modération spécifique (modéré ou non modéré).
-     * Elle renvoie les témoignages sous forme d'un tableau formaté.
-     *
-     * @param bool $isModerated Le statut de modération des témoignages à récupérer.
-     *                          `true` pour les témoignages modérés, `false` pour les non modérés.
-     * @return void Renvoie une réponse HTTP au client avec les données des témoignages
-     *               ou un message d'erreur en cas d'exception.
-     */
-
-    //GET testimonies by status
-    public function getTestimoniesByStatus($isModerated) {
-        try {
-            $testimonies = $this->testimoniesRepository->getModerationTestimonies($isModerated);
-
-            $testimoniesArray = array_map(function ($testimony) {
-                return [
-                    'idTestimony' => $testimony->getIdTestimony(),
-                    'firstName' => $testimony->getFirstName(),
-                    'lastName' => $testimony->getLastName(),
-                    'content' => $testimony->getContent(),
-                    'rating' => $testimony->getRating(),
-                    'isModerated' => $testimony->getIsModerated()
-                ];
-            }, $testimonies);
-
-            $this->sendResponse(['status' => 'success', 'data' => $testimoniesArray]);
-            
-        } catch (Exception $e) {
-            
-            $this->sendResponse(['error' => $e->getMessage()], 400);        
-        }
-    }
-
-    //Get all moderated testimonies
-    public function getUnmoderatedTestimoniesList() {
-        $this->getTestimoniesByStatus(0);
-    }
-
-    //Get al unmoderated testimonies
-    public function getModeratedTestimoniesList() {
-        $this->getTestimoniesByStatus(1);
-    }
-
-    
-    /**
      * Crée un nouveau témoignage à partir des données reçues via une requête POST.
      *
      * Cette méthode traite les données JSON envoyées par le client, 
@@ -226,6 +178,21 @@ class TestimoniesController {
             return;
         }
 
+        // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401); // ou tout autre code approprié
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin' ou 'employé'
+        if ($userData['role'] !== 'admin' && $userData['role'] !== 'employé') {
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
+            return;
+        }
+
+
          // Récupère les données envoyées
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -252,14 +219,10 @@ class TestimoniesController {
             return;
         }
 
-       
-
-        // Récupère le témoignage et met à jour son statut de modération.
-       
+        // Récupère le témoignage et met à jour son statut de modération. 
         $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
 
         // Vérifiez si $testimony est une instance de Testimonies
-
         if ($testimony === null) {
             $this->sendResponse(['status' => 'error', 'message' => 'Témoignage non trouvé'], 404);
             return;
@@ -285,6 +248,20 @@ class TestimoniesController {
         //Vérifie si la bonne méthode HTTP est utilisée (PUT)
         if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
             $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+            return;
+        }
+
+        // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401); // ou tout autre code approprié
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin' ou 'employé'
+        if ($userData['role'] !== 'admin' && $userData['role'] !== 'employé') {
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
             return;
         }
 
@@ -356,6 +333,20 @@ class TestimoniesController {
             return;
         }
 
+        // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401); // ou tout autre code approprié
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin' ou 'employé'
+        if ($userData['role'] !== 'admin' && $userData['role'] !== 'employé') {
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
+            return;
+        }
+
          // Récupère les données envoyées
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -394,9 +385,7 @@ class TestimoniesController {
 
         try {
 
-           
-
-            // Tente de rejet le témoignage et renvoie une réponse appropriée.
+            // Tente de rejeter le témoignage et renvoie une réponse appropriée.
            if($this->testimoniesRepository->deleteTestimony($testimony)) {
 
                $this->sendResponse(['status' => 'success', 'message' => 'Témoignage supprimé avec success']);
