@@ -11,7 +11,7 @@ export const ContactModalProvider = ({ children }) => {
   const [modalData, setModalData] = useState({});
 
   const openContactModal = (data = {}) => {
-    console.log("Mise à jour de modalData dans openContactModal:", data);
+   
       setModalData(data);
       setIsContactModalOpen(true);
       setIsAdModalOpen(false);
