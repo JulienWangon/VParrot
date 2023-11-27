@@ -13,29 +13,29 @@ const useFetchRejectedTestimonies = () => {
   const [error, setError] = useState(null);
 
 
-  useEffect(() => {
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const rejectedTestimonies = await getRejectedTestimonies();
+            
+            setTestimonies(rejectedTestimonies);
+    
+        } catch (error) {
+            setError(error.message || "Une erreur est survenue lors de la récupération des témoignages.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      // Fonction asynchrone pour récupérer les témoignages rejetés.
-      const fetchData = async () => {
+    useEffect(() => {
+        fetchData();
+        
+    }, []);
 
-          try {
-              //appelle de la fonction du service pour récupérer les avis lcient rejeté
-              const rejectedTestimonies = await getRejectedTestimonies();
+   
 
-              //Mise a jour de l'atat avec les avis client récupérés
-              setTestimonies(rejectedTestimonies);
-          } catch (error) {
-              // En cas d'erreur, mise à jour de l'état d'erreur avec le message d'erreur.
-              setError(error.message || "Une erreur est survenue lors de la récupération des témoignages. ")
-          } finally {
-              //Désactivation de l'état de chargement
-              setLoading(false);
-          }
-      };
 
-      //Appelle de la focntion fetchData au montage du composant
-      fetchData();
-  }, []);
+
   //Retourne les avis client rejeté l'état de chargement et les erreurs pour une utilisation dans autre composants
   return { testimonies, loading, error };   
 }
