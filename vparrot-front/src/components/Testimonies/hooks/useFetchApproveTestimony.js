@@ -21,16 +21,19 @@ const useFetchApproveTestimony = () => {
     const { csrfToken } = useAuth();
 
     //Focntion asynchrone pour approuver un avis client
-    const approveThisTestimony = async (idTestimony) => {
-
+    const approveThisTestimony = async (idTestimony, onSuccess) => {
+     
         //Activation de l'indiczteur de chargement
         setIsLoading(true);
 
         try {
             //Appelle a la fonction du service pour approuver l avis client
             const response = await approveTestimony(idTestimony, csrfToken);
+          
             //Affichage du message de succès via le context message
             showMessage({ data: response }, 'success');
+            onSuccess();
+
             return response;
         } catch (error) {
             //Affichage du message d'erreur et propagation de l'erreur
