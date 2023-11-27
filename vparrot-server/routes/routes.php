@@ -12,7 +12,6 @@ header("Access-Control-Allow-Credentials: true");
 
 
 //require controllers
-require_once './vparrot-server/controllers/RejectedTestimoniesController.php';
 require_once './vparrot-server/controllers/CarsController.php';
 require_once './vparrot-server/controllers/ServicesController.php';
 require_once './vparrot-server/controllers/SchedulesController.php';
@@ -50,7 +49,6 @@ $servicesRepo = new ServicesRepository();
 $carRepo = new CarsRepository();
 $schedulesRepo = new SchedulesRepository();
 $testimoniesRepo = new TestimoniesRepository();
-$rejectedTestimoniesRepo = new RejectedTestimoniesRepository();
 
 //Instanciation du service d email
 $emailService = new EmailService();
@@ -66,7 +64,6 @@ $controllers = [
     'cars' => new CarsController($carRepo, $validator),
     'services' => new ServicesController($servicesRepo, $validator),
     'schedules' => new SchedulesController($schedulesRepo, $validator, $authModel),
-    'rejectedTestimonies' => new RejectedTestimoniesController($rejectedTestimoniesRepo),
     'testimonies' => new TestimoniesController($testimoniesRepo, $validator, $authModel),
     'users' => new UsersController($usersRepo, $validator, $emailService, $authModel),
     'auth' => new AuthController($validator, $authModel, $usersRepo),
@@ -86,7 +83,6 @@ $routes = [
         '/vparrot/cars/briefs' => [$controllers['cars'], 'getCarBriefDetails'],
         '/vparrot/services' => [$controllers['services'], 'getAllServicesListGroupedByType' ],
         '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
-        '/vparrot/testimonies/rejected' => [$controllers['rejectedTestimonies'], 'getRejectedTestimonies'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/testimonies/moderated' => [$controllers['testimonies'], 'getModeratedTestimoniesList'],
         '/vparrot/testimonies/unmoderated' => [$controllers['testimonies'], 'getUnmoderatedTestimoniesList'],
