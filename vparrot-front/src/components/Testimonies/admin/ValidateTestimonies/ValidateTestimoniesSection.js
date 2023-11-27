@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
-import useFetchModeratedTestimonies from '../../hooks/useFetchModeratedTestimonies';
+
 import TestimonyTable from '../TestimonyTab/TestimonyTable';
 import TestimonyModal from '../../public/TestimonyModal/TestimonyModal';
 
-const ValidateTestimoniesSection = () => {
+import './validateTestimoniesSection.css';
 
-    const { testimonies, loading } = useFetchModeratedTestimonies();
+const ValidateTestimoniesSection = ({ testimonies }) => {
+
+  
     const [selectedTestimony, setSelectedTestimony] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = (testimony) => {
-
         setSelectedTestimony(testimony);
         setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
+        setSelectedTestimony(null)
     }
 
-    if (loading) {
-        return <div>Loading...</div>
-    }
-
+    
     return (
         <section className="validateTestimonies">
          {testimonies.length > 0 ? (
         <>
-            <p>Vous avez {testimonies.length} avis publiés sur votre page d'acceuil.</p>
+            <p className="validationCount">Vous avez <strong>{testimonies.length}</strong> avis publiés sur votre page d'acceuil.</p>
             <TestimonyTable
                 testimonies={testimonies} 
                 onOpenModal={handleOpenModal} 
@@ -41,7 +40,7 @@ const ValidateTestimoniesSection = () => {
             )}
         </>
     ) : (
-        <p>Vous n'avez pas d'avis publiés actuellement.</p>
+        <p className="validationInfo">Vous n'avez pas d'avis publiés actuellement.</p>
     )}
         
     </section>
