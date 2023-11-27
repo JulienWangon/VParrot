@@ -21,10 +21,14 @@ const useFetchCreateTestimony = () => {
             //Appelle de la focntion du service pour créer un avis client
             const response = await createTestimony(dataToSend);
             
-            //Affiche le message de succès si réussite
-            showMessage({ data: response }, 'success');
-            return response;
-
+            if (response && response.status === 'success') {
+                // Extraction de l'objet de l'avis et renvoi
+                const newTestimonyData = response.data.data;
+                showMessage({ data: response }, 'success');
+                return newTestimonyData;
+            } else {
+                throw new Error(response.data.message || "Erreur lors de la création de l'avis.");
+            }
         } catch (error) {
             //Affiche l'erreur et propagation de l erreur
             if (error.response && error.response.data) {
