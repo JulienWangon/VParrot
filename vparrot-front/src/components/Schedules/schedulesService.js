@@ -36,7 +36,7 @@ export const fetchUpdateSchedules = async (idOpeningDay, scheduleData, csrfToken
         const response = await instanceAxios.put(`/schedules/${idOpeningDay}/update`, requestBody)
         if (response.data && response.data.status === 'success') {
 
-          return response.data.data;
+          return response.data;
         } else {
 
           throw new Error(response.data.message || "Données reçues non valides ou erreur de requête.");
