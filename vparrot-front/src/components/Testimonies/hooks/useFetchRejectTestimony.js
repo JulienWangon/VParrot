@@ -16,7 +16,7 @@ const useFetchRejectTestimony = () => {
     const { csrfToken } = useAuth();
 
     //foction asynchrone pour rejeter u navis client
-    const rejectThisTestimony = async (idTestimony) => {
+    const rejectThisTestimony = async (idTestimony, onSuccess) => {
         
         //Activiation de l'indicateur de chargement
         setIsLoading(true);
@@ -26,6 +26,9 @@ const useFetchRejectTestimony = () => {
             const response = await rejectTestimony(idTestimony, csrfToken);
             //Affichage du message de succès
             showMessage({ data: response }, 'success');
+            console.log('Rejected Testimony Response:', response); 
+            onSuccess();
+
             return response;
         } catch (error) {
             //Affichage de l'erreur et propagation
