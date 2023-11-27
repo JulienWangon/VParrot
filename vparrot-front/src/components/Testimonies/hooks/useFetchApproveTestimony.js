@@ -23,7 +23,7 @@ const useFetchApproveTestimony = () => {
     //Focntion asynchrone pour approuver un avis client
     const approveThisTestimony = async (idTestimony, onSuccess) => {
      
-        //Activation de l'indiczteur de chargement
+        //Activation de l'indicateur de chargement
         setIsLoading(true);
 
         try {
