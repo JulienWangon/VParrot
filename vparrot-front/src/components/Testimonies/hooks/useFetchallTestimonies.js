@@ -41,7 +41,7 @@ const useFetchAllTestimonies = () => {
         fetchData();
     }, [showMessage]);
 
-    return { testimonies, isLoading};
+    return { testimonies, setTestimonies, isLoading};
 }
 
 export default useFetchAllTestimonies;
