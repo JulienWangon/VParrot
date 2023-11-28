@@ -19,7 +19,21 @@ const useFetchAllTestimonies = () => {
             try {
                 
                 const response = await fetchAllTestimonies();
-                setTestimonies(response);
+               
+                if (response) {
+
+                    if (response && response['en attente']) {
+                        setTestimonies(response); // Mise à jour de l'état avec les données
+                    } else {
+                        // Gérer le cas où la structure de la réponse n'est pas celle attendue
+                        showMessage({ message: "La récupération des témoignages a échoué" }, 'error');
+                    }
+                    
+                } else {
+                    // Gérer le cas où la réponse n'est pas un succès
+                    showMessage({ message: "La récupération des témoignages a échoué" }, 'error');
+                }
+                
   
             } catch (error) {
 
