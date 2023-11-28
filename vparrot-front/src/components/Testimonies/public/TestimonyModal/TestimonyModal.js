@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import useFetchCreateTestimony from '../../hooks/useFetchCreateTestimony';
+import { useTestimonies } from '../../../../contexts/TestimoniesContext';
 
 //import de google recaptcha
 import ReCAPTCHA from 'react-google-recaptcha';
 //Import utilitaire pour validation des entrées utilisateur
-import { validateEmail, validateRating, validateComment, validateName } from '../../../../_utils/validation';
+import { validateRating, validateComment, validateName } from '../../../../_utils/validation';
 
 //import des composants 
 import TextInput from '../../../common/Input/TextInput/TextInput';
@@ -19,9 +19,10 @@ import TestimonyStyle from './testimonyModal.module.css';
 //Clé API pour google recaptcha
 const reCaptchaKey = "6Le8ugwpAAAAAGo_7BMdYwZ_gZfNGLLXcCqb_TXC";
 
-const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, rejectThisTestimony, onTestimonyCreated }) => {
+const TestimonyModal = ({ onClose, mode, testimony }) => {
 
-    const { createNewTestimony, loading } = useFetchCreateTestimony();
+    const { addTestimony, approveTestimony, rejectTestimony, deleteTestimony } = useTestimonies();
+    
 
     //Etat local pour stocker les données de l'avis client
     const [testimonyData, setTestimonyData] = useState({
@@ -31,12 +32,14 @@ const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, reject
         rating: ""
          })
     
+
     //Etat pour stocker les erreurs de validations des champs
     const [ errors, setErrors] = useState({});
 
     //Etat pour la valeur du recaptcha
     const [captchaValue, setCaptchaValue] = useState(null);
     
+
     //Remplissage des données en mode modération
     useEffect(() => {
       if (mode === "moderation" && testimony) {
@@ -59,6 +62,7 @@ const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, reject
           [name]: value,
         });
 
+
         //Validations des entrées de champs en fonction des régles de validation
         const newErrors = { ...errors };
   
@@ -67,9 +71,6 @@ const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, reject
           case 'firstName':
               newErrors[name] = validateName(value)
               break;
-          case 'email':
-            newErrors.email = validateEmail(value);
-            break;
           case 'rating':
             newErrors.rating = validateRating(value);
             break;
@@ -83,48 +84,61 @@ const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, reject
         setErrors(newErrors);     
     };
 
+
     //Vérification de l'absence d'erreurs
     const hasNoErrors = () => {
       return Object.values(errors).every(error => !error);
     };
+
 
     //Vérifie si tout les champs sont rempli
     const areAllFieldsFilled = () => {
       return Object.values(testimonyData).every(value => value !== '');
     };
 
+
     //Varification si le formulaire est pret a etre envoyer
     const isFormReadyForSubmission = () =>{
       return hasNoErrors() && testimonyData &&  captchaValue;
     }
 
+
     //Gestion de l approbation d'un avis client
     const handleApprove = async () => {
       if (mode === "moderation") {
-          await approveThisTestimony(testimony.idTestimony);
+          approveTestimony(testimony.idTestimony);
           onClose();
       }
     };
 
     const handleReject = async () => {
       if (mode === "moderation") {
-          await rejectThisTestimony(testimony.idTestimony);
+          rejectTestimony(testimony.idTestimony);
           onClose();
       }
     };
 
+
     //soumission du formulaire dans le cas de la création d'un avis client
     const handleSubmit = async (e) => {
       e.preventDefault();
+
       if (mode === "creation" && areAllFieldsFilled() && hasNoErrors()) {
           const dataToSend = { ...testimonyData, recaptchaResponse: captchaValue };
-          const response = await createNewTestimony(dataToSend);
-          if (response && response.status === 'success') {
-            onTestimonyCreated(response.data);
-            onClose();
-        }   
+          addTestimony(dataToSend);
+          onClose();  
       }
-  };
+    };
+
+
+    const handleDelete = (testimonyId) => {
+      
+      deleteTestimony(testimonyId);
+      onClose();
+    };
+
+
+
 
     //Tableau d'option pour le choix de la note
     const ratingOptions = [
@@ -137,7 +151,7 @@ const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, reject
     ];
 
 
-    if(loading) return <div>Chargement...</div>
+    
 
     return (
 
@@ -195,9 +209,12 @@ const TestimonyModal = ({ onClose, mode, testimony, approveThisTestimony, reject
                     )}
                     {mode === "moderation" && (
                         <>
-                            <Button onClick={handleApprove}>Approuver</Button>
-                            <Button onClick={handleReject}>Rejeter</Button>
+                            <Button onClick={handleApprove} colorStyle="whiteBtn">Approuver</Button>
+                            <Button onClick={handleReject} colorStyle="whiteBtn">Rejeter</Button>
                         </>
+                    )}
+                    {mode === "consultation" && testimony.status === "rejeté" && (
+                        <Button onClick={handleDelete} colorStyle="whiteBtn">Supprimer</Button>
                     )}
                     <Button
                         type="button"
