@@ -27,7 +27,6 @@ const useFetchRejectTestimony = () => {
             //Affichage du message de succès
             showMessage({ data: response }, 'success');
             console.log('Rejected Testimony Response:', response); 
-            onSuccess();
 
             return response;
         } catch (error) {
