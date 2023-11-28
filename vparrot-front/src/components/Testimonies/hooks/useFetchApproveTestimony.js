@@ -32,7 +32,7 @@ const useFetchApproveTestimony = () => {
           
             //Affichage du message de succès via le context message
             showMessage({ data: response }, 'success');
-            onSuccess();
+            
 
             return response;
         } catch (error) {
