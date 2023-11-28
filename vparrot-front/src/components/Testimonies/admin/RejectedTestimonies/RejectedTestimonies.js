@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 
+import { useTestimonies } from '../../../../contexts/TestimoniesContext';
+
 import TestimonyTable from '../TestimonyTab/TestimonyTable';
 import TestimonyModal from '../../public/TestimonyModal/TestimonyModal';
 
-const RejectedTestimoniesSection = ({ testimonies }) => {
+const RejectedTestimoniesSection = () => {
+
+    const { testimonies } = useTestimonies();
+    const rejectedTestimonies = testimonies['rejeté'];
 
     const [selectedTestimony, setSelectedTestimony] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,15 +27,16 @@ const RejectedTestimoniesSection = ({ testimonies }) => {
 
     return (
       <section className="validateTestimonies">
-       {testimonies.length > 0 ? (
+       {rejectedTestimonies.length > 0 ? (
       <>
-          <p className="validationCount">Vous avez {testimonies.length} avis rejetés actuellement.</p>
+          <p className="validationCount">Vous avez {rejectedTestimonies.length} avis rejetés actuellement.</p>
           <TestimonyTable
-              testimonies={testimonies} 
+              testimonies={rejectedTestimonies} 
               onOpenModal={handleOpenModal} 
           />
           {isModalOpen && selectedTestimony && (
               <TestimonyModal
+                  mode="moderation"
                   testimony={selectedTestimony} 
                   onClose={handleCloseModal} 
               />
