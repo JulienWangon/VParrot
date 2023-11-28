@@ -3,8 +3,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-//import du hook pour récupérer les avis clients modérés
-import useFetchModeratedTestimonies from '../../../hooks/useFetchModeratedTestimonies';
+import { useTestimonies } from '../../../../../contexts/TestimoniesContext';
 
 import TestimonyCard from '../TestimonyCard/TestimonyCard';
 import TestimonyModal from '../../TestimonyModal/TestimonyModal';
@@ -18,17 +17,12 @@ import './testimoniesSlider.css';
 
 const TestimoniesSlider = () => {
 
-    //récupération des avis clients de l"tat de chargemnt et des erreurs
-    const { testimonies, loading, error } = useFetchModeratedTestimonies();
+    const { testimonies } = useTestimonies();
+    const approvedTestimonies = testimonies['approuvé'];
   
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    //Affiche le chargement des données
-    if (loading) return <div>Loading...</div>
-
-    //Affiche l'erreur si il y en a une
-    if (error) return <div errorContainer>Erreur: {error}</div>
-
+  
 
     //configuration du carrousel
     const settings = {
@@ -110,7 +104,7 @@ const TestimoniesSlider = () => {
     <>
     <Slider {...settings}>
 
-        {testimonies.map((testimony) => (
+        {approvedTestimonies.map((testimony) => (
             <div key={testimony.idTestimony}>
                 <TestimonyCard {...testimony} />
             </div>
