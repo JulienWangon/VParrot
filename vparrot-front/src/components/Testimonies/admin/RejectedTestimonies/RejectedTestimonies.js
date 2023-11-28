@@ -9,6 +9,7 @@ const RejectedTestimoniesSection = ({ testimonies }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = (testimony) => {
+        console.log("Avis sélectionné :", testimony);
         setSelectedTestimony(testimony);
         setIsModalOpen(true);
     };
@@ -30,7 +31,6 @@ const RejectedTestimoniesSection = ({ testimonies }) => {
           />
           {isModalOpen && selectedTestimony && (
               <TestimonyModal
-                  mode="consultation" 
                   testimony={selectedTestimony} 
                   onClose={handleCloseModal} 
               />
