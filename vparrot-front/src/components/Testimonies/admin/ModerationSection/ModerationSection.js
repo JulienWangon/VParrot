@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 
+import { useTestimonies } from '../../../../contexts/TestimoniesContext';
+
 import TabCardTestimony from "../TabCardTestimony/TabCardTestimony";
 import TestimonyModal from '../../public/TestimonyModal/TestimonyModal';
 
 import './moderationSection.css';
 
 
-const ModerationSection = ( { testimonies, onApprove, onReject} ) => {
+const ModerationSection = () => {
+
+    const { testimonies, approveTestimony, rejectTestimony } = useTestimonies();
+    const enAttenteTestimonies = testimonies['en attente'];
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTestimony, setSelectedTestimony] = useState(null);
@@ -24,14 +29,14 @@ const ModerationSection = ( { testimonies, onApprove, onReject} ) => {
 
     const handleApprove = () => {
         if(selectedTestimony) {
-            onApprove(selectedTestimony.idTestimony);
+            approveTestimony(selectedTestimony.idTestimony);
             handleCloseModal();
         }
     };
 
     const handleReject = () => {
         if(selectedTestimony) {
-            onReject(selectedTestimony.idTestimony)
+            rejectTestimony(selectedTestimony.idTestimony);
             handleCloseModal();
         }
     };
@@ -39,11 +44,11 @@ const ModerationSection = ( { testimonies, onApprove, onReject} ) => {
     return (
         <section className="moderationSection">
 
-            {testimonies.length > 0 ? (
+            {enAttenteTestimonies.length > 0 ? (
                 <>
-                    <p className="validationCount">Vous avez {testimonies.length} avis en attente de modération.</p>
+                    <p className="validationCount">Vous avez {enAttenteTestimonies.length} avis en attente de modération.</p>
                     <TabCardTestimony 
-                        testimonies={testimonies} 
+                        testimonies={enAttenteTestimonies} 
                         onOpenModal={handleOpenModal} 
                     />
                     {isModalOpen && selectedTestimony && (
