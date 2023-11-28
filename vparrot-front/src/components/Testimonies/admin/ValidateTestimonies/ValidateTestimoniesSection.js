@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 
+import { useTestimonies } from '../../../../contexts/TestimoniesContext';
+
 import TestimonyTable from '../TestimonyTab/TestimonyTable';
 import TestimonyModal from '../../public/TestimonyModal/TestimonyModal';
 
 import './validateTestimoniesSection.css';
 
-const ValidateTestimoniesSection = ({ testimonies }) => {
+const ValidateTestimoniesSection = () => {
 
-  
-    const [selectedTestimony, setSelectedTestimony] = useState(null);
+    const { testimonies } = useTestimonies();
+    const approvedTestimonies = testimonies['approuvé'];
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTestimony, setSelectedTestimony] = useState(null);
 
     const handleOpenModal = (testimony) => {
         setSelectedTestimony(testimony);
@@ -18,26 +22,24 @@ const ValidateTestimoniesSection = ({ testimonies }) => {
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setSelectedTestimony(null)
-    }
+        setSelectedTestimony(null);
+    };
 
-    
     return (
         <section className="validateTestimonies">
-         {testimonies.length > 0 ? (
+         {approvedTestimonies.length > 0 ? (
         <>
-            <p className="validationCount">Vous avez <strong>{testimonies.length}</strong> avis publiés sur votre page d'acceuil.</p>
-            <TestimonyTable
-                testimonies={testimonies} 
-                onOpenModal={handleOpenModal} 
-            />
+            <p className="validationCount">Vous avez <strong>{approvedTestimonies.length}</strong> avis publiés sur votre page d'acceuil.</p>
+            <TestimonyTable testimonies={approvedTestimonies} onOpenModal={handleOpenModal}/>
+        
             {isModalOpen && selectedTestimony && (
-                <TestimonyModal
-                    mode="moderation" 
-                    testimony={selectedTestimony} 
-                    onClose={handleCloseModal} 
-                />
-            )}
+                        <TestimonyModal
+                            mode="moderation" 
+                            testimony={selectedTestimony} 
+                            onClose={handleCloseModal}
+                        />
+                    )}
+        
         </>
     ) : (
         <p className="validationInfo">Vous n'avez pas d'avis publiés actuellement.</p>
