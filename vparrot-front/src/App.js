@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { MessageProvider } from './contexts/MessagesContext';
 import { ContactModalProvider } from './contexts/ContactModalContext';
+import { TestimoniesProvider } from './contexts/TestimoniesContext';
+
 import ProtectedRoute from './_utils/ProtectedRoute';
 
 import ContactModal from './components/Contacts/ContactModal/ContactModal';
@@ -28,6 +30,7 @@ import ResetPassword from './components/admin/ResetPassword/ResetPassword';
 import ContactManager from './pages/admin/ContactManager/ContactManager';
 
 
+
 function App() {
   return (
     <div className="App">
@@ -42,7 +45,13 @@ function App() {
 
                             <Route index element={<Home/>}/>
 
-                            <Route path="/accueil" element={<Home/>}/>
+                            <Route path="/accueil" element={
+                            
+                                <TestimoniesProvider>
+                                    <Home/>
+                                </TestimoniesProvider>
+                            }/>
+
                             <Route path="/entretiens" element={<MaintenanceServices/>}/>
                             <Route path="/reparations" element={<RepairServices/>}/>
                             <Route path="/ventes" element={<SalesArea/>}/>
@@ -68,7 +77,9 @@ function App() {
                             path="/avisclients" 
                             element={
                                 <ProtectedRoute>
-                                    <TestimoniesManager/>
+                                    <TestimoniesProvider>
+                                        <TestimoniesManager/>
+                                    </TestimoniesProvider>
                                 </ProtectedRoute>
                             }
                             />
