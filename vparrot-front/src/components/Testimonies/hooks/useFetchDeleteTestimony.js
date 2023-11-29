@@ -6,18 +6,24 @@ import { deleteTestimony } from '../testimoniesService';
 //import du context de message pour afficher des notification
 import { useMessage } from '../../../contexts/MessagesContext';
 
+//Import context d'authentification pour récupérer des données utilisateurs;
+import { useAuth} from '../../../contexts/AuthContext';
+
+
 const useFetchDeleteTestimony = () => {
 
     const [isLoading, setIsLoading] = useState(false);
+    ///Récupération du token csrf depuis le context d'authentification
+    const { csrfToken } = useAuth();
     const { showMessage } = useMessage();
 
-    const deleteThisTestimony = async (idTestimony, csrfToken) => {
+    const deleteThisTestimony = async (idTestimony) => {
 
         setIsLoading(true);
 
         try {
 
-            const response = await deleteTestimony(idTestimony);
+            const response = await deleteTestimony(idTestimony, csrfToken);
             showMessage({ data: response }, 'success');
         } catch (error) {
 
