@@ -30,8 +30,13 @@
 .formGroup {
   display: flex;
   flex-direction: column;
+  margin: 0.5em;
   width: 80%;
   color: white;
+}
+
+.formGroup > label {
+  text-align: start;
 }
 
 .testimonyInput {
@@ -40,8 +45,12 @@
     
 }
 
-.createTestimonyBtn {
+.createTestimonyBtn, .deleteTestimonyBtn {
   margin-top: 2em;
+}
+
+.deleteTestimonyBtn {
+    width: 30%;
 }
 
 
@@ -80,12 +89,12 @@
 @media screen and (min-width: 1400px) {
 
     .formContainer {
-      width: 45vw;
+      width: 40vw;
       padding: 1em;   
     }
 
     .createTestimony {
-        width: 70%;
+        width: 100%;
     }
 
 }
@@ -94,12 +103,12 @@
 @media screen and (max-width: 1399px) and (min-width: 1201px) {
 
     .formContainer {
-      width: 45vw;
+      width: 50vw;
       padding: 1em;   
     }
 
     .createTestimony {
-        width: 70%;
+        width: 90%;
     }
 
 
@@ -109,12 +118,12 @@
 @media screen and (max-width: 1200px) and (min-width: 992px) {
 
     .formContainer {
-      width: 55vw;
+      width: 50vw;
       padding: 1em;   
     }
 
     .createTestimony {
-        width: 70%;
+        width: 95%;
     }
  
 }
@@ -123,12 +132,12 @@
 @media screen and (max-width: 991px) and (min-width: 768px) {
 
     .formContainer {
-      width: 65vw;
+      width: 50vw;
       padding: 1em;   
     }
 
     .createTestimony {
-        width: 80%;
+        width: 100%;
     }
 
 }
@@ -142,7 +151,7 @@
   }
 
   .createTestimony {
-      width: 70%;
+      width: 90%;
   }
   
 
