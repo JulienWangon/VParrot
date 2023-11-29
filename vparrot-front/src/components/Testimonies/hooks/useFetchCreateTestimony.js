@@ -20,10 +20,10 @@ const useFetchCreateTestimony = () => {
         try {
             //Appelle de la focntion du service pour créer un avis client
             const response = await createTestimony(dataToSend);
-            
+        
             if (response && response.status === 'success') {
                 // Extraction de l'objet de l'avis et renvoi
-                const newTestimonyData = response.data.data;
+                const newTestimonyData = response.data;
                 showMessage({ data: response }, 'success');
                 return newTestimonyData;
             } else {
