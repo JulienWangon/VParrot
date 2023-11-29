@@ -15,6 +15,7 @@ export const TestimoniesProvider = ({ children }) => {
     
 
     const { testimonies, setTestimonies, isLoading: isLoadingAllTestimonies } = useFetchAllTestimonies();
+
     const { createNewTestimony, loading: isLoadingCreateTestimony } = useFetchCreateTestimony();
     const { approveThisTestimony, loading: isLoadingApproveTestimony } = useFetchApproveTestimony();
     const { rejectThisTestimony, loading: isLoadingRejectTestimony } = useFetchRejectTestimony();
@@ -24,20 +25,20 @@ export const TestimoniesProvider = ({ children }) => {
 
     //Ajouter un avis client 
     const addTestimony = (newTestimonyData) => {
-
         createNewTestimony(newTestimonyData)
+        
             .then(newTestimony => {
-                setTestimonies(prev => ({
-                    ...prev, 
-                    "en attente": [newTestimony, ...prev["en attente"]]
-                }));
+               
+                setTestimonies(prev => {
+                    const updatedTestimonies = {...prev, "en attente": [newTestimony, ...prev["en attente"]]};
+                  
+                    return updatedTestimonies;
+                });
             })
             .catch(error => {
-
                 console.error("Erreur lors de l'ajout d'un témoignage:", error);
             });
     };
-
 
     //fonction pour approuver un avis client 
     const approveTestimony = (idTestimony) => {
@@ -96,7 +97,6 @@ export const TestimoniesProvider = ({ children }) => {
             console.error("Erreur lors de la suppression d'un témoignage:", error);
         });
     };
-
 
     return (
         <TestimoniesContext.Provider value = {{
