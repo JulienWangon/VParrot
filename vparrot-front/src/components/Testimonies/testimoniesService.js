@@ -104,10 +104,12 @@ export const rejectTestimony = async (idTestimony, csrfToken) => {
 
 
 //Supprimer un avis client
-export const deleteTestimony = async (idTestimony) => {
+export const deleteTestimony = async (idTestimony, csrfToken) => {
     try {
 
-        const response = await instanceAxios.delete(`/testimonies/${idTestimony}`);
+        const url = `/testimonies/delete?idTestimony=${encodeURIComponent(idTestimony)}&csrfToken=${encodeURIComponent(csrfToken)}`;
+
+        const response = await instanceAxios.delete(url);
         if (response.data && response.data.status === 'success') {
 
             return response.data;
