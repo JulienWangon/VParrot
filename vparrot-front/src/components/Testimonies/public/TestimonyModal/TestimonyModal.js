@@ -42,7 +42,7 @@ const TestimonyModal = ({ onClose, mode, testimony }) => {
 
     //Remplissage des données en mode modération
     useEffect(() => {
-      if (mode === "moderation" && testimony) {
+      if ((mode === "moderation" || mode === "suppression") && testimony) {
           setTestimonyData({
               firstName: testimony.firstName,
               lastName: testimony.lastName,
@@ -168,6 +168,7 @@ const TestimonyModal = ({ onClose, mode, testimony }) => {
                     value={testimonyData.firstName}
                     onChange={handleInputChange}
                     error={errors.firstName}
+                    readOnly={mode !== "creation"}
                   />
                   <TextInput
                     formGroupClass={TestimonyStyle.formGroup}
@@ -178,6 +179,7 @@ const TestimonyModal = ({ onClose, mode, testimony }) => {
                     value={testimonyData.lastName}
                     onChange={handleInputChange}
                     error={errors.lastName}
+                    readOnly={mode !== "creation"}
                   />
                   <TextArea
                       formGroupClass={TestimonyStyle.formGroup}
@@ -187,6 +189,7 @@ const TestimonyModal = ({ onClose, mode, testimony }) => {
                       value={testimonyData.content}
                       onChange={handleInputChange}
                       error={errors.content}
+                      readOnly={mode !== "creation"}
                     />
                   <SelectInput
                       formGroupClass={TestimonyStyle.formGroup}
@@ -197,6 +200,7 @@ const TestimonyModal = ({ onClose, mode, testimony }) => {
                       onChange={handleInputChange}
                       options={ratingOptions}
                       error={errors.rating}
+                      readOnly={mode !== "creation"}
                   />
                   {mode === "creation" && areAllFieldsFilled() && hasNoErrors() && (
                       <ReCAPTCHA
@@ -213,8 +217,8 @@ const TestimonyModal = ({ onClose, mode, testimony }) => {
                             <Button onClick={handleReject} colorStyle="whiteBtn">Rejeter</Button>
                         </>
                     )}
-                    {mode === "consultation" && testimony.status === "rejeté" && (
-                        <Button onClick={handleDelete} colorStyle="whiteBtn">Supprimer</Button>
+                    {mode === "suppression" && (
+                        <Button className={TestimonyStyle.deleteTestimonyBtn} onClick={() => handleDelete(testimony.idTestimony)} colorStyle="whiteBtn">Supprimer</Button>
                     )}
                     <Button
                         type="button"
