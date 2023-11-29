@@ -19,12 +19,10 @@ const TestimoniesSlider = () => {
 
     const { testimonies } = useTestimonies();
 
-    console.log('Valeur retournée par useTestimonies:', testimonies);
     const approvedTestimonies = testimonies['approuvé'];
   
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    console.log('Valeur de testimonies après déstructuration:', testimonies);
 
     //configuration du carrousel
     const settings = {
