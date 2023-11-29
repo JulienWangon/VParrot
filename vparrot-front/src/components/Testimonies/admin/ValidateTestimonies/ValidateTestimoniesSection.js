@@ -34,7 +34,7 @@ const ValidateTestimoniesSection = () => {
         
             {isModalOpen && selectedTestimony && (
                         <TestimonyModal
-                            mode="moderation" 
+                            mode="suppression" 
                             testimony={selectedTestimony} 
                             onClose={handleCloseModal}
                         />
