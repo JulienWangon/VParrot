@@ -17,6 +17,8 @@ const useFetchAllContact = () => {
 
               const contactsList = await fetchAllContact();
               setContacts(contactsList)
+              console.log(contactsList);
+              return contactsList.data
             } catch (error) {
 
                 setError(error.message || 'Une erreur est survenue lors de la récupération de la liste des contacts.')
