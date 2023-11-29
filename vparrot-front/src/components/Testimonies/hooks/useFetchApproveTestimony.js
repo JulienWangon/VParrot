@@ -21,7 +21,7 @@ const useFetchApproveTestimony = () => {
     const { csrfToken } = useAuth();
 
     //Focntion asynchrone pour approuver un avis client
-    const approveThisTestimony = async (idTestimony, onSuccess) => {
+    const approveThisTestimony = async (idTestimony) => {
      
         //Activation de l'indicateur de chargement
         setIsLoading(true);
