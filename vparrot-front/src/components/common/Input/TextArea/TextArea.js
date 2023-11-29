@@ -4,8 +4,9 @@ const TextArea = ({ inputClassName, label, placeholder, name, value, readOnly, o
     return (
         <div className={formGroupClass || 'formGroup'}>
           <label htmlFor={name}>{name}</label>
-          <textarea
+          <textarea       
               className={inputClassName}
+              label = {label}
               id={name}
               name={name}
               value={value}
