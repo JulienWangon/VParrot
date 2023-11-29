@@ -347,18 +347,14 @@ class TestimoniesController {
             return;
         }
 
-         // Récupère les données envoyées
-        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $idTestimony= $_GET['idTestimony'] ?? null;
+        $csrfToken = $_GET['csrfToken'] ?? null;
 
-         //Vérifie si le format json est valide
-        if (!$this->validator->validateJsonFormat($data)) {
- 
-            $this->sendResponse($this->validator->getErrors(), 400);
-            return;
-        }
+
 
         //Vérifie la présence des donnée id et token csrf
-        if (empty($data['idTestimony']) || empty($data['csrfToken'])) {
+        if (empty($idTestimony) || empty($csrfToken)) {
             
             $this->sendResponse(['status' => 'error', 'message'=> 'identitfiant témoignage ou token csrf manquant'], 400);
             return;
@@ -367,21 +363,21 @@ class TestimoniesController {
         //Validation du token csrf 
         $decodedTokenData = $this->authModel->decodeJwtFromCookie();
 
-        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+        if ($csrfToken !== $decodedTokenData['csrfToken']) {
             
             $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
             return;
         }
 
         //Vérification de l'existance du témoignage dans la base de donnée
-        if(!$this->testimoniesRepository->testimonyExists($data['idTestimony'])) {
+        if(!$this->testimoniesRepository->testimonyExists($idTestimony)) {
 
             $this->sendResponse(['status'=> 'error', 'message' => 'Témoignage non trouvé '], 404);
             return;
         }
 
         // Récupère le témoignage et met à jour son statut de modération.
-        $testimony = $this->testimoniesRepository->findTestimonyById($data['idTestimony']);
+        $testimony = $this->testimoniesRepository->findTestimonyById($idTestimony);
 
         try {
 
