@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import Button from '../../../common/Buttons/Button/Button';
 import TestimonyModal from '../../public/TestimonyModal/TestimonyModal';
 
+
+
 import './creationSection.css';
 
 
-const CreationSection = ({ onCreateTestimony }) => {
+const CreationSection = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -26,7 +29,7 @@ const CreationSection = ({ onCreateTestimony }) => {
 
               {isModalOpen && (
 
-                  <TestimonyModal mode="creation" onClose={handleCloseModal} onTestimonyCreated={onCreateTestimony}/>
+                  <TestimonyModal mode="creation" onClose={handleCloseModal}/>
               )}
 
           </div>        
