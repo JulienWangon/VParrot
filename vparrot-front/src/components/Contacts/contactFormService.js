@@ -26,7 +26,7 @@ export const fetchAllContact = async () => {
         const response = await instanceAxios.get('/contact');
         if(response.data && response.data.status === "success") {
 
-            return response.data
+            return response.data.data
         } else {
 
             throw response.data;
