@@ -110,7 +110,7 @@ $routes = [
     ],
 
     'DELETE' => [
-      '#^/vparrot/testimonies/(\d+)$#' => [$controllers['testimonies'], 'deleteTestimony'],
+      '#^/vparrot/testimonies/delete$#' => [$controllers['testimonies'], 'deleteThisTestimony'],
 
     ]
 
