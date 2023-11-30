@@ -39,8 +39,33 @@ class UsersController {
 
     //Obtenir la liste des utilisateurs et leur role
     public function getAllUsersList() {
-        $data = $this->userRepository->getAllUsersWithRoles();
-        $this->sendResponse($data);
+        try {
+
+            $userData = $this->userRepository->getAllUsersWithRoles();
+
+            if(empty($userData)) {
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucuns utilisateurs trouvés']);
+                return;
+            }
+
+            $formattedUsers = [];
+
+            foreach ($userData['data'] as $user) {
+                $formattedUsers[] = [
+                    "idUser" => $user['idUser'],
+                    "firstName" => $user['firstName'],
+                    "lastName" => $user['lastName'],
+                    "userEmail" => $user['userEmail'],
+                    "roleId" => $user['roleId'],
+                    "roleName" => $user['roleName']
+                ];
+            }
+    
+            $this->sendResponse(['status' => 'success', 'data' => array_values($formattedUsers)]);
+        } catch (Exception $e) {
+
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
     }
 
     //Création d'un nouvel utilisateur
