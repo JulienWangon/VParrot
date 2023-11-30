@@ -3,9 +3,9 @@
 class Role {
 
     private ?int $idRole = null;
-    private string $roleName;
+    private ?string $roleName;
 
-    public function __construct(string $roleName, ?int $idRole = null) {
+    public function __construct(?string $roleName = null, ?int $idRole = null) {
 
         $this->idRole = $idRole;
         $this->roleName = $roleName;
@@ -21,6 +21,10 @@ class Role {
     }
 
 //Setter List 
+    public function setIdRole($idRole) :void {
+        $this->idRole = $idRole;
+    }
+
     public function setRoleName($roleName) :void {
         $this->roleName = $roleName;
     }
