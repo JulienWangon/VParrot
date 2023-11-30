@@ -34,31 +34,23 @@ class UserRepository extends Database {
             $stmt = $db->prepare($req);
             $stmt->execute();
             $usersData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          
 
             $users = [];
-            $roles = [];
             
-            foreach($usersData as $userData) {
-                if(!isset($roles[$userData['id_role']])) {
-
-                    $roles[$userData['id_role']] = new Role(
-                      $userData['id_role'],
-                      $userData['role_name'],
-                    );
-                }
-
-                $user = new Users(
-                    $userData['first_name'],
-                    $userData['last_name'],
-                    $userData['user_email'],
-                    $userData['id_role'],
-                    $userData['id_user']
-                );
-
-                $users[] = $user;     
-          }
-
-          return ['users' => $users, 'roles' => $roles];
+            foreach ($usersData as $userData) {
+                $user = [
+                    'idUser' => $userData['id_user'],
+                    'firstName' => $userData['first_name'],
+                    'lastName' => $userData['last_name'],
+                    'userEmail' => $userData['user_email'],
+                    'roleId' => $userData['id_role'],
+                    'roleName' => $userData['role_name']
+                ];
+                $users[] = $user;
+            }
+            
+            return ['status' => 'success', 'data' => $users];
           
         } catch (PDOException $e) {
 
