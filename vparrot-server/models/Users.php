@@ -4,14 +4,14 @@ require_once 'Database.php';
  
 class Users extends Database {
 
-    private ?int $idUser = null;
-    private string $firstName;
-    private string $lastName;
-    private string $userEmail;
-    private ?string $userPassword = null;
-    private int $roleId;
+    private ?int $idUser;
+    private ?string $firstName;
+    private ?string $lastName;
+    private ?string $userEmail;
+    private ?string $userPassword;
+    private ?int $roleId;
 
-    public function __construct(string $firstName, string $lastName, string $userEmail, ?int $idUser = null, ?int $roleId = null, ?string $userPassword = null) {
+    public function __construct(?string $firstName = null, ?string $lastName = null, ?string $userEmail = null, ?int $idUser = null, ?int $roleId = null, ?string $userPassword = null) {
 
         $this->idUser = $idUser;
         $this->firstName = $firstName;
@@ -48,6 +48,10 @@ class Users extends Database {
     }
 
     //Setters list
+    public function setIdUser(int $idUser) :void {
+        $this->idUser = $idUser;
+    }
+
     public function setFirstName(string $firstName) :void {
         $this->firstName = $firstName;
         
