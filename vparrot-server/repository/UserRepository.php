@@ -70,7 +70,7 @@ class UserRepository extends Database {
      * @return bool Renvoie vrai si l'ajout a réussi, faux sinon.
      */
 
-    public function addUser(string $firstName, string $lastName, string $userEmail, string $hashedPassword, int $roleId) : bool {
+    public function addUser(Users $user) : bool {
 
         try {
 
@@ -80,14 +80,21 @@ class UserRepository extends Database {
 
             $stmt = $db->prepare($req);
 
-            $stmt->bindValue(":firstName", $firstName, PDO::PARAM_STR);
-            $stmt->bindValue(":lastName", $lastName, PDO::PARAM_STR);
-            $stmt->bindValue(":userEmail", $userEmail, PDO::PARAM_STR);
-            $stmt->bindValue(":userPassword", $hashedPassword, PDO::PARAM_STR);
-            $stmt->bindValue(":roleId", $roleId, PDO::PARAM_INT);
+            $stmt->bindValue(":firstName", $user->getFirstName(), PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $user->getLastName(), PDO::PARAM_STR);
+            $stmt->bindValue(":userEmail", $user->getUserEmail(), PDO::PARAM_STR);
+            $stmt->bindValue(":userPassword", $user->getUserPassword(), PDO::PARAM_STR);
+            $stmt->bindValue(":roleId", $user->getRoleId(), PDO::PARAM_INT);
 
             $result = $stmt->execute();
-            return $result;
+            
+            if ($result) {
+              
+                return $db->lastInsertId();
+            } else {
+               
+                throw new Exception("Échec de l'ajout de l'utilisateur.");
+            }
 
         } catch (PDOException $e) {
             $this->handleException($e, "ajout d'un nouvel utilisateur");
