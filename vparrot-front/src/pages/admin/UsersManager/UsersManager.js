@@ -1,11 +1,19 @@
 import React from 'react';
 import Header from '../../../components/common/Header/Header';
+import UsersSection from '../../../components/Users/UsersSection/UsersSection';
 
 const UsersManager = () => {
   return (
-    <div>
+    <>
         <Header title="Utilisateurs" slogan="Gestion des utilisateurs"/>
-    </div>
+
+        <main>
+
+          <UsersSection/>
+
+
+        </main>
+    </>
   );
 };
 
