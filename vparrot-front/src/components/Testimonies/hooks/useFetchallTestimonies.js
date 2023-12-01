@@ -19,7 +19,7 @@ const useFetchAllTestimonies = () => {
             try {
                 
                 const response = await fetchAllTestimonies();
-               
+                console.log(response);
                 if (response) {
                     if (response && response['en attente'] && response['approuvé'] && response['rejeté']) {
                         setTestimonies(response); // Mise à jour de l'état avec les données
