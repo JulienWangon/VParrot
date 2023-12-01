@@ -68,8 +68,48 @@ class UsersController {
         }
     }
 
+
     //Création d'un nouvel utilisateur
     public function addThisUser() {
+
+        //Vérifie si la bonne méthode HTTP est utilisée (PUT)
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+            return;
+        }
+
+
+        // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401);
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin' ou 'employé'
+        if ($userData['role'] !== 'admin') {
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
+            return;
+        }
+
+
+         //Vérifie la présence du token csrf
+        if (empty($data['csrfToken'])) {
+            
+            $this->sendResponse(['status' => 'error', 'message'=> 'token csrf manquant'], 400);
+            return;
+        }
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
 
         // Recupérer les données envoyé par l'utilisateur
         $data = json_decode(file_get_contents('php://input'), true);
@@ -81,8 +121,8 @@ class UsersController {
             return;
         }
 
-            //Vérifier si toute les clés sont présente
-        $requireKeys =["first_name", "last_name", "user_email", "user_password", "role_id"];
+        //Vérifier si toute les clés sont présente
+        $requireKeys =["firstName", "lastName", "userEmail", "roleId"];
         foreach ($requireKeys as $key) {
             if (!isset($data[$key])) {
 
@@ -92,19 +132,17 @@ class UsersController {
         }
 
         //Assigne les données à des variable
-        $firstName = $data["first_name"];
-        $lastName = $data["last_name"];
-        $userEmail = $data["user_email"];
-        $userPassword = $data['user_password'];
-        $roleId = $data["role_id"];
+        $firstName = $data["firstName"];
+        $lastName = $data["lastName"];
+        $userEmail = $data["userEmail"];
+        $roleId = $data["roleId"];
 
         //validation des données
         $validFirstName = $this->validator->validateStringForNames($firstName, "prénom");
         $validLastName = $this->validator->validateStringForNames($lastName, "nom");
         $validUserEmail = $this->validator->validateEmail($userEmail);
-        $validUserPassword = $this->validator->validatePassword($userPassword);
 
-        if(!$validLastName || !$validFirstName || !$validUserEmail || !$validUserPassword) {
+        if(!$validLastName || !$validFirstName || !$validUserEmail) {
 
             $errors = $this->validator->getErrors();
             $this->sendResponse(["status" => "error", "message" => $errors], 400);
@@ -119,20 +157,36 @@ class UsersController {
             return;
          }
 
-        //Hash du mot de passe
-        $hashedPassword = password_hash($userPassword, PASSWORD_DEFAULT);
-
         try {
 
-            if ($this->userRepository->addUser($firstName, $lastName, $userEmail, $userPassword, $roleId)) {
-                $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès"], 200);
+            // Générez un mot de passe provisoire aléatoire
+            $securityUtil = new SecurityUtil();
+            $temporaryPassword = $securityUtil->generateTemporaryPassword();
+            $hashedTemporaryPassword = password_hash($temporaryPassword, PASSWORD_DEFAULT);
 
+            $user = new Users();
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setUserEmail($userEmail);
+            $user->setUserPassword($hashedTemporaryPassword);
+            $user->setRoleId($roleId);
+    
+            $userId = $this->userRepository->addUser($user);
+    
+            if ($userId) {
+
+                $emailSubject = "Bienvenue chez V.Parrot";
+                $emailBody = $emailBody = "Nous sommes ravis de vous compter parmi nous.\n\nPour vous connecter à votre espace d'administration, vous pouvez suivre ce lien : http://localhost:3000/access-panel 
+                \n\nVotre mot de passe provisoire est : $temporaryPassword.\n\nNous vous invitons à le changer dès votre première connexion en cliquant sur le lien 'Mot de passe oublié' disponible dans le formulaire de connexion.";
+                $this->emailService->sendEmail($userEmail, $emailSubject, $emailBody);
+
+
+                $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès", "userId" => $userId], 200);
             } else {
-                $this->sendResponse(["status" => "error", "message" => "Échec de l'ajout de l'utilisateur"], 500);
-                        
-            }
 
-        } catch( Exception $e) {
+                $this->sendResponse(["status" => "error", "message" => "Échec de l'ajout de l'utilisateur"], 500);
+            }
+        } catch (Exception $e) {
 
             $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
         }
@@ -290,9 +344,9 @@ class UsersController {
     }
 
 
-    public function resetPassword() {
 
-        
+    public function resetPassword() {
+    
         try {
 
             $data = json_decode(file_get_contents('php://input'), true);
