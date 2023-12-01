@@ -1,0 +1,26 @@
+.cardUser {
+ width: 100%;
+}
+
+.cardContactFooter {
+  text-align: center;
+}
+
+.updateUser, .deleteUser {
+  width: 40%;
+  margin: 0.5em;
+}
+
+.cardUserTitle {
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 1.5rem;
+}
+
+.cardUserContent {
+  font-size: 0.9rem;
+  font-family: 'Anek Tamil', sans-serif;
+}
+
+.cardUserHeader {
+  font-family: 'Anek Tamil', sans-serif;
+}
