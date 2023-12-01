@@ -33,7 +33,7 @@ class TestimoniesController {
             $testimonies = $this->testimoniesRepository->getAllTestimonies();
 
             if(empty($testimonies)) {
-                $this->sendResponse(['status' => 'error', 'message' => 'Aucuns témoignages trouvés']);
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucuns témoignages trouvés;']);
                 return;
             }
 
@@ -182,7 +182,7 @@ class TestimoniesController {
         try {
             $userData = $this->authModel->decodeJwtFromCookie();
         } catch (Exception $e) {
-            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401); // ou tout autre code approprié
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401);
             return;
         }
 
