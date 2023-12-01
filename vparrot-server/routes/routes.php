@@ -19,6 +19,7 @@ require_once './vparrot-server/controllers/TestimoniesController.php';
 require_once './vparrot-server/controllers/UsersController.php';
 require_once './vparrot-server/controllers/AuthController.php';
 require_once './vparrot-server/controllers/ContactController.php';
+require_once './vparrot-server/controllers/RoleController.php';
 
 require_once './vparrot-server/repository/ContactRepository.php';
 require_once './vparrot-server/repository/RejectedTestimoniesRepository.php';
@@ -27,6 +28,7 @@ require_once './vparrot-server/repository/CarsRepository.php';
 require_once './vparrot-server/repository/SchedulesRepository.php';
 require_once './vparrot-server/repository/TestimoniesRepository.php';
 require_once './vparrot-server/repository/UserRepository.php';
+require_once './vparrot-server/repository/RoleRepository.php';
 
 require_once './vparrot-server/util/EmailService.php';
 
@@ -34,6 +36,7 @@ require_once './vparrot-server/models/RejectedTestimonies.php';
 require_once './vparrot-server/models/Testimonies.php';
 require_once './vparrot-server/models/AuthModel.php';
 require_once './vparrot-server/models/Users.php';
+require_once './vparrot-server/models/Role.php';
 require_once './vparrot-server/Validator/Validator.php';
 
 
@@ -45,6 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 //Instanciation des repository
 $contactRepo = new contactRepository();
 $usersRepo = new UserRepository();
+$rolesRepo = new RoleRepository();
 $servicesRepo = new ServicesRepository();
 $carRepo = new CarsRepository();
 $schedulesRepo = new SchedulesRepository();
@@ -60,6 +64,7 @@ $validator = new Validator();
 
 //instanciations des controllers
 $controllers = [
+    'roles' => new RoleController($rolesRepo, $validator, $authModel),
     'contact' => new ContactController($contactRepo, $validator),
     'cars' => new CarsController($carRepo, $validator),
     'services' => new ServicesController($servicesRepo, $validator),
@@ -85,6 +90,7 @@ $routes = [
         '/vparrot/schedules' => [$controllers['schedules'], 'getSchedulesList'],
         '/vparrot/testimonies' => [$controllers['testimonies'], 'getAllTestimoniesList'],
         '/vparrot/users' => [$controllers['users'], 'getAllUsersList'],
+        '/vparrot/roles' => [$controllers['roles'], 'getAllRolesList'],
         '/vparrot/check-session' => [$controllers['auth'], 'checkSession'],
         '/vparrot/contact' => [$controllers['contact'], 'getContactList'],
 
