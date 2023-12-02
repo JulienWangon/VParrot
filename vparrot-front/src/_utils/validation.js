@@ -25,7 +25,7 @@ export const validatePassword = (password) => {
   if(!password) {
       error = "Le mot de passe est requis";
   } else {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^&*()_+[\]{}|;:,.<>?])[A-Za-z\d@$!%^&*()_+[\]{}|;:,.<>?]{8,}$/;
       if(!passwordRegex.test(password)) {
         error = "Le mot de passe doit avoir au moins 8 caractères, inclure au moins une majuscule, un chiffre et un caractère spécial."
       }
