@@ -12,7 +12,7 @@ const useFetchAllUsers = () => {
             setIsLoading(true);
             try {
                 const response = await fetchAllUsers();
-                console.log("la réponse", response);
+               
                 if (response) {
                     setUsers(response);
                 } else {
@@ -32,7 +32,7 @@ const useFetchAllUsers = () => {
         fetchData();
     }, [showMessage]); 
 
-    return { users, setUsers, isLoading };
+    return { users, isLoading };
 }
 
 export default useFetchAllUsers;

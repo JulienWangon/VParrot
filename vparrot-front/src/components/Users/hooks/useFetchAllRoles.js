@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { fetchAllRoles } from "../RolesService";
 import { useMessage } from "../../../contexts/MessagesContext";
 
-
 const useFetchAllRoles = () => {
 
     const [roles, setRoles] = useState([]);
@@ -19,14 +18,16 @@ const useFetchAllRoles = () => {
             try {
 
                 const response = await fetchAllRoles();
-
+                console.log("Réponse complète dans le hook:", response);
                 if(response) {
+
                     setRoles(response);
                 }  else {
 
                   showMessage({ data: "La récupération des utilisateurs a échoué" }, 'error');
                 }
             } catch (error) {
+              console.log("Error:", error);
 
               if (error.response && error.response.data && error.response.data.status === 'error') {
                 showMessage({ message: error.response.data.message || "Erreur lors de l'opération" }, 'error');
@@ -41,7 +42,7 @@ const useFetchAllRoles = () => {
 
         fetchData();
     }, [showMessage])
-
+    console.log('Roles dans le hook:', roles);
     return { roles, isLoading }
 }
 
