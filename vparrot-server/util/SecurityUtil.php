@@ -9,7 +9,7 @@ class SecurityUtil {
 
     //Fonction pour générer un password aléatoire et provisoir pour le nouvel utilisateur
     function generateTemporaryPassword() {
-        $length = 8;
+        $length = 12;
         $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $lowercase = 'abcdefghijklmnopqrstuvwxyz';
         $digits = '0123456789';
