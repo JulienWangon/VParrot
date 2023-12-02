@@ -94,6 +94,17 @@ class UsersController {
         }
 
 
+        // Recupérer les données envoyé par l'utilisateur
+        $data = json_decode(file_get_contents('php://input'), true);
+       
+        //Valider le format json obtenu
+        if (!$this->validator->validateJsonFormat($data)) {
+  
+            $this->sendResponse($this->validator->getErrors(), 400);
+            return;
+        }
+
+
          //Vérifie la présence du token csrf
         if (empty($data['csrfToken'])) {
             
@@ -107,17 +118,6 @@ class UsersController {
         if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
             
             $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
-            return;
-        }
-
-
-        // Recupérer les données envoyé par l'utilisateur
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        //Valider le format json obtenu
-        if (!$this->validator->validateJsonFormat($data)) {
-
-            $this->sendResponse($this->validator->getErrors(), 400);
             return;
         }
 
@@ -151,7 +151,7 @@ class UsersController {
 
     
         //Contrôle si l'email existe
-        if($this->users->doesEmailExists($userEmail)) {
+        if($this->userRepository->doesEmailExist($userEmail)) {
 
             $this->sendResponse(["status" => "error", "message" => "L'adresse e-mail existe déjà."]);
             return;
@@ -177,7 +177,7 @@ class UsersController {
 
                 $emailSubject = "Bienvenue chez V.Parrot";
                 $emailBody = $emailBody = "Nous sommes ravis de vous compter parmi nous.\n\nPour vous connecter à votre espace d'administration, vous pouvez suivre ce lien : http://localhost:3000/access-panel 
-                \n\nVotre mot de passe provisoire est : $temporaryPassword.\n\nNous vous invitons à le changer dès votre première connexion en cliquant sur le lien 'Mot de passe oublié' disponible dans le formulaire de connexion.";
+                \n\nVotre mot de passe provisoire est : $temporaryPassword.\n\nNous vous invitons à le changer dès votre première tentative de connexion en cliquant sur le lien 'Mot de passe oublié' disponible dans le formulaire de connexion.";
                 $this->emailService->sendEmail($userEmail, $emailSubject, $emailBody);
 
 
