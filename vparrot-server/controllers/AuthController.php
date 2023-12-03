@@ -168,8 +168,8 @@ class AuthController {
 
                     // Renvoyer le role l'Id et le token csrf
                     $responseUser = [
-                        "id" => $user["id_user"],
-                        "role" => $user["role_name"],
+                        "id" => $user["idUser"],
+                        "role" => $user["roleName"],
                         "csrfToken" => $csrfToken
                     ];
                     $this->sendResponse(['status' => 'success', 'user' => $responseUser]);
