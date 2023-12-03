@@ -24,3 +24,47 @@
 .cardUserHeader {
   font-family: 'Anek Tamil', sans-serif;
 }
+
+
+
+/* Plus grands écrans */
+@media screen and (min-width: 1400px) {
+  .updateUser, .deleteUser {
+    width: 20%;
+    margin: 0.5em;
+  }
+
+  
+}
+
+/* Grands écrans de bureau */
+@media screen and (max-width: 1399px) and (min-width: 1201px) {
+  .updateUser, .deleteUser {
+    width: 25%;
+    margin: 0.5em;
+  }
+}
+
+/* Tablettes et petits écrans de bureau */
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+  .updateUser, .deleteUser {
+    width: 25%;
+    margin: 0.5em;
+  }
+}
+
+/* Tablettes en orientation portrait et grands mobiles */
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  
+}
+
+/* Appareils mobiles en orientation paysage */
+@media screen and (max-width: 767px) and (min-width: 576px) {
+
+  .updateUser, .deleteUser {
+    width: 25%;
+    margin: 0.5em;
+  }
+
+ 
+}
