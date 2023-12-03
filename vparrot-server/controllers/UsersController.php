@@ -87,7 +87,7 @@ class UsersController {
             return;
         }
 
-        // Vérifie si l'utilisateur a le rôle 'admin' ou 'employé'
+        // Vérifie si l'utilisateur a le rôle 'admin'
         if ($userData['role'] !== 'admin') {
             $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
             return;
@@ -194,7 +194,29 @@ class UsersController {
     }
 
     //Mise à jour utilisateur
-    public function updateThisUser(int $idUser) {
+    public function updateThisUser() {
+
+        //Vérifie si la bonne méthode HTTP est utilisée (PUT)
+        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+            return;
+        }
+
+
+        // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401);
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin'
+        if ($userData['role'] !== 'admin') {
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
+            return;
+        }
+
 
         //Récupération des données du formulaire
         $data = json_decode(file_get_contents('php://input'), true);
@@ -206,6 +228,24 @@ class UsersController {
             return;
         }
 
+
+        //Vérifie la présence du token csrf
+        if (empty($data['csrfToken'])) {
+            
+            $this->sendResponse(['status' => 'error', 'message'=> 'token csrf manquant'], 400);
+            return;
+        }
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+
         $requireKeys =["first_name", "last_name", "user_email", "role_id"];
             foreach ($requireKeys as $key) {
                 if (!isset($data[$key])) {
@@ -215,11 +255,12 @@ class UsersController {
                 }
             }
 
-    
-        $firstName = $data["first_name"];
-        $lastName = $data["last_name"];
-        $userEmail = $data["user_email"];
-        $roleId = $data["role_id"];
+        
+        $idUser = $data['idUser'];
+        $firstName = $data["firstName"];
+        $lastName = $data["lastName"];
+        $userEmail = $data["userEmail"];
+        $roleId = $data["roleId"];
 
         //Validation du format des données
         $validFirstName = $this->validator->validateStringForNames($firstName, "prénom");
@@ -248,15 +289,23 @@ class UsersController {
 
         try {
 
-            if ($this->userRepository->updateUser($idUser, $firstName, $lastName, $userEmail, $roleId)) {
-                $this->sendResponse(["status" => "success", "message" => "Utilisateur mis à jour avec succès"], 200);
+            $user = new Users();
+            $user->setIdUser($idUser);
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setUserEmail($userEmail);
+            $user->setRoleId($roleId);
 
+            if ($this->userRepository->updateUser($user)) {
+
+                $this->sendResponse(["status" => "success", "message" => "Utilisateur mis à jour avec succès"], 200);
             } else {
-                $this->sendResponse(["status" => "error", "message" => "Échec de la mise à jour de l'utilisateur"], 500);
-                        
+
+                $this->sendResponse(["status" => "error", "message" => "Échec de la mise à jour de l'utilisateur"], 500);              
             }
 
         } catch(Exception $e) {
+
             $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
         }
     }
