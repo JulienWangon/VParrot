@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import useAddUser from '../hooks/useAddUser';
+import useUpdateUser from '../hooks/useUpdateUser';
 
 import TextInput from '../../common/Input/TextInput/TextInput';
 import SelectInput from '../../common/Input/SelectInput/SelectInput';
@@ -11,17 +12,29 @@ import userModalStyle from './userModal.module.css';
 
 import { validateEmail, validateName } from '../../../_utils/validation';
 
-const UserModal = ({ onClose, roles, users, onAddUser }) => {
+const UserModal = ({ onClose, roles, onAddUser, userToUpdate, onUpdateUser,mode }) => {
 
-    const { addNewUser, isLoading } = useAddUser();
+    const { addNewUser, isLoading: addUserLoading } = useAddUser();
+    const { updateExistingUser, isLoading: updateUserLoading } = useUpdateUser();
 
     const [userData, setUserData] = useState({
-        firstName: '',
-        lastName: '',
-        userEmail: '',
-        roleId: ''
-  
+        firstName: userToUpdate?.firstName || '',
+        lastName: userToUpdate?.lastName || '',
+        userEmail: userToUpdate?.userEmail || '',
+        roleId: userToUpdate?.roleId || ''
     });
+
+    useEffect(() => {
+        if (mode === 'update' && userToUpdate) {
+            setUserData({
+                idUser: userToUpdate.idUser,
+                firstName: userToUpdate.firstName,
+                lastName: userToUpdate.lastName,
+                userEmail: userToUpdate.userEmail,
+                roleId: userToUpdate.roleId
+            });
+        }
+    }, [mode, userToUpdate]);
 
     //Etat pour stocker les erreurs de validations des champs
     const [ errors, setErrors] = useState({});
@@ -71,29 +84,35 @@ const UserModal = ({ onClose, roles, users, onAddUser }) => {
 
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
+        if (areAllFieldsFilled() && hasNoErrors()) {
+            const dataToSend = { ...userData };
+    
+            try {
+                if (mode === 'create') {
+                    const newUser = await addNewUser(dataToSend);
+                    onAddUser(newUser);
+                } else if (mode === 'update') {
+                    
+                    const updatedUser = await updateExistingUser(dataToSend);
+                    onUpdateUser(updatedUser); 
+                }
+                onClose();
+            } catch (error) {
+                
+                console.error('Erreur lors de la mise à jour de l’utilisateur:', error);
+            }
+        }
+    };
 
-      if (areAllFieldsFilled() && hasNoErrors()) {
-          const dataToSend = { ...userData };
-          
-          try {
-
-              const newUser = await addNewUser(dataToSend); 
-              onAddUser(newUser);
-              onClose();
-          } catch (error) {
-              console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
-          }
-      }
-  };
-
-    if(isLoading) return <div>Chargement...</div>
+    if(addUserLoading) return <div>Chargement...</div>
+    if(updateUserLoading) return <div>Chargement...</div>
    
 
     return (
       <div className={userModalStyle.modalOverlay}>
           <div className={userModalStyle.formContainer}>
-              <H2Title h2Text="Ajoutez un utilsateur" className={userModalStyle.userModalTitle} colorStyle="whiteTitle"/>
+              <H2Title h2Text={mode === 'create' ? "Ajoutez un utilisateur" : "Mettez à jour l'utilisateur"} className={userModalStyle.userModalTitle} colorStyle="whiteTitle"/>
               <form className={userModalStyle.createUser} onSubmit={handleSubmit}>
                   <TextInput
                       formGroupClass={userModalStyle.formGroup}
@@ -147,7 +166,7 @@ const UserModal = ({ onClose, roles, users, onAddUser }) => {
                   />
 
                   <div className={userModalStyle.btnContainer}>
-                        <Button type="submit" className={userModalStyle.addBtn} colorStyle="whiteBtn" disabled={!isFormReadyForSubmission()}>Ajouter</Button>
+                        <Button type="submit" className={userModalStyle.addBtn} colorStyle="whiteBtn" disabled={!isFormReadyForSubmission()}>{mode === 'create' ? "Ajouter" : "Mettre à jour"}</Button>
                         <Button className={userModalStyle.addBtn} onClick={onClose} colorStyle="whiteBtn">Annuler</Button>
                   </div>
               </form>
