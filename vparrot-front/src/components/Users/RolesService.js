@@ -6,8 +6,10 @@ export const fetchAllRoles = async () => {
     try {
 
         const response = await instanceAxios.get('/roles');
+     
         if (response.data && response.data.status === 'success') {
-            return response.data.data
+            return response.data.data;
+           
          
         } else {
 
