@@ -62,7 +62,7 @@ export const updateUser = async (userData, csrfToken) => {
             csrfToken: csrfToken
         };
 
-        const response = await instanceAxios.put('/vparrot/users/update', requestBody);
+        const response = await instanceAxios.put('/users/update', requestBody);
 
         if(response.data && response.data.status === "success") {
 
