@@ -30,7 +30,7 @@ const useFetchAllUsers = () => {
         };
 
         fetchData();
-    }, [showMessage]); 
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return { users, isLoading };
 }

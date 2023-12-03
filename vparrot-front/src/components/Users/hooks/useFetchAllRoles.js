@@ -41,7 +41,7 @@ const useFetchAllRoles = () => {
         };
 
         fetchData();
-    }, [showMessage])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
     console.log('Roles dans le hook:', roles);
     return { roles, isLoading }
 }
