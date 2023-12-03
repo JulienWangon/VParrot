@@ -114,7 +114,7 @@ class UserRepository extends Database {
      * @return bool Renvoie vrai si la mise à jour a réussi, faux sinon.
      */
 
-    public function updateUser(int $userId, string $firstName, string $lastName, string $userEmail, int $roleId) : bool {
+    public function updateUser(Users $user) : bool {
         try {
             $db = $this->getBdd();
             $req = "UPDATE users 
@@ -123,13 +123,13 @@ class UserRepository extends Database {
 
             $stmt = $db->prepare($req);
 
-            $stmt->bindValue(":userId", $userId, PDO::PARAM_INT);
-            $stmt->bindValue(":firstName", $firstName, PDO::PARAM_STR);
-            $stmt->bindValue(":lastName", $lastName, PDO::PARAM_STR);
-            $stmt->bindValue(":userEmail", $userEmail, PDO::PARAM_STR);
-            $stmt->bindValue(":roleId", $roleId, PDO::PARAM_INT);
+            $stmt->bindValue(":userId", $user->getIdUser(), PDO::PARAM_INT);
+            $stmt->bindValue(":firstName", $user->getFirstName(), PDO::PARAM_STR);
+            $stmt->bindValue(":lastName", $user->getLastName(), PDO::PARAM_STR);
+            $stmt->bindValue(":userEmail", $user->getUserEmail(), PDO::PARAM_STR);
+            $stmt->bindValue(":roleId", $user->getRoleId(), PDO::PARAM_INT);
 
-            $result = $stmt->execute;
+            $result = $stmt->execute();
             return $result;
 
         } catch (PDOException $e) {
