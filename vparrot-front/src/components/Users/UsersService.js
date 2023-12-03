@@ -79,6 +79,6 @@ export const updateUser = async (userData, csrfToken) => {
         console.error('Erreur lors de la mise à jour de l\'utilisateur:', errorMessage);
         throw new Error(errorMessage);
     }
-}
+};
 
 
