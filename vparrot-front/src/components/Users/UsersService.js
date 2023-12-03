@@ -49,8 +49,36 @@ export const addUser = async (userData, csrfToken) => {
         console.error('Erreur lors de l\'ajout de l\'utilisateur:', errorMessage);
         throw new Error(errorMessage);
     }
+};
 
 
+//Mise à jour d'un utilisateur 
+export const updateUser = async (userData, csrfToken) => {
 
+    try {
+
+        const requestBody = {
+            ...userData,
+            csrfToken: csrfToken
+        };
+
+        const response = await instanceAxios.put('/vparrot/users/update', requestBody);
+
+        if(response.data && response.data.status === "success") {
+
+            return response.data;
+        } else {
+
+            throw new Error(response.data.message || "Erreur lors de la communication avec l'API.");
+        }
+
+
+    } catch (error) {
+
+        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
+        console.error('Erreur lors de la mise à jour de l\'utilisateur:', errorMessage);
+        throw new Error(errorMessage);
+    }
 }
+
 
