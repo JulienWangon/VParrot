@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useFetchAllUsers from '../hooks/useFetchAllUsers';
 import useFetchAllRoles from '../hooks/useFetchAllRoles';
 import UserCard from '../UserCard/UserCard';
@@ -11,23 +11,49 @@ import H2Title from '../../common/H2Title/H2Title';
 const UsersSection = () => {
 
     const { users: initialUsers, isLoading: isLoadingUsers } = useFetchAllUsers();
+   
     const { roles, isLoading: isLoadingRoles } = useFetchAllRoles();
 
     const [users, setUsers] = useState(initialUsers);
-
+    const [selectedUser, setSelectedUser] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    useEffect(() => {
+
+      setUsers(initialUsers);
+    }, [initialUsers]);
+
+
     const handleCreateUserClick = () => {
+        setSelectedUser(null);
+        setIsModalOpen(true);
+    };
+
+
+    const handleEditUserClick = (user) => {
+      setSelectedUser(user);
       setIsModalOpen(true);
-  };
+    };
 
-  const addUser = (newUser) => {
    
-    setUsers([...users, newUser]);
-};
+    const addUser = (newUser) => {
 
-    if(isLoadingUsers) { return <div>Loading...</div>}
-    if(isLoadingRoles) { return <div>Loading...</div>}
+      setUsers(prevUsers => [...prevUsers, newUser]);
+    };
+
+
+    const updateUser = (updatedUser) => {
+      
+      setUsers(prevUsers => {
+        return prevUsers.map(user => user.idUser === updatedUser.idUser ? updatedUser : user);
+      });
+    };
+
+
+    if (isLoadingUsers || isLoadingRoles) { 
+      return <div>Loading...</div>;
+    }
+    console.log('Users before mapping: ', users);
    
   return (
     <section className="mt-4">
@@ -36,14 +62,15 @@ const UsersSection = () => {
             <Button className="createUserBtn" colorStyle="redBtn" onClick={handleCreateUserClick}>Créer un utilisateur</Button>
         </div>
         <div className="userCardContainer row row-cols-1 row-cols-md-2 g-4">
-            {initialUsers.map((user) => (
+        
+            {users.map((user) => (
               <div key={user.idUser} className="userCardList col d-flex align-items-stretch">
-                  <UserCard user={user}/>
+                  <UserCard user={user} onEditUser={() => handleEditUserClick(user)}/>
               </div>
                 
             ))}
         </div>
-        {isModalOpen && <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} roles={roles} users={users} onAddUser={addUser} />}
+        {isModalOpen && <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} roles={roles} mode={selectedUser ? "update" : "create"} users={users} onAddUser={addUser} onUpdateUser={updateUser} userToUpdate={selectedUser}/>}
     </section>
   );
 };
