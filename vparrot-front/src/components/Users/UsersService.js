@@ -3,12 +3,10 @@ import instanceAxios from "../../_utils/axios";
 
 //Optenir la liste des utilisateurs et leur rôle
 export const fetchAllUsers = async () => {
-
     try {
 
         const response = await instanceAxios.get('/users');
         if (response.data && response.data.status === 'success') {
-          console.log(response.data.data)
           return response.data.data
          
       } else {
@@ -30,20 +28,21 @@ export const addUser = async (userData, csrfToken) => {
     try {
 
         const requestBody = {
-            user: userData,
+            ...userData,
             csrfToken: csrfToken
         };
 
 
-        const response = await instanceAxios.post('/user', requestBody);
+        const response = await instanceAxios.post('/users', requestBody);
+     
         if (response.data && response.data.status === 'success') {
-
-            return response.data.data;
+            return response.data;
         } else {
-
-            throw new Error(response.data.message || "Données reçues non valides ou erreur de requête.");
+       
+            console.log("Réponse de l'API en cas d'erreur : ", response.data);
+            throw new Error(response.data.message|| "Erreur lors de la communication avec l'API.");
         }
-
+        
     } catch (error) {
 
         const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
