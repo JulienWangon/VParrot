@@ -70,7 +70,7 @@ class UserRepository extends Database {
      * @return bool Renvoie vrai si l'ajout a réussi, faux sinon.
      */
 
-    public function addUser(Users $user) : bool {
+    public function addUser(Users $user) : int {
 
         try {
 
@@ -202,15 +202,24 @@ class UserRepository extends Database {
      * @return bool Renvoie vrai si l'email existe, faux sinon.
      */
 
-    public function doesEmailExist(string $email) : bool {
+    public function doesEmailExist(string $email, int $excludeUserId = null) : bool {
         try {
 
             $db = $this->getBdd();
             $req = "SELECT COUNT(1) FROM users WHERE user_email = :email";
 
+            if ($excludeUserId !== null) {
+                $req .= " AND id_user != :excludeUserId";
+            }
+
             $stmt = $db->prepare($req);
 
             $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+
+            if ($excludeUserId !== null) {
+                $stmt->bindValue(":excludeUserId", $excludeUserId, PDO::PARAM_INT);
+            }
+
             $stmt->execute();
             
             return $stmt->fetchColumn() > 0;
@@ -236,13 +245,13 @@ class UserRepository extends Database {
      * @throws PDOException Si une erreur survient lors de la requête à la base de données.
     */
 
-      //Get user by ID
+      //Obtenir les information d'u utilisateur via son id
       public function getUserByID($userId) {
         
         try {
 
             $db = $this->getBdd();
-            $req = "SELECT u.id_user, u.user_email, r.id_role, r.role_name 
+            $req = "SELECT u.id_user, u.first_name, u.last_name, u.user_email, r.id_role, r.role_name 
                     FROM users u 
                     JOIN roles r 
                     ON u.role_id = r.id_role
@@ -251,9 +260,23 @@ class UserRepository extends Database {
             $stmt->bindValue(":userId", $userId, PDO::PARAM_INT);
             $stmt->execute();
     
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            return $user;
+            if ($userData) {
+                
+                $adjustedUserData = [
+                    "idUser" => $userData['id_user'],
+                    "firstName" => $userData['first_name'],
+                    "lastName" => $userData['last_name'],
+                    "userEmail" => $userData['user_email'],
+                    "roleId" => $userData['id_role'],
+                    "roleName" => $userData['role_name']
+                ];
+
+                return $adjustedUserData;
+            } else {
+                return null; // Utilisateur non trouvé
+            }
 
         } catch (PDOException $e) {
 
@@ -276,7 +299,7 @@ class UserRepository extends Database {
      * @throws PDOException Si une erreur survient lors de la requête à la base de données.
     */
 
-    //Get user by Email 
+    //obtenir les informations d'un utilisateur via son email 
     public function getUserByEmail($userEmail) {
 
         try {
@@ -309,8 +332,25 @@ class UserRepository extends Database {
 
     }
 
+    //Verifie si l'utilisateur existe via un id
+    public function doesUserExist (int $idUser) :bool  {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "SELECT COUNT(*) FROM users WHERE id_user = :idUser";
+
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $count = $stmt->fetchColumn();
+
+            return $count > 0;
+        } catch (PDOException $e) {
 
 
-
-
+            $this->handleException($e, "recherche de l'utilisateur");
+        }
+    }
 }

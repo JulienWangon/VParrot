@@ -175,13 +175,15 @@ class UsersController {
     
             if ($userId) {
 
+                $newUserData = $this->userRepository->getUserById($userId);
+
                 $emailSubject = "Bienvenue chez V.Parrot";
                 $emailBody = $emailBody = "Nous sommes ravis de vous compter parmi nous.\n\nPour vous connecter à votre espace d'administration, vous pouvez suivre ce lien : http://localhost:3000/access-panel 
                 \n\nVotre mot de passe provisoire est : $temporaryPassword.\n\nNous vous invitons à le changer dès votre première tentative de connexion en cliquant sur le lien 'Mot de passe oublié' disponible dans le formulaire de connexion.";
-                $this->emailService->sendEmail($userEmail, $emailSubject, $emailBody);
+                $this->emailService->sendEmail($newUserData['userEmail'], $emailSubject, $emailBody);
 
 
-                $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès", "userId" => $userId], 200);
+                $this->sendResponse(["status" => "success", "message" => "Utilisateur créé avec succès", "user" => $newUserData], 200);
             } else {
 
                 $this->sendResponse(["status" => "error", "message" => "Échec de l'ajout de l'utilisateur"], 500);
@@ -246,7 +248,7 @@ class UsersController {
         }
 
 
-        $requireKeys =["first_name", "last_name", "user_email", "role_id"];
+        $requireKeys =["firstName", "lastName", "userEmail", "roleId"];
             foreach ($requireKeys as $key) {
                 if (!isset($data[$key])) {
 
@@ -275,13 +277,12 @@ class UsersController {
           }
 
         // Vérifie si l'utilisateur existe avant la mise  jour
-        if(!$this->users->doesUserExist($idUser)) {
-            $this->sendResponse(["status" => "error", "message" => "L'utilisateur n'existe pas."], 404); // 404 Not Found
-            return;
+        if(!$this->userRepository->doesUserExist($idUser)) {
+            $this->sendResponse(["status" => "error", "message" => "L'utilisateur n'existe pas."], 404);
         }
 
         // Vérifie si l email est déja utilisé par un autre utilisateur
-        if($this->users->doesEmailExists($userEmail, $idUser)) {
+        if($this->userRepository->doesEmailExist($userEmail, $idUser)) {
 
             $this->sendResponse(["status" => "error", "message" => "L'adresse e-mail est déjà utilisée par un autre utilisateur."]);
             return;
@@ -297,13 +298,27 @@ class UsersController {
             $user->setRoleId($roleId);
 
             if ($this->userRepository->updateUser($user)) {
+               
+                $updatedUser = $this->userRepository->getUserById($idUser);
+        
+                if ($updatedUser) {
 
-                $this->sendResponse(["status" => "success", "message" => "Utilisateur mis à jour avec succès"], 200);
+                    $formattedUser = [
+                        "idUser" => $updatedUser['idUser'],
+                        "firstName" => $updatedUser['firstName'],
+                        "lastName" => $updatedUser['lastName'],
+                        "userEmail" => $updatedUser['userEmail'],
+                        "roleId" => $updatedUser['roleId'],
+                        "roleName" => $updatedUser['roleName']
+                    ];
+                    
+                    $this->sendResponse(["status" => "success", "message" => "Utilisateur mis à jour avec succès", "user" => $formattedUser], 200);
+                } else {
+                    $this->sendResponse(["status" => "error", "message" => "Utilisateur mis à jour, mais erreur lors de la récupération des données"], 500);
+                }
             } else {
-
                 $this->sendResponse(["status" => "error", "message" => "Échec de la mise à jour de l'utilisateur"], 500);              
             }
-
         } catch(Exception $e) {
 
             $this->sendResponse(["status" => "error", "message" => $e->getMessage()], 500);
