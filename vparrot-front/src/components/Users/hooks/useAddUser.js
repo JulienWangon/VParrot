@@ -22,6 +22,7 @@ const useAddUser = () => {
             setCreateUser(userData);
 
             showMessage({ data: response }, 'success');
+            return response.user;
         } catch (error) {
             if (error.response) {
                 // Si c'est une erreur spécifique de l'API, utilisez son message

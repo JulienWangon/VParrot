@@ -17,8 +17,8 @@ const useUpdateUser = () => {
         try {
 
             const response = await updateUser(userData, csrfToken);
-
             showMessage({data: response }, 'success');
+            return response.user;
         } catch (error) {
 
             if(error.response) {
