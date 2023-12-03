@@ -23,15 +23,14 @@ const useAddUser = () => {
 
             showMessage({ data: response }, 'success');
         } catch (error) {
-
-            //Gestion des erreurs
-            if (error.response && error.response.data && error.response.data.status === 'error') {
-            //Affichage erreur provenant de la reponse API 
-                showMessage({ message: error.response.data.message || "Erreur lors de l'opération" }, 'error');
+            if (error.response) {
+                // Si c'est une erreur spécifique de l'API, utilisez son message
+                showMessage({ message: error.response.data.message }, 'error');
             } else {
-            //Affichage autre erreur (exemple erreur reseau)
-                showMessage({ message: error.message || "Une erreur s'est produite" }, 'error');
+                // Pour les autres types d'erreurs, utilisez un message générique
+                showMessage({ data: error || "Une erreur s'est produite" }, 'error');
             }
+      
         } finally {
 
           setIsLoading(false);
