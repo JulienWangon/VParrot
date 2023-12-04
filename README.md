@@ -29,7 +29,7 @@ MAIL_FROM_NAME = "Garage V.Parrot"
 
 6. mise en place de la base de donnée et injection des fixtures
 
-télécharger le dossier archive au lien ci joint : https://drive.google.com/file/d/1_ral92MhZemyhD_hAxkMfcaeCSgqFjtM/view?usp=drive_link
+télécharger le dossier archive au lien ci joint : https://drive.google.com/file/d/1Nr_hWoUVC4gKq_I1ADbTAOocTKKQVry6/view?usp=drive_link
 le dossier contient les fichiers pour la création de la base de donnée et des tables ainsi que le fichier d'injection des fixtures dans la base 
 
 ouvrez un terminal et déplacer vers le dossier  C:\wamp64\bin\mysql\mysqlx.y.z\bin>
