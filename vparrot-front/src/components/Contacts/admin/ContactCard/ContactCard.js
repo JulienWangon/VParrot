@@ -10,7 +10,7 @@ const ContactCard = ( { contact }) => {
                 <p className="cardContactContent card-text">{contact.content}</p>
                 <Button className="contactTraitment" colorStyle="redBtn">Traiter le Message</Button>   
             </div>
-            <div class="cardContactFooter card-footer text-muted">
+            <div className="cardContactFooter card-footer text-muted">
                 <span className="emailContact me-3">{contact.email}</span>
                 <span className="phoneContact">0{contact.phone}</span>      
             </div>
