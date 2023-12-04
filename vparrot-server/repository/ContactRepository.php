@@ -38,7 +38,7 @@ class contactRepository extends Database {
                     $contactData['email'],
                     $contactData['contact_subject'],
                     $contactData['content'],
-                    $contactData['is_treated']
+                    $contactData['status']
                 );
 
                 $contacts[] = $contact;
@@ -73,7 +73,7 @@ class contactRepository extends Database {
         try {
 
             $db = $this->getBdd();
-            $req = "INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, is_treated) VALUES (:firstName, :lastName, :phone, :email, :contactSubject, :content, 0)";
+            $req = "INSERT INTO contact (first_name, last_name, phone, email, contact_subject, content, status) VALUES (:firstName, :lastName, :phone, :email, :contactSubject, :content, 'non traité')";
 
             $stmt = $db->prepare($req);
             $stmt->bindValue(":firstName", $contact->getFirstName(), PDO::PARAM_STR);
