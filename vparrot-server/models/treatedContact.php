@@ -1,7 +1,7 @@
 <?php
 
 
-class treatedContact {
+class TreatedContact {
 
     private $idTreatedContact;
     private $firstName;
