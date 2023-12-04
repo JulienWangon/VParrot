@@ -56,11 +56,10 @@ const UsersSection = () => {
           deletedUser(userId)
               .then(() => {
                   setUsers(prevUsers => prevUsers.filter(user => user.idUser !== userId));   
-                  // Afficher un message de succès ici, si nécessaire
+             
               })
               .catch(error => {
-                  console.error('Erreur lors de la suppression de l\'utilisateur:', error);
-                  // Afficher un message d'erreur ici, si nécessaire
+               
               });
       }
   };
