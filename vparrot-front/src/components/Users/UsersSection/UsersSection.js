@@ -51,16 +51,19 @@ const UsersSection = () => {
     };
 
 
-    const handleDeleteUser = (userId) => {
-      deletedUser(userId)
-          .then(() => {
-              setUsers(prevUsers => prevUsers.filter(user => user.idUser !== userId));   
-          })
-          .catch(error => {
-           
-              console.error('Erreur lors de la suppression de l\'utilisateur:', error);
-          });
-    };
+    const handleDeleteUser = (userId, userName) => {
+      if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ?`)) {
+          deletedUser(userId)
+              .then(() => {
+                  setUsers(prevUsers => prevUsers.filter(user => user.idUser !== userId));   
+                  // Afficher un message de succès ici, si nécessaire
+              })
+              .catch(error => {
+                  console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+                  // Afficher un message d'erreur ici, si nécessaire
+              });
+      }
+  };
 
 
     if (isLoadingUsers || isLoadingRoles) { 
