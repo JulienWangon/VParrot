@@ -20,6 +20,7 @@ require_once './vparrot-server/controllers/UsersController.php';
 require_once './vparrot-server/controllers/AuthController.php';
 require_once './vparrot-server/controllers/ContactController.php';
 require_once './vparrot-server/controllers/RoleController.php';
+require_once './vparrot-server/controllers/TreatedContactController.php';
 
 require_once './vparrot-server/repository/ContactRepository.php';
 require_once './vparrot-server/repository/RejectedTestimoniesRepository.php';
@@ -29,6 +30,7 @@ require_once './vparrot-server/repository/SchedulesRepository.php';
 require_once './vparrot-server/repository/TestimoniesRepository.php';
 require_once './vparrot-server/repository/UserRepository.php';
 require_once './vparrot-server/repository/RoleRepository.php';
+require_once './vparrot-server/repository/TreatedContactRepository.php';
 
 require_once './vparrot-server/util/EmailService.php';
 
@@ -46,6 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //Instanciation des repository
+$treatedContactRepo = new TreatedContactRepository();
 $contactRepo = new contactRepository();
 $usersRepo = new UserRepository();
 $rolesRepo = new RoleRepository();
@@ -64,6 +67,7 @@ $validator = new Validator();
 
 //instanciations des controllers
 $controllers = [
+    'treatedContact' => new TreatedContactController($treatedContactRepo, $validator, $authModel),
     'roles' => new RoleController($rolesRepo, $validator, $authModel),
     'contact' => new ContactController($contactRepo, $validator),
     'cars' => new CarsController($carRepo, $validator),
@@ -78,7 +82,8 @@ $controllers = [
 //Définition des routes
 $routes = [
     'GET' => [
-        
+
+        '/vparrot/contact/treated' => [$controllers['treatedContact'], 'getAllTreatedContactList'],
         '#^/vparrot/cars/details/(\d+)$#' => [$controllers['cars'], 'getFullCarDetails'],
         '/vparrot/cars/filtered' => [$controllers['cars'], 'getFilteredCarsList'],
         '/vparrot/cars/distinct-transmission-types' => [$controllers['cars'], 'getAllDistinctTransmissionTypes'],
