@@ -9,9 +9,9 @@ class Contact {
     private $email;
     private $subject;
     private $content;
-    private $isTreated;
+    private $status;
 
-    public function __construct($id = null, $firstName = null, $lastName = null, $phone = null, $email = null, $subject = null, $content = null, $isTreated = 0) {
+    public function __construct($id = null, $firstName = null, $lastName = null, $phone = null, $email = null, $subject = null, $content = null, $status = "non traité") {
 
         $this->id = $id;
         $this->firstName = $firstName;
@@ -20,7 +20,7 @@ class Contact {
         $this->email = $email;
         $this->subject = $subject;
         $this->content = $content;
-        $this->isTreated = $isTreated;
+        $this->status = $status;
     }
 
 //Getters List 
@@ -52,8 +52,8 @@ class Contact {
         return $this->content;
     }
 
-    public function getIsTreated () :bool {
-        return $this->isTreated;
+    public function getStatus () :bool {
+        return $this->status;
     }
 
 //Setters List 
@@ -81,7 +81,7 @@ class Contact {
         $this->content = $content;
     }
 
-    public function setIsTreated($isTreated) :void {
-        $this->isTreated = $isTreated;
+    public function setStatus($status) :void {
+        $this->status = $status;
     }
 }
