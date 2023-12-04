@@ -146,7 +146,7 @@ class UserRepository extends Database {
      * @return bool Renvoie vrai si la suppression a réussi, faux sinon.
      */
 
-    public function deleteUser($idUser) :bool {
+    public function deleteUser(Users $user) :bool {
         try {
 
             $db = $this->getBdd();
@@ -154,7 +154,7 @@ class UserRepository extends Database {
 
             $stmt = $db->prepare($req);
 
-            $stmt->bindValue(":idUser", $idUser, PDO::PARAM_INT);
+            $stmt->bindValue(":idUser", $user->getIdUser(), PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->rowCount() > 0;
