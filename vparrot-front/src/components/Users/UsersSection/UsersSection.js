@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useFetchAllUsers from '../hooks/useFetchAllUsers';
 import useFetchAllRoles from '../hooks/useFetchAllRoles';
+import useDeleteUser from '../hooks/useDeleteUser';
 import UserCard from '../UserCard/UserCard';
 import Button from '../../common/Buttons/Button/Button';
 import UserModal from '../UserModal/UserModal';
@@ -11,8 +12,8 @@ import H2Title from '../../common/H2Title/H2Title';
 const UsersSection = () => {
 
     const { users: initialUsers, isLoading: isLoadingUsers } = useFetchAllUsers();
-   
     const { roles, isLoading: isLoadingRoles } = useFetchAllRoles();
+    const { deletedUser } = useDeleteUser();
 
     const [users, setUsers] = useState(initialUsers);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -50,6 +51,18 @@ const UsersSection = () => {
     };
 
 
+    const handleDeleteUser = (userId) => {
+      deletedUser(userId)
+          .then(() => {
+              setUsers(prevUsers => prevUsers.filter(user => user.idUser !== userId));   
+          })
+          .catch(error => {
+           
+              console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+          });
+    };
+
+
     if (isLoadingUsers || isLoadingRoles) { 
       return <div>Loading...</div>;
     }
@@ -65,7 +78,7 @@ const UsersSection = () => {
         
             {users.map((user) => (
               <div key={user.idUser} className="userCardList col d-flex align-items-stretch">
-                  <UserCard user={user} onEditUser={() => handleEditUserClick(user)}/>
+                  <UserCard user={user} onEditUser={() => handleEditUserClick(user)} onDeleteUser={() => handleDeleteUser(user.idUser)}/>
               </div>
                 
             ))}
