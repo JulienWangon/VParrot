@@ -41,7 +41,7 @@ class ContactController {
                     'email' => $contact->getEmail(),
                     'contactSubject' => $contact->getSubject(),
                     'content' => $contact->getContent(),
-                    'isTreated' => $contact->getIsTreated()
+                    'status' => $contact->getStatus()
                 ];
             }, $contacts);
 
