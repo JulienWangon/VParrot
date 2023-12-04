@@ -1,6 +1,6 @@
 <?php
 
-require_once './vparrot-server/models/treatedContact.php';
+require_once './vparrot-server/models/TreatedContact.php';
 require_once './vparrot-server/models/Database.php';
 
 
@@ -47,6 +47,6 @@ class TreatedContactRepository extends Database {
           $this->handleException($e, "extraction de tous les avis clients");
       }
 
-  };
+  }
 
 }
