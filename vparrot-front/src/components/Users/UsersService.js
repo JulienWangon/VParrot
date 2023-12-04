@@ -81,4 +81,35 @@ export const updateUser = async (userData, csrfToken) => {
     }
 };
 
+//Supprimer un utilisateur
+export const deleteUser = async (idUser, csrfToken) => {
+
+    try {
+
+        const response = await instanceAxios.delete(`/users/${idUser}/delete`, {
+            headers: {
+                'Content-Type': 'application/json', 
+                'X-CSRF-TOKEN': csrfToken, 
+            },
+        });
+
+        if(response.data && response.data.status === 'success') {
+
+            return response.data;
+        } else {
+
+            throw new Error(response.data.message || "Erreur lors de la communication avec l'API.");
+        }
+
+    } catch (error) {
+
+        const errorMessage = error.response?.data?.message ?? "Erreur lors de la communication avec l'API.";
+        console.error('Erreur lors de la suppression l\'utilisateur:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+
+}
+
+
 
