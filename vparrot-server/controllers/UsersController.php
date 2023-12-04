@@ -326,6 +326,86 @@ class UsersController {
     }
 
 
+    //Supprimer un utilisateur 
+    public function deleteThisUser($idUser) {
+
+        //Vérifie si la bonne méthode HTTP est utilisée (DELETE)
+        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
+            $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+            return;
+        }
+
+
+        // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401);
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin'
+        if ($userData['role'] !== 'admin') {
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
+            return;
+        }
+
+
+        //Vérifie la présence du token csrf
+        $headers = getallheaders();
+        $csrfTokenHeader = $headers['X-CSRF-TOKEN'] ?? '';
+
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+
+        if ($csrfTokenHeader !== $decodedTokenData['csrfToken']) {
+            
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+        
+        // Vérifie si l'utilisateur existe avant la mise  jour
+        if(!$this->userRepository->doesUserExist($idUser)) {
+            
+            $this->sendResponse(["status" => "error", "message" => "L'utilisateur n'existe pas."], 404);
+            return;
+        }
+
+        try {
+
+            $userData = $this->userRepository->getUserByID($idUser);
+
+            if($userData) {
+    
+                $userToDelete = new Users();
+                $userToDelete->setIdUser($userData['idUser']);
+                $userToDelete->setFirstName($userData['firstName']);
+                $userToDelete->setLastName($userData['lastName']);
+                $userToDelete->setUserEmail($userData['userEmail']);
+                $userToDelete->setRoleId($userData['roleId']);
+    
+                $isDeleted = $this->userRepository->deleteUser($userToDelete);
+    
+                if ($isDeleted) {
+
+                    $this->sendResponse(['status' => 'success', 'message' => 'Utilisateur supprimé avec succès', 'user' => $userToDelete]);
+                } else {
+
+                    $this->sendResponse(['status' => 'error', 'message' => 'Erreur lors de la suppression'], 500);
+                }
+
+            } else {
+
+                $this->sendResponse(['status' => 'error', 'message' => 'Utilisateur non trouvé'], 404);
+            }
+        } catch (Exception $e) {
+
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+
      /**
      * Gère la demande de réinitialisation du mot de passe.
      *
