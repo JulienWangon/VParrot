@@ -8,7 +8,7 @@ class TreatedContact {
     private $lastName;
     private $phone;
     private $email;
-    private $subject;
+    private $contactSubject;
     private $content;
     private $status;
     private $treatmentDate;
@@ -16,14 +16,14 @@ class TreatedContact {
     private $assignedUserId;
 
 
-    public function __construct ($idTreatedContact = null, $firstName = null, $lastName = null, $phone = null, $email = null, $subject = null, $content = null, $assignedUserId = null, $treatmentDate = null, $userComment = null , $status = "en cours") {
+    public function __construct ($idTreatedContact = null, $firstName = null, $lastName = null, $phone = null, $email = null, $contactSubject = null, $content = null, $assignedUserId = null, $treatmentDate = null, $userComment = null , $status = "en cours") {
 
         $this->idTreatedContact = $idTreatedContact;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->phone = $phone;
         $this->email = $email;
-        $this->subject = $subject;
+        $this->contactSubject = $contactSubject;
         $this->content = $content;
         $this->status = $status;
         $this->treatmentDate = $treatmentDate;
@@ -53,8 +53,8 @@ class TreatedContact {
         return $this->email;
     }
 
-    public function getSubject() :string {
-        return $this->subject;
+    public function getContactSubject() :string {
+        return $this->contactSubject;
     }
 
     public function getContent() :string {
@@ -98,8 +98,8 @@ class TreatedContact {
         $this->email = $email;
     }
 
-    public function setSubject($subject) :void {
-        $this->subject = $subject;
+    public function setContactSubject($contactSubject) :void {
+        $this->contactSubject = $contactSubject;
     }
 
     public function setContent($content) :void {
