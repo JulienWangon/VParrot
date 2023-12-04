@@ -7,7 +7,7 @@ header("Access-Control-Allow-Origin: http://localhost:3000");
 //allowed HTTP methods (méthode autorisées)
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 //Allowed headers (en-tête autorisés)
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-CSRF-TOKEN");
 header("Access-Control-Allow-Credentials: true");
 
 
@@ -116,6 +116,7 @@ $routes = [
     ],
 
     'DELETE' => [
+      '#^/vparrot/users/(\d+)/delete$#' => [$controllers['users'], 'deleteThisUser'],
       '#^/vparrot/testimonies/delete$#' => [$controllers['testimonies'], 'deleteThisTestimony'],
 
     ]
