@@ -38,7 +38,7 @@ class TreatedContactController {
 
             if(empty($treatedContacts)) {
 
-              $this->sendResponse(['status' => 'error', 'message' => 'Aucuns contact traité trouvés;']);
+              $this->sendResponse(['status' => 'error', 'message' => 'Aucuns contacts traités trouvés. ']);
               return;
             }
 
