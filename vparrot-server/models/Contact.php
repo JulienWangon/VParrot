@@ -2,7 +2,7 @@
 
 class Contact {
 
-    private $id;
+    private $idContact;
     private $firstName;
     private $lastName;
     private $phone;
@@ -11,9 +11,9 @@ class Contact {
     private $content;
     private $status;
 
-    public function __construct($id = null, $firstName = null, $lastName = null, $phone = null, $email = null, $subject = null, $content = null, $status = "non traité") {
+    public function __construct($idContact = null, $firstName = null, $lastName = null, $phone = null, $email = null, $subject = null, $content = null, $status = "non traité") {
 
-        $this->id = $id;
+        $this->idContact = $idContact;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->phone = $phone;
@@ -24,8 +24,8 @@ class Contact {
     }
 
 //Getters List 
-    public function getId () :int {
-        return $this->id;
+    public function getIdcontact () :int {
+        return $this->idContact;
     }
 
     public function getFirstName () :string {
@@ -57,6 +57,10 @@ class Contact {
     }
 
 //Setters List 
+    public function setIdContact($idContact) :void {
+        $this->idContact = $idContact;
+    }
+
     public function setFirstName($firstName) :void {
         $this->firstName = $firstName;
     }
