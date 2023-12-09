@@ -16,7 +16,7 @@ class TreatedContact {
     private $assignedUserId;
 
 
-    public function __construct ($idTreatedContact = null, $firstName = null, $lastName = null, $phone = null, $email = null, $contactSubject = null, $content = null, $assignedUserId = null, $treatmentDate = null, $userComment = null , $status = "en cours") {
+    public function __construct ($idTreatedContact = null, $firstName = null, $lastName = null, $phone = null, $email = null, $contactSubject = null, $content = null, $assignedUserId = null, $treatmentDate = null, $userComment = null , $status = null) {
 
         $this->idTreatedContact = $idTreatedContact;
         $this->firstName = $firstName;
