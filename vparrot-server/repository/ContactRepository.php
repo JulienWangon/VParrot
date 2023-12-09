@@ -91,5 +91,65 @@ class contactRepository extends Database {
             $this->handleException($e, "ajout d'un contact");
         }
     }
+
+
+    //Obtenir un contact par son ID
+    public function getContactById($idContact) {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "SELECT * FROM contact WHERE id_contact = :idContact";
+
+            $stmt = $db->prepare($req);
+            $stmt->bindValue(":idContact", $idContact, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+
+                $contactData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $contact = new Contact();
+                $contact->setIdContact($contactData['id_contact']);
+                $contact->setFirstName($contactData['first_name']);
+                $contact->setLastName($contactData['last_name']);
+                $contact->setPhone($contactData['phone']);
+                $contact->setEmail($contactData['email']);
+                $contact->setSubject($contactData['subject']);
+                $contact->setContent(($contactData['content']));
+                $contact->setStatus($contactData['status']);
+
+                return $contact;
+
+            } else {
+
+                throw new Exception("Contact non trouvé.");
+            }
+        } catch (PDOException $e) {
+
+            $this->handleException($e, "recherche du contact par son id");           
+        }
+    }
+
+
+    //Supprimer un contact via son ID
+    public function deletecontactById($idContact) {
+
+        try {
+
+            $db = $this->getBdd();
+            $req = "DELETE FROM contact WHERE id_contact = :idContact";
+
+            $stmt = $db->preapre($req);
+            $stmt->bindValue(":idcontact", $idContact, PDO::PARAM_INT);
+            $stmt->execute;
+
+            return $stmt->rowCount() > 0;
+
+        } catch (PDOException $e) {
+
+            $this->handleException($e, "Suppression d'un contact");
+        }
+    }
   
 }
