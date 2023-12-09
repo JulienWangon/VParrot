@@ -48,8 +48,8 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 //Instanciation des repository
-$treatedContactRepo = new TreatedContactRepository();
 $contactRepo = new contactRepository();
+$treatedContactRepo = new TreatedContactRepository($contactRepo);
 $usersRepo = new UserRepository();
 $rolesRepo = new RoleRepository();
 $servicesRepo = new ServicesRepository();
@@ -109,6 +109,7 @@ $routes = [
         '/vparrot/login' => [$controllers['auth'], "login"],
         '/vparrot/logout' => [$controllers['auth'], "logout"],
         '/vparrot/contact' => [$controllers['contact'], 'createContact'],
+        '/vparrot/contact/treat' => [$controllers['treatedContact'], 'treatThisContact'],
 
     ],
 
