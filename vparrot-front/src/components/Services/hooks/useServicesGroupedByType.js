@@ -26,7 +26,7 @@ const useServicesGroupedByType  = () => {
             } catch (error) {
                 //Mise à jour de l'état d"erreur en cas d'erreur
                 setError(error.message);
-                //Mise à joru de l'état de chargement
+                //Mise à jour de l'état de chargement
                 setLoading(false);
             }
         };
