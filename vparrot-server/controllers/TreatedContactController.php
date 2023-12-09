@@ -73,4 +73,93 @@ class TreatedContactController {
         }
     }
 
+    //Traitement d'un contact
+    public function treatThisContact () {
+
+        //Vérifie si la bonne méthode HTTP est utilisée (POST)
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+          $this->sendResponse(["status" => "error", "message" => "Méthode non autorisée"], 405);
+          return;
+        }
+
+         // Récupère les informations de l'utilisateur depuis le JWT
+        try {
+
+            $userData = $this->authModel->decodeJwtFromCookie();
+        } catch (Exception $e) {
+
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 401);
+            return;
+        }
+
+        // Vérifie si l'utilisateur a le rôle 'admin' ou 'employé'
+        if ($userData['role'] !== 'admin' && $userData['role'] !== 'employé') {
+
+            $this->sendResponse(['status' => 'error', 'message' => 'Accès non autorisé'], 403);
+            return;
+        }
+
+        // Récupère les données envoyées
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        //Vérifie si le format json est valide
+        if (!$this->validator->validateJsonFormat($data)) {
+  
+            $this->sendResponse($this->validator->getErrors(), 400);
+            return;
+        }
+ 
+         //Vérifie la présence des donnée id et token csrf
+        if (empty($data['contactId']) || empty($data['csrfToken'])) {
+             
+            $this->sendResponse(['status' => 'error', 'message'=> 'identitfiant témoignage ou token csrf manquant'], 400);
+            return;
+         }
+ 
+        //Validation du token csrf 
+        $decodedTokenData = $this->authModel->decodeJwtFromCookie();
+ 
+        if ($data['csrfToken'] !== $decodedTokenData['csrfToken']) {
+             
+            $this->sendResponse(['status' => 'error', 'message' => 'Token CSRF invalide'], 400);
+            return;
+        }
+
+
+        //Assigne les data à des variables
+        $contactId = $data['contactId'];
+        $assignedUserId = $data['assignedUserId'];
+        $userComment = $data['userComment'];
+        $treatmentDate = $data['treatmentDate'];
+        $status = $data['status'];
+
+        //Validation des données
+        $validUserComment = $this->validator->validateMediumContent($userComment, 'commentaire', 50, 400);
+        $validStatus = $this->validator->validateStringForNames($status, 'status', 20);
+        $validAssignedUserId = $this->validator->validateNumber($assignedUserId, 'id');
+        $validTreatmentDate = $this->validator->validateStringForNames($treatmentDate, "date");
+        $validContactId = $this->validator->validateNumber($contactId, 'id');
+
+        if(!$validUserComment || !$validStatus || !$validAssignedUserId || !$validTreatmentDate || !$validContactId) {
+
+          $errors = $this->validator->getErrors();
+          $this->sendResponse(["status" => "error", "message" => $errors], 400);
+          return;
+        }
+
+        try {
+
+            if($this->treatedContactRepository->contactTreatment($contactId, $assignedUserId, $userComment, $treatmentDate, $status)) {
+
+                $this->sendResponse(['status' => 'success', 'message' => 'Contact traité avec success']);
+            } else {
+
+                $this->sendResponse(['status' => 'error', 'message' => 'Aucun contact traité']);
+            }
+        } catch (Exception $e) {
+
+            $this->sendResponse(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+
 }
