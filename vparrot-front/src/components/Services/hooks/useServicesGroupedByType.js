@@ -35,8 +35,22 @@ const useServicesGroupedByType  = () => {
         fetchData();
     }, [])
 
+    const fetchService = async () => {
+      setLoading(true);
+      try {
+          const data = await fetchAllServicesGroupedByType();
+          setServiceGroupedByType(data);
+      } catch (error) {
+          setError(error.message);
+      }
+      setLoading(false);
+  };
+
+
+
+     
     //Retourne les services par type l'état de chargement et les erreurs pour utilisation dans un autre composant
-    return { servicesGroupedByType, loading, error };
+    return { servicesGroupedByType, setServiceGroupedByType, loading, error, fetchService };
 };
 
 export default useServicesGroupedByType;
