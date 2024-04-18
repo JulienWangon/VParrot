@@ -1,0 +1,14 @@
+.serviceSectionTitle {
+  text-align: center;
+}
+
+.serviceTabSection {
+  margin-top: 2em;
+  padding: 1em;
+}
+
+
+.eyeBtnContainer {
+ background-color: rgba(187, 39, 26, 0.9)!important;
+ border: none;
+}

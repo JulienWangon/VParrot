@@ -19,7 +19,7 @@ const ServiceCard = ({ name, description, price, pathImg }) => {
         <div className="cardContent">
             <h3 className="cardTitle">{name}</h3>
             <p className="cardDescription">{description}</p>
-            <p className="cardPrice">{price}</p>
+            <p className="cardPrice">{price}{!isNaN(parseFloat(price)) && " €"}</p>
             <div className="contactContainer">
                 <ContactBtn className="whiteBtn" additionalData={{  subject: `Demande d'info sur ${name}`  }}/>
             </div>
