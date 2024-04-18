@@ -1,14 +1,20 @@
 import React from 'react';
 import Button from '../../../common/Buttons/Button/Button';
 
-const ContactCard = ( { contact }) => {
+const ContactCard = ( { contact, onOpenModal }) => {
+
+    const handleOpenModal = () => {
+        onOpenModal(contact);
+    };
+
+
     return (
         <div className="cardContact card my-3">
             <h5 className="cardcontactHeader card-header">{contact.contactSubject}</h5>
             <div className="cardContactBody card-body">
                 <h5 className="cardContactTitle card-title">{`${contact.lastName} ${contact.firstName}`}</h5>
                 <p className="cardContactContent card-text">{contact.content}</p>
-                <Button className="contactTraitment" colorStyle="redBtn">Traiter le Message</Button>   
+                <Button className="contactTraitment" colorStyle="redBtn" onClick={handleOpenModal}>Traiter le Message</Button>   
             </div>
             <div className="cardContactFooter card-footer text-muted">
                 <span className="emailContact me-3">{contact.email}</span>
@@ -18,5 +24,5 @@ const ContactCard = ( { contact }) => {
     );
 };
 
-export default ContactCard;
+export default React.memo(ContactCard);
 

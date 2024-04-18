@@ -1,0 +1,63 @@
+.modalOverlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px); 
+  z-index: 3000; 
+  cursor: pointer;
+}
+
+.inputContainer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90vw;
+  max-height: auto;
+  background-color: rgba(187, 39, 26, 0.6);
+  border-radius: 20px;
+  z-index: 3000;
+  overflow-y: auto; 
+}
+
+.treatmentTitle {
+  font-family: 'Alumni Sans', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+  margin-top: 0.5em;
+}
+
+.treatmentForm {
+  width: 100%;
+  border: none;
+  padding: 0.8em;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 0.8em;
+}
+
+.formGroup > label {
+  color: white;
+  margin-bottom:0.2em; 
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 2em;
+}
+

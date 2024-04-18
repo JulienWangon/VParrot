@@ -59,31 +59,29 @@ export const fetchAllTreatedContact = async () => {
 }
 
 
-export const treatContact = async (contactId, assignedUserId, userComment, treatmentDate, status, csrfToken) => {
+export const treatContact = async (contactData, csrfToken) => {
+
     try {
 
-        const dataToSend = {
-            contactId,
-            assignedUserId,
-            userComment,
-            treatmentDate,
-            status,
-            csrfToken
-        };
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        } 
 
-        const response = await instanceAxios.post('/contact/treat', dataToSend);
+      
+        const response = await instanceAxios.post('/contact/treat', contactData, { headers });
 
         if(response.data && response.data.status === "success") {
 
-            return response.data.data;
+            return response.data;
         } else {
 
             throw response.data;
         }
-
+        
     } catch (error) {
 
-        console.error("Erreur lors du traitement du contact, error");
+        console.error("Erreur lors du traitement du contact", error);
         throw error;
     }
 }
