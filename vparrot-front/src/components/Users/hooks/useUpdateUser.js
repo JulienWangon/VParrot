@@ -11,12 +11,12 @@ const useUpdateUser = () => {
     const [ isLoading, setIsLoading ] = useState(false);
 
     const updateExistingUser = async (userData) => {
-
+    
         setIsLoading(true);
 
         try {
-
-            const response = await updateUser(userData, csrfToken);
+            const { idUser, ...formData } = userData;
+            const response = await updateUser(idUser, formData, csrfToken);
             showMessage({data: response }, 'success');
             return response.user;
         } catch (error) {

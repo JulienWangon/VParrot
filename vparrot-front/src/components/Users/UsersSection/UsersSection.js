@@ -44,8 +44,9 @@ const UsersSection = () => {
 
 
     const updateUser = (updatedUser) => {
-      
+    
       setUsers(prevUsers => {
+       
         return prevUsers.map(user => user.idUser === updatedUser.idUser ? updatedUser : user);
       });
     };
@@ -68,8 +69,7 @@ const UsersSection = () => {
     if (isLoadingUsers || isLoadingRoles) { 
       return <div>Loading...</div>;
     }
-    console.log('Users before mapping: ', users);
-   
+  
   return (
     <section className="mt-4">
         <H2Title className="userSectionTitle" h2Text="Gestion des comptes utilisateur"/>

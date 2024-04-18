@@ -53,10 +53,10 @@ const UserModal = ({ onClose, roles, onAddUser, userToUpdate, onUpdateUser,mode 
     switch (name) {
       case 'lastName':
       case 'firstName':
-          newErrors[name] = validateName(value)
+          newErrors[name] = validateName(value);
           break;
       case 'userEmail':
-          newErrors.content = validateEmail(value);
+          newErrors.userEmail = validateEmail(value);
           break;
       default:
           break;
@@ -85,22 +85,22 @@ const UserModal = ({ onClose, roles, onAddUser, userToUpdate, onUpdateUser,mode 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (areAllFieldsFilled() && hasNoErrors()) {
+        if (areAllFieldsFilled() && hasNoErrors() && userData) {
             const dataToSend = { ...userData };
-    
+        
             try {
                 if (mode === 'create') {
                     const newUser = await addNewUser(dataToSend);
                     onAddUser(newUser);
-                } else if (mode === 'update') {
+                } else if (mode === 'update' ) {
                     
-                    const updatedUser = await updateExistingUser(dataToSend);
+                    const updatedUser = await updateExistingUser(dataToSend);                  
                     onUpdateUser(updatedUser); 
                 }
                 onClose();
-            } catch (error) {
                 
-                console.error('Erreur lors de la mise à jour de l’utilisateur:', error);
+            } catch (error) {               
+                console.error("Erreur lors de la mise à jour de l'utilisateur:", error);
             }
         }
     };

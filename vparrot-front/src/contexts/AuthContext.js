@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const { showMessage } = useMessage();
     
-  // Focntio pour controller si l utilisateur est connecté
+  // Fonction pour controller si l utilisateur est connecté
     const checkUserSession = async () => {
 
         try {
@@ -28,7 +28,9 @@ export const AuthProvider = ({ children }) => {
             if (response.status === 200) {
                 setCurrentUser({
                   id: response.data.user.id,
-                  role: response.data.user.role
+                  role: response.data.user.role,
+                  firstName: response.data.user.firstName,
+                  lastName: response.data.user.lastName
                 });
 
                 setCsrfToken(response.data.user.csrfToken);
@@ -53,8 +55,8 @@ export const AuthProvider = ({ children }) => {
           try {
   //Configurer les données du formulaire pour la requête POST
               const data = {
-                  user_email: email,
-                  user_password: password,
+                  userEmail: email,
+                  userPassword: password,
                   captchaToken: captchaToken
             };
 
@@ -74,9 +76,11 @@ export const AuthProvider = ({ children }) => {
               showMessage(response, "success");             
               setCurrentUser({
                 id: response.data.user.id,
-                role: response.data.user.role
+                role: response.data.user.role,
+                firstName: response.data.user.firstName,
+                lastName: response.data.user.lastName
               });
-              setCsrfToken(response.data.csrf_token);       
+              setCsrfToken(response.data.csrfToken);       
                 navigate('/accueiladmin');
             } else if (response.data.status === "error") {
               

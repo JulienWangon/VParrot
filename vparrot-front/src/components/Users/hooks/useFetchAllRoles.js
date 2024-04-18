@@ -18,7 +18,7 @@ const useFetchAllRoles = () => {
             try {
 
                 const response = await fetchAllRoles();
-                console.log("Réponse complète dans le hook:", response);
+              
                 if(response) {
 
                     setRoles(response);
@@ -27,7 +27,7 @@ const useFetchAllRoles = () => {
                   showMessage({ data: "La récupération des utilisateurs a échoué" }, 'error');
                 }
             } catch (error) {
-              console.log("Error:", error);
+             
 
               if (error.response && error.response.data && error.response.data.status === 'error') {
                 showMessage({ message: error.response.data.message || "Erreur lors de l'opération" }, 'error');
@@ -41,8 +41,8 @@ const useFetchAllRoles = () => {
         };
 
         fetchData();
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
-    console.log('Roles dans le hook:', roles);
+    }, []) 
+  
     return { roles, isLoading }
 }
 

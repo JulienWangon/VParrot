@@ -39,7 +39,6 @@ export const addUser = async (userData, csrfToken) => {
             return response.data;
         } else {
        
-            console.log("Réponse de l'API en cas d'erreur : ", response.data);
             throw new Error(response.data.message|| "Erreur lors de la communication avec l'API.");
         }
         
@@ -53,16 +52,15 @@ export const addUser = async (userData, csrfToken) => {
 
 
 //Mise à jour d'un utilisateur 
-export const updateUser = async (userData, csrfToken) => {
+export const updateUser = async (idUser, formData, csrfToken) => {
 
     try {
 
-        const requestBody = {
-            ...userData,
-            csrfToken: csrfToken
-        };
-
-        const response = await instanceAxios.put('/users/update', requestBody);
+        const response = await instanceAxios.put(`/user/${idUser}/update`, formData, {
+            headers:  {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        });
 
         if(response.data && response.data.status === "success") {
 
@@ -86,12 +84,12 @@ export const deleteUser = async (idUser, csrfToken) => {
 
     try {
 
-        const response = await instanceAxios.delete(`/users/${idUser}/delete`, {
-            headers: {
-                'Content-Type': 'application/json', 
-                'X-CSRF-TOKEN': csrfToken, 
-            },
-        });
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken 
+        };
+
+        const response = await instanceAxios.delete(`/users/${idUser}/delete`, { headers });
 
         if(response.data && response.data.status === 'success') {
 
