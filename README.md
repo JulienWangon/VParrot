@@ -17,19 +17,11 @@ Cette commande va créer le dossier node_modules et y installer toutes les dépe
 
 5. dans le dossier vparrot-server créé un fichier .env et copier le code suivant et collez le à l'interieur , il s'agit de varible d'environnement pour configurer mon service d'email PHP Mailer et la clé secrète pour encoder les token JWT
 
-SECRET_KEY = "k1#em1zeb-=w@%_ym5+5l6h27y1!tu(2ph@u-+=21igg=8%228"
 
-SMTP_HOST  ="muscadier.o2switch.net"
-SMTP_USER = "noreply@garage-vparrot.j-webflow.com"
-SMTP_PASSWORD = "@Julien57320"
-SMTP_SECURE = "ssl"
-SMTP_PORT = "465"
-MAIL_FROM_ADDRESS = "noreply@garage-vparrot.j-webflow.com"
-MAIL_FROM_NAME = "Garage V.Parrot"
 
 6. mise en place de la base de donnée et injection des fixtures
 
-télécharger le dossier archive au lien ci joint : https://drive.google.com/file/d/1Nr_hWoUVC4gKq_I1ADbTAOocTKKQVry6/view?usp=drive_link
+télécharger le dossier archive au lien ci joint : 
 le dossier contient les fichiers pour la création de la base de donnée et des tables ainsi que le fichier d'injection des fixtures dans la base 
 
 ouvrez un terminal et déplacer vers le dossier  C:\wamp64\bin\mysql\mysqlx.y.z\bin>
@@ -50,11 +42,7 @@ le server de développement se lance vous pouvez maintenant utiliser le projet
 
 l'accès à la page de connexion se fait via l url : /access-panel
 
-email administrateur : vincent.parrot@garage-vparrot.j-webflow.com
-mot de passe: @Julien57320
 
-email employé : benoit.paire@garage-vparrot.j-webflow.com
-mot de passe: @Julien57320
 
 
 
