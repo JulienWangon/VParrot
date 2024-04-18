@@ -1,0 +1,54 @@
+.modalOverlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Plus foncé pour plus de contraste */
+  backdrop-filter: blur(8px);
+  z-index: 2500; /* Plus haut que la modale de voiture pour s'assurer qu'elle s'affiche au-dessus */
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60vw; /* Ajuster selon besoin pour les équipements */
+  background-color: #fff; /* Fond blanc pour la clarté */
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtil ombrage pour le relief */
+  z-index: 3000;
+  overflow-y: auto; /* Au cas où le contenu déborde */
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 1.5em;
+  color: #333; /* Couleur discrète */
+  cursor: pointer;
+}
+
+.inputGroup {
+  width: 80%; /* Utilisation de la largeur pour aligner les champs de saisie */
+  margin-bottom: 1em;
+}
+
+.submitBtn {
+  padding: 10px 20px;
+  background-color: #007BFF; /* Couleur bleue pour le bouton de soumission */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}

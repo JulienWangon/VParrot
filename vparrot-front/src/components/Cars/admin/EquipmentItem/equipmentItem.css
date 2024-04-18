@@ -1,0 +1,37 @@
+/* equipmentItem.css */
+.checkboxAsButton {
+  width: 50%px; /* Largeur fixe */
+  height: 50px; /* Hauteur fixe */
+  margin: 5px; /* Marge entre chaque item */
+  display: flex;
+  align-items: center;
+}
+
+.hiddenCheckbox {
+  display: none;
+}
+
+.equipment, .selectedEquipment {
+  /* Styles pour le label */
+  width: 100%; /* Remplir complètement l'espace disponible */
+  height: 100%; /* Remplir complètement l'espace disponible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: auto;
+
+}
+
+.equipment {
+  /* Styles pour les éléments non sélectionnés */
+  background-color: #f0f0f0;
+}
+
+.selectedEquipment {
+  /* Styles pour les éléments sélectionnés */
+  background-color: green; /* Par exemple */
+  color: white; /* Couleur du texte */
+}

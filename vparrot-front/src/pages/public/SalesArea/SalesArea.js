@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useFetchFilteredCars from '../../../components/Cars/hooks/useFetchFileteredCars';
 import { useContactModal } from '../../../contexts/ContactModalContext';
+import { useCars } from '../../../contexts/CarContext';
 
 import Header from '../../../components/common/Header/Header';
 import H2Title from '../../../components/common/H2Title/H2Title';
@@ -19,13 +20,14 @@ const SalesArea = () => {
 
     const [selectedCar, setSelectedCar] = useState(null);
     const [contactSubject, setContactSubject] = useState("");
+    const { setCarId } = useCars();
 
     const handleCarDetailsClick = (car) => { 
-
-            setSelectedCar(car.id_car);
-            setContactSubject(`Demande d'information sur ${car.brand} ${car.model}`);
-            console.log("Mise à jour du sujet pour CarModal:", `Demande d'information sur ${car.brand} ${car.model}`);
-            openAdModal({ subject: `Demande d'information sur ${car.brand} ${car.model}` });
+     
+        setSelectedCar(car.id_car);  // Sélectionner l'ID de la voiture pour la modale
+        setContactSubject(`Demande d'information sur ${car.brand} ${car.model}`);  // Définir le sujet pour tout contact ou requête ultérieure
+        setCarId(car.id_car);  // Déclencher le chargement des détails de la voiture dans le contexte
+        openAdModal();  
     };
 
   return (

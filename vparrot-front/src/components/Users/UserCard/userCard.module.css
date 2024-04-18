@@ -2,10 +2,6 @@
  width: 100%;
 }
 
-.cardContactFooter {
-  text-align: center;
-}
-
 .updateUser, .deleteUser {
   width: 40%;
   margin: 0.5em;
@@ -16,13 +12,16 @@
   font-size: 1.5rem;
 }
 
+.cardUserContent, .cardUserHeader {
+    font-family: 'Anek Tamil', sans-serif;
+}
 .cardUserContent {
   font-size: 0.9rem;
-  font-family: 'Anek Tamil', sans-serif;
+ 
 }
 
-.cardUserHeader {
-  font-family: 'Anek Tamil', sans-serif;
+.cardContactFooter {
+  text-align: center;
 }
 
 

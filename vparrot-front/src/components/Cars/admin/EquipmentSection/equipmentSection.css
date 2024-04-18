@@ -1,0 +1,50 @@
+.choiceEquipmentSection {
+  margin-bottom: 50px; /* Espacement entre les sections */
+  margin-top: 50px;
+}
+
+.h3Title {
+  margin-bottom: 10px; /* Espacement sous le titre de la section */
+}
+
+.equipmentContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Deux colonnes de même taille */
+  gap: 5px; /* Espacement entre les éléments de la grille */
+
+}
+
+.selectedEquipment {
+  background-color: #007bff; /* Couleur de fond pour l'élément sélectionné */
+  color: white; /* Couleur du texte pour l'élément sélectionné */
+}
+
+.sectionEquipmentsTitle{
+  color: white;
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 0;
+
+}
+
+
+.addEquipmentButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: white; /* Changez la couleur selon votre thème */
+}
+
+.addEquipmentButton i {
+  font-size: 1.3rem; /* Taille de l'icône */
+  border-radius: 50%; /* Rendre le bord circulaire */
+ 
+
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
+  
+}

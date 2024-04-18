@@ -6,12 +6,11 @@ import Button from '../../../common/Buttons/Button/Button';
 import './carsCard.css';
 
 const CarsCard = ({ car, onDetailsClick }) => {
+
+
   return (
 
-    
     <div className="carCards">
-
-       
 
         <div className="carImgContainer">
             <img className="carImg" src={car.image} alt={`${car.brand} ${car.model}`}/>
@@ -36,7 +35,7 @@ const CarsCard = ({ car, onDetailsClick }) => {
         </div>
 
         <div className="carDetailsBtn">
-            <Button className="openCarModal" colorStyle="redBtn" onClick={() => onDetailsClick(car)}>Détails</Button>
+            <Button className="openCarModal" colorStyle="redBtn" onClick={() => onDetailsClick(car.id_car)}>Détails</Button>
         </div>
 
         <div className="refContainer">

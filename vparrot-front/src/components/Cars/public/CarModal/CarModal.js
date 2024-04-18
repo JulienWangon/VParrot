@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContactModal } from '../../../../contexts/ContactModalContext';
-import useFetchAllCarDetailsById from '../../hooks/useFetchAllCarDetailsById';
+import { useCars } from '../../../../contexts/CarContext';
+
 import Button from '../../../common/Buttons/Button/Button';
 import CarImagesGallery from '../CarImagesGallery/CarImagesGallery';
 import DetailsList from '../DetailsList/DetailsList';
@@ -13,28 +14,27 @@ import ContactBtn from '../../../common/Buttons/ContactBtn/ContactBtn';
 
 
 const CarModal = ({ carId, subject }) => {
-  console.log("Sujet reçu dans CarModal:", subject)
-  
+ 
   const { isAdModalOpen, closeAdModal } = useContactModal();
+  const { carDetails, loadingAllCarDetails, errorAllCarDetails } = useCars();
 
-
-  const { car, loading, error } = useFetchAllCarDetailsById(carId);
+  
    // Ne rien rendre si la modale n'est pas censée être ouverte.
    if (!isAdModalOpen) {
     return null;
   };
-
+ 
   // Contenu à afficher pendant le chargement
-  if (loading) {
+  if (loadingAllCarDetails) {
     return <div className="modalOverlay modalOpen"><p>Chargement...</p></div>;
   };
 
   // Gestion des erreurs
-  if (error) {
-    return <div className="modalOverlay modalOpen"><p>Erreur: {error}</p></div>;
+  if (errorAllCarDetails) {
+    return <div className="modalOverlay modalOpen"><p>Erreur: {errorAllCarDetails}</p></div>;
   };
 
-  if (!car) {
+  if (!carDetails) {
     return <div className="modalOverlay modalOpen"><p>Aucune information disponible pour cette voiture.</p></div>;
   };
 
@@ -47,15 +47,15 @@ const CarModal = ({ carId, subject }) => {
     <div className={carModalStyle.modalOverlay}>
         <div className={carModalStyle.carModal}>
             <div className={carModalStyle.modalHeader}>
-                <CarImagesGallery images={car.images} brand={car.brand} model={car.model}/> 
+                <CarImagesGallery images={carDetails.images} brand={carDetails.brand} model={carDetails.model}/> 
                 <div className={carModalStyle.carNameandLoc}>
                     <div className={carModalStyle.nameCar}>
                         <div className={carModalStyle.brandModel}>
-                            <span className={carModalStyle.carBrand}>{car.brand}</span>
-                            <span className={carModalStyle.carModel}>{car.model}</span>
+                            <span className={carModalStyle.carBrand}>{carDetails.brand}</span>
+                            <span className={carModalStyle.carModel}>{carDetails.model}</span>
                         </div>
                         <div className={carModalStyle.tradeNameModal}>
-                            <span className={carModalStyle.tradeName}>{car.tradeName}</span>
+                            <span className={carModalStyle.tradeName}>{carDetails.tradeName}</span>
                         </div>
                         <div className={carModalStyle.localisation}>
                             <i className={`fa-solid fa-location-dot ${carModalStyle.gpsIcon}`}></i>
@@ -63,18 +63,18 @@ const CarModal = ({ carId, subject }) => {
                         </div>
                     </div>
                     <div className={carModalStyle.modalPrice}>
-                        <span className={carModalStyle.formatPrice}>{`${car.price}€`}</span>
+                        <span className={carModalStyle.formatPrice}>{`${carDetails.price}€`}</span>
                     </div>
               </div>   
             </div>
             <div className={carModalStyle.modalBody}>
                 <div className={carModalStyle.infoCarContainer}>
-                <DetailsList features={car} className={carModalStyle.modalCarDetails}/>
-                <EquipmentsList data={car.equipments} labelFunction={getEquipmentLabel}/>
+                <DetailsList features={carDetails} className={carModalStyle.modalCarDetails}/>
+                <EquipmentsList data={carDetails.equipments} labelFunction={getEquipmentLabel}/>
 
                 <div className={carModalStyle.contactIntro}>
                     <p className={carModalStyle.introContact}>Ce véhicule vous intéresse ? N'hésitez plus !</p>
-                    <ContactBtn className="carModalContact" additionalData={{ subject: `Information sur le véhicule ${car.brand} ${car.model}` }}/>           
+                    <ContactBtn className="carModalContact" additionalData={{ subject: `Information sur le véhicule ${carDetails.brand} ${carDetails.model}` }}/>           
                 </div>
 
             </div>

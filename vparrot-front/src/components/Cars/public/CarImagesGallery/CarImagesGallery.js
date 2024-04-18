@@ -22,8 +22,8 @@ const CarImagesGallery = ({ images, brand, model }) => {
 
       <Slider {...settings}>
         {images.map((image, index) => (
-          <div className="pics" key={index}>
-            <img className="carPics" src={image} alt={`${brand} ${model} - Vue ${index + 1}`} />
+          <div className="pics" key={image.id}>
+            <img className="carPics" src={image.url} alt={`${brand} ${model} - Vue ${index + 1}`} />
           </div>
         ))}
       </Slider>
