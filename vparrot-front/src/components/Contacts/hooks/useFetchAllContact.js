@@ -17,7 +17,7 @@ const useFetchAllContact = () => {
 
               const contactsList = await fetchAllContact();
               setContacts(contactsList)
-              console.log(contactsList);
+    
               return contactsList.data
             } catch (error) {
 

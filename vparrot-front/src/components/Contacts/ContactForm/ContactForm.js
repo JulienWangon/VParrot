@@ -27,7 +27,6 @@ const ContactForm = ({ subject }) => {
     });
 
     useEffect(() => {
-        console.log("Sujet reçu dans ContactForm via modalData:", modalData.subject);
         if (modalData && modalData.subject) {
             setFormData(currentFormData => ({ ...currentFormData, subject: modalData.subject }));
         }
