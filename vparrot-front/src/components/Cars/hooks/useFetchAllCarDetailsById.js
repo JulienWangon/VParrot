@@ -1,38 +1,32 @@
 import { useState, useEffect } from 'react';
 import { fetchAllCarDetailsById } from '../CarsService';
 
-const useFetchAllCarDetailsById = (carId) => {
+const useFetchAllCarDetailsById = () => {
 
-    const [car, setCar] = useState(null);
+    const [carId, setCarId] = useState(null);
+    const [carDetails, setCarDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        if (!carId) return;
 
         const fetchData = async () => {
+            setLoading(true);
             try {
-
-                if (!carId) {
-                    setLoading(false);
-                    return;
-                }
-
                 const data = await fetchAllCarDetailsById(carId);
-                setCar(data);
+                setCarDetails(data);
+                setError(null);
             } catch (error) {
-
-                setError(error.message || "Une erreur est survenue lors de la récupération des informations du véhicule. ");
+                setError(error.message || "Une erreur est survenue lors de la récupération des informations du véhicule.");
             } finally {
-
                 setLoading(false);
             }
         };
 
         fetchData();
-
     }, [carId]);
 
-    return { car, loading, error };
+    return { carDetails, loading, error, setCarId };
 };
-
 export default useFetchAllCarDetailsById;
